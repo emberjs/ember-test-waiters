@@ -14,13 +14,17 @@ export interface ISimpleWaiterDebugInfo {
 }
 
 export class SimpleWaiter<T> implements IWaiter {
+  public name: WaiterName;
+
   items = new Map<unknown, ISimpleWaiterDebugInfo>();
 
-  constructor(public name: WaiterName) {};
+  constructor(name: WaiterName) {
+    this.name = name;
+  }
 
   add(item: T, label: string) {
     this.items.set(item, {
-      stack: (new Error()).stack,
+      stack: new Error().stack,
       label,
     });
   }
@@ -48,9 +52,9 @@ class PromiseWaiter<T> implements IWaiter {
 
   add(promise: Promise<T>, label?: string) {
     this.items.set(promise, {
-      stack: (new Error()).stack,
+      stack: new Error().stack,
       label,
-    })
+    });
   }
 
   delete(promise: Promise<T>) {
@@ -86,7 +90,7 @@ export function waitForPromise<T>(promise: Promise<T>, label?: string) {
         PROMISE_WAITER.delete(promise);
         throw error;
       }
-    )
+    );
   }
 
   return result;
@@ -124,7 +128,7 @@ interface IPendingWaiterState {
 export function getPendingWaiterState(): IPendingWaiterState {
   let result: IPendingWaiterState = {
     pending: 0,
-    waiters: { }
+    waiters: {},
   };
 
   WAITERS.forEach(waiter => {
@@ -132,7 +136,7 @@ export function getPendingWaiterState(): IPendingWaiterState {
       result.pending++;
 
       let debugInfo = waiter.debugInfo();
-      result.waiters[waiter.name] =  debugInfo || true;
+      result.waiters[waiter.name] = debugInfo || true;
     }
   });
 

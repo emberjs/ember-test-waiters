@@ -1,5 +1,12 @@
-import { module, test, skip } from 'qunit';
-import { register, unregister, shouldWait, getWaiters, reset, getPendingWaiterState } from 'ember-test-waiters';
+import { module, test } from 'qunit';
+import {
+  register,
+  unregister,
+  shouldWait,
+  getWaiters,
+  reset,
+  getPendingWaiterState,
+} from 'ember-test-waiters';
 
 module('ember-test-waiter', function(hooks) {
   hooks.afterEach(function() {
@@ -14,7 +21,7 @@ module('ember-test-waiter', function(hooks) {
         return true;
       },
 
-      debugInfo() {}
+      debugInfo() {},
     });
 
     let waiters = getWaiters().map(w => w.name);
@@ -29,7 +36,7 @@ module('ember-test-waiter', function(hooks) {
         return true;
       },
 
-      debugInfo() {}
+      debugInfo() {},
     };
 
     register(waiter);
@@ -50,7 +57,7 @@ module('ember-test-waiter', function(hooks) {
       waitUntil() {
         return this.waiting;
       },
-      debugInfo() {}
+      debugInfo() {},
     };
     let second = {
       name: 'first-loser',
@@ -58,7 +65,7 @@ module('ember-test-waiter', function(hooks) {
       waitUntil() {
         return this.waiting;
       },
-      debugInfo() {}
+      debugInfo() {},
     };
 
     register(first);
@@ -89,14 +96,17 @@ module('ember-test-waiter', function(hooks) {
       },
       debugInfo() {
         return debugInfo;
-      }
+      },
     };
     register(first);
 
     assert.deepEqual(getPendingWaiterState(), { pending: 0, waiters: {} }, 'precond');
 
-    debugInfo = [ 'blah', 'blah'];
-    assert.deepEqual(getPendingWaiterState(), { pending: 1, waiters: {firsty: ['blah', 'blah'] } });
+    debugInfo = ['blah', 'blah'];
+    assert.deepEqual(getPendingWaiterState(), {
+      pending: 1,
+      waiters: { firsty: ['blah', 'blah'] },
+    });
 
     debugInfo = undefined;
     assert.deepEqual(getPendingWaiterState(), { pending: 0, waiters: {} }, 'reset');
