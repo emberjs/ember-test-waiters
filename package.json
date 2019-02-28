@@ -15,7 +15,7 @@
   "scripts": {
     "build": "ember build",
     "lint:hbs": "ember-template-lint .",
-    "lint:js": "eslint .",
+    "lint:js": "eslint --ext ts,js .",
     "start": "ember serve",
     "test": "ember test",
     "test:all": "ember try:each",
@@ -35,6 +35,7 @@
     "@types/ember__test-helpers": "^0.7.7",
     "@types/qunit": "^2.5.4",
     "@types/rsvp": "^4.0.2",
+    "@typescript-eslint/parser": "^1.4.2",
     "broccoli-asset-rev": "^2.7.0",
     "ember-cli": "~3.7.1",
     "ember-cli-dependency-checker": "^3.0.0",
