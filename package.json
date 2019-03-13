@@ -14,7 +14,6 @@
   },
   "scripts": {
     "build": "ember build",
-    "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint --ext ts,js .",
     "start": "ember serve",
     "test": "ember test",
@@ -35,6 +34,7 @@
     "@types/ember__test-helpers": "^0.7.7",
     "@types/qunit": "^2.5.4",
     "@types/rsvp": "^4.0.2",
+    "@typescript-eslint/eslint-plugin": "^1.4.2",
     "@typescript-eslint/parser": "^1.4.2",
     "broccoli-asset-rev": "^2.7.0",
     "ember-cli": "~3.8.1",
@@ -43,7 +43,6 @@
     "ember-cli-htmlbars-inline-precompile": "^1.0.3",
     "ember-cli-inject-live-reload": "^1.8.2",
     "ember-cli-sri": "^2.1.1",
-    "ember-cli-template-lint": "^1.0.0-beta.1",
     "ember-cli-typescript": "^1.5.0",
     "ember-cli-uglify": "^2.1.0",
     "ember-disable-prototype-extensions": "^1.1.3",

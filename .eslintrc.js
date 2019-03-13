@@ -5,13 +5,16 @@ module.exports = {
     ecmaVersion: 2017,
     sourceType: 'module',
   },
-  plugins: ['ember', 'prettier'],
+  plugins: ['ember', 'prettier', '@typescript-eslint'],
   extends: ['eslint:recommended', 'plugin:ember/recommended', 'prettier'],
   env: {
     browser: true,
+    node: false,
   },
   rules: {
     'prettier/prettier': 'error',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
   },
   overrides: [
     // node files
