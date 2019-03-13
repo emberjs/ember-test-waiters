@@ -14,7 +14,7 @@ module.exports = {
   rules: {
     'prettier/prettier': 'error',
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-unused-vars': 'error',
   },
   overrides: [
     // node files
