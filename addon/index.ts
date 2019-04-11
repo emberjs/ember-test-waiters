@@ -4,8 +4,8 @@ export {
   getWaiters,
   reset,
   getPendingWaiterState,
-  shouldWait,
-} from './waiters';
+  hasPendingWaiters,
+} from './waiter-manager';
 
-export { SimpleWaiter } from './simple-waiter';
-export { PromiseWaiter, waitForPromise } from './promise-waiter';
+export { default as TestWaiter } from './test-waiter';
+export { waitForPromise } from './wait-for-promise';

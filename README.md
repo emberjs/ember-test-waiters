@@ -1,37 +1,71 @@
-ember-test-waiters
-==============================================================================
+# ember-test-waiters
 
-[Short description of the addon.]
+This addon provides APIs to allow Ember testing to play nicely with other asynchronous
+events, such as an application that is waiting for a CSS3
+transition or an IndexDB transaction. Waiters runs periodically
+after each async helper (i.e. `click`, `andThen`, `visit`, etc) has executed,
+until a predetermined condition is met. After the waiters finish, the next async helper
+is executed and the process repeats.
 
+This allows the test suite to pause at deterministic intervals, and helps thread together
+the async nature of tests.
 
-Compatibility
-------------------------------------------------------------------------------
+## Compatibility
 
-* Ember.js v2.18 or above
-* Ember CLI v2.13 or above
+- Ember.js v2.18 or above
+- Ember CLI v2.13 or above
 
-
-Installation
-------------------------------------------------------------------------------
+## Installation
 
 ```
 ember install ember-test-waiters
 ```
 
+## Usage
 
-Usage
-------------------------------------------------------------------------------
+Ember test waiters uses a minimal API to provide waiting functionality. This minimal API can be composed to accomodate various complex scenarios.
 
-[Longer description of how to use the addon in apps.]
+### TestWaiter class
 
+The `TestWaiter` class is, in most cases, all you will need to wait for async operations to complete before continuing tests.
 
-Contributing
-------------------------------------------------------------------------------
+```
+import Component from '@ember/component';
+import { TestWaiter } from 'ember-test-waiters';
+
+if (DEBUG) {
+  let waiter = new TestWaiter('friend-waiter');
+}
+
+export default class Friendz extends Component {
+  didInsertElement() {
+    waiter.beginAsync(this);
+
+    someAsyncWork().then(() => {
+      waiter.endAsync(this);
+    });
+  }
+}
+```
+
+### Waiting on all waiters
+
+The `ember-test-waiters` addon provides a `waiter-manager` to register, unregister, iterate and invoke waiters to determine if we should wait for conditions to be met or continue test execution. This functionality is encapsulated in the `hasPendingWaiters` function, which evaluates each registered waiter to determine its current state.
+
+```
+import { hasPendingWaiters } from 'ember-test-waiters';
+
+//...
+
+if (hasPendingWaiters()) {
+  // keep going in our tests
+};
+```
+
+## Contributing
 
 See the [Contributing](CONTRIBUTING.md) guide for details.
 
-
-License
-------------------------------------------------------------------------------
+## License
 
 This project is licensed under the [MIT License](LICENSE.md).
