@@ -15,12 +15,12 @@
   - [TestWaiter][11]
     - [Parameters][12]
     - [Examples][13]
-    - [waitUntil][14]
-    - [debugInfo][15]
-  - [beginAsync][16]
+  - [beginAsync][14]
+    - [Parameters][15]
+  - [endAsync][16]
     - [Parameters][17]
-  - [endAsync][18]
-    - [Parameters][19]
+  - [waitUntil][18]
+  - [debugInfo][19]
 - [waitForPromise][20]
   - [Parameters][21]
   - [Examples][22]
@@ -99,15 +99,6 @@ export default class Friendz extends Component {
 }
 ```
 
-#### waitUntil
-
-Used to determine if the waiter system should still wait for async
-operations to complete.
-
-#### debugInfo
-
-Returns the `debugInfo` for each item tracking async operations in this waiter.
-
 ### beginAsync
 
 Should be used to signal the beginning of an async operation that
@@ -128,6 +119,19 @@ beginning of an async operation.
 #### Parameters
 
 - `item` {T} The item to that was registered for waiting
+
+### waitUntil
+
+Used to determine if the waiter system should still wait for async
+operations to complete.
+
+Returns **[boolean][24]**
+
+### debugInfo
+
+Returns the `debugInfo` for each item tracking async operations in this waiter.
+
+Returns **ITestWaiterDebugInfo**
 
 ## waitForPromise
 
@@ -169,12 +173,12 @@ export default class Friendz extends Component {
 [11]: #testwaiter
 [12]: #parameters-2
 [13]: #examples
-[14]: #waituntil
-[15]: #debuginfo
-[16]: #beginasync
-[17]: #parameters-3
-[18]: #endasync
-[19]: #parameters-4
+[14]: #beginasync
+[15]: #parameters-3
+[16]: #endasync
+[17]: #parameters-4
+[18]: #waituntil
+[19]: #debuginfo
 [20]: #waitforpromise
 [21]: #parameters-5
 [22]: #examples-1

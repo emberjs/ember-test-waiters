@@ -1,4 +1,4 @@
-import { IWaiter, WaiterName, ISimpleWaiterDebugInfo } from './types';
+import { IWaiter, WaiterName, ITestWaiterDebugInfo } from './types';
 import { register } from './waiter-manager';
 
 /**
@@ -30,7 +30,7 @@ export default class TestWaiter<T> implements IWaiter {
   public name: WaiterName;
   private isRegistered = false;
 
-  items = new Map<T, ISimpleWaiterDebugInfo>();
+  items = new Map<T, ITestWaiterDebugInfo>();
 
   /**
    * @public
@@ -94,15 +94,23 @@ export default class TestWaiter<T> implements IWaiter {
   /**
    * Used to determine if the waiter system should still wait for async
    * operations to complete.
+   *
+   * @public
+   * @method waitUntil
+   * @returns {boolean}
    */
-  waitUntil() {
+  waitUntil(): boolean {
     return this.items.size === 0;
   }
 
   /**
    * Returns the `debugInfo` for each item tracking async operations in this waiter.
+   *
+   * @public
+   * @method debugInfo
+   * @returns {ITestWaiterDebugInfo}
    */
-  debugInfo(): ISimpleWaiterDebugInfo[] {
+  debugInfo(): ITestWaiterDebugInfo[] {
     return [...this.items.values()];
   }
 }

@@ -3,10 +3,10 @@ export type WaiterName = string;
 export interface IWaiter {
   name: WaiterName;
   waitUntil(): boolean;
-  debugInfo(): ISimpleWaiterDebugInfo[];
+  debugInfo(): ITestWaiterDebugInfo[];
 }
 
-export interface ISimpleWaiterDebugInfo {
+export interface ITestWaiterDebugInfo {
   stack: string | undefined;
   label: string | undefined;
 }
