@@ -68,7 +68,7 @@ export function getPendingWaiterState(): IPendingWaiterState {
 }
 
 /**
- * Determines if there are any pending waiters in the waiter manager.
+ * Determines if there are any pending waiters.
  *
  * @returns {boolean} `true` if there are pending waiters, otherwise `false`.
  */
