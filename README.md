@@ -1,6 +1,6 @@
 # ember-test-waiters
 
-This addon provides APIs to allow Ember testing to play nicely with other asynchronous
+This addon provides APIs to allow [@ember/test-helpers](https://github.com/emberjs/ember-test-helpers/) to play nicely with other asynchronous
 events, such as an application that is waiting for a CSS3
 transition or an IndexDB transaction. Waiters runs periodically
 after each async helper (i.e. `click`, `andThen`, `visit`, etc) has executed,
@@ -23,7 +23,7 @@ ember install ember-test-waiters
 
 ## Usage
 
-Ember test waiters uses a minimal API to provide waiting functionality. This minimal API can be composed to accomodate various complex scenarios.
+`ember-test-waiters` uses a minimal API to provide waiting functionality. This minimal API can be composed to accommodate various complex scenarios.
 
 ### TestWaiter class
 
@@ -33,7 +33,7 @@ The `TestWaiter` class is, in most cases, all you will need to wait for async op
 import Component from '@ember/component';
 import { TestWaiter } from 'ember-test-waiters';
 
-if (DEBUG) {
+let waiter = DEBUG && new TestWaiter('friend-waiter');
   let waiter = new TestWaiter('friend-waiter');
 }
 

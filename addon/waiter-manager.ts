@@ -42,7 +42,7 @@ export function reset(): void {
 }
 
 /**
- * Gets the current state of all test waiters. Any test waiters whose
+ * Gets the current state of all waiters. Any waiters whose
  * `waitUntil` method returns false will be considered `pending`.
  *
  * @returns a result object containing a count of all waiters pending and
@@ -68,7 +68,7 @@ export function getPendingWaiterState(): IPendingWaiterState {
 }
 
 /**
- * Determines if there are any pending waiters in the waiter manager.
+ * Determines if there are any pending waiters.
  *
  * @returns {boolean} `true` if there are pending waiters, otherwise `false`.
  */
