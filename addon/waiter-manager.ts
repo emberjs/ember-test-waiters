@@ -45,9 +45,9 @@ export function reset(): void {
  * Gets the current state of all waiters. Any waiters whose
  * `waitUntil` method returns false will be considered `pending`.
  *
- * @returns a result object containing a count of all waiters pending and
- * a `waiters` object containing the name of all pending waiters and their
- * debug info.
+ * @returns {IPendingWaiterState} An object containing a count of all waiters
+ * pending and a `waiters` object containing the name of all pending waiters
+ * and their debug info.
  */
 export function getPendingWaiterState(): IPendingWaiterState {
   let result: IPendingWaiterState = {
