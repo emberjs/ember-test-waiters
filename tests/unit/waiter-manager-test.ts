@@ -25,6 +25,17 @@ module('test-watiers', function(hooks) {
     assert.deepEqual(waiters, ['first']);
   });
 
+  test('register will only add one waiter with the same name', function(assert) {
+    let waiter = new TestWaiter('first');
+    let secondWaiterButStillCalledFirst = new TestWaiter('first');
+
+    register(waiter);
+    register(secondWaiterButStillCalledFirst);
+
+    let waiters = getWaiters().map(w => w.name);
+    assert.deepEqual(waiters, ['first']);
+  });
+
   test('unregister will correctly remove a waiter', function(assert) {
     let waiter = new TestWaiter('first');
 
@@ -125,5 +136,36 @@ module('test-watiers', function(hooks) {
 
     second.endAsync(secondItem);
     assert.strictEqual(hasPendingWaiters(), false, 'Second waiter is not pending');
+  });
+
+  test('custom waiters can be registered', function(assert) {
+    let customWaiterCounter = 0;
+    let customWaiter = {
+      name: 'custom waiter' as string,
+      waiterItems: new Map<string, string>(),
+
+      beginAsync() {
+        customWaiterCounter++;
+        this.waiterItems.set(`waiterItem${customWaiterCounter}`, <string>new Error().stack);
+      },
+
+      endAsync() {
+        customWaiterCounter--;
+      },
+
+      waitUntil() {
+        return customWaiterCounter === 0;
+      },
+
+      debugInfo() {
+        return this.waiterItems;
+      },
+    };
+
+    register(customWaiter);
+
+    console.log();
+
+    assert.deepEqual([customWaiter], getWaiters());
   });
 });

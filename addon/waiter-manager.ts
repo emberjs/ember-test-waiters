@@ -1,6 +1,6 @@
 import { IWaiter, IPendingWaiterState } from './types';
 
-const WAITERS = new Set();
+const WAITERS = new Map();
 
 /**
  * Registers a waiter with the test waiter manager.
@@ -9,7 +9,7 @@ const WAITERS = new Set();
  * @param waiter {IWaiter} A test waiter instance
  */
 export function register(waiter: IWaiter): void {
-  WAITERS.add(waiter);
+  WAITERS.set(waiter.name, waiter);
 }
 
 /**
@@ -19,7 +19,7 @@ export function register(waiter: IWaiter): void {
  * @param waiter {IWaiter} A test waiter instance
  */
 export function unregister(waiter: IWaiter): void {
-  WAITERS.delete(waiter);
+  WAITERS.delete(waiter.name);
 }
 
 /**
@@ -29,7 +29,7 @@ export function unregister(waiter: IWaiter): void {
  * @returns {IWaiter[]}
  */
 export function getWaiters(): IWaiter[] {
-  return [...WAITERS];
+  return [...WAITERS.values()];
 }
 
 /**

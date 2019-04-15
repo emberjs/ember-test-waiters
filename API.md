@@ -4,26 +4,20 @@
 
 - [Test Waiter Manager][1]
   - [register][2]
-    - [Parameters][3]
-  - [unregister][4]
-    - [Parameters][5]
-  - [getWaiters][6]
-  - [reset][7]
-  - [getPendingWaiterState][8]
-  - [hasPendingWaiters][9]
-- [Test Waiter class][10]
-  - [TestWaiter][11]
-    - [Parameters][12]
-    - [Examples][13]
-  - [beginAsync][14]
-    - [Parameters][15]
-  - [endAsync][16]
-    - [Parameters][17]
-  - [waitUntil][18]
-  - [debugInfo][19]
-- [waitForPromise][20]
-  - [Parameters][21]
-  - [Examples][22]
+  - [unregister][3]
+  - [getWaiters][4]
+  - [reset][5]
+  - [getPendingWaiterState][6]
+  - [hasPendingWaiters][7]
+- [Test Waiter class][8]
+  - [TestWaiter][9]
+  - [beginAsync][10]
+  - [endAsync][11]
+  - [waitUntil][12]
+  - [debugInfo][13]
+- [waitForPromise][14]
+  - [Parameters][15]
+  - [Examples][16]
 
 ## Test Waiter Manager
 
@@ -47,7 +41,7 @@ Unregisters a waiter with the test waiter manager.
 
 Gets an array of all test waiters current registered.
 
-Returns **[Array][23]&lt;IWaiter>**
+Returns **[Array][17]&lt;IWaiter>**
 
 ### reset
 
@@ -66,7 +60,7 @@ debug info.
 
 Determines if there are any pending waiters in the waiter manager.
 
-Returns **[boolean][24]** `true` if there are pending waiters, otherwise `false`.
+Returns **[boolean][18]** `true` if there are pending waiters, otherwise `false`.
 
 ## Test Waiter class
 
@@ -125,7 +119,7 @@ beginning of an async operation.
 Used to determine if the waiter system should still wait for async
 operations to complete.
 
-Returns **[boolean][24]**
+Returns **[boolean][18]**
 
 ### debugInfo
 
@@ -162,25 +156,19 @@ export default class Friendz extends Component {
 
 [1]: #test-waiter-manager
 [2]: #register
-[3]: #parameters
-[4]: #unregister
-[5]: #parameters-1
-[6]: #getwaiters
-[7]: #reset
-[8]: #getpendingwaiterstate
-[9]: #haspendingwaiters
-[10]: #test-waiter-class
-[11]: #testwaiter
-[12]: #parameters-2
-[13]: #examples
-[14]: #beginasync
-[15]: #parameters-3
-[16]: #endasync
-[17]: #parameters-4
-[18]: #waituntil
-[19]: #debuginfo
-[20]: #waitforpromise
-[21]: #parameters-5
-[22]: #examples-1
-[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[3]: #unregister
+[4]: #getwaiters
+[5]: #reset
+[6]: #getpendingwaiterstate
+[7]: #haspendingwaiters
+[8]: #test-waiter-class
+[9]: #testwaiter
+[10]: #beginasync
+[11]: #endasync
+[12]: #waituntil
+[13]: #debuginfo
+[14]: #waitforpromise
+[15]: #parameters
+[16]: #examples
+[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
