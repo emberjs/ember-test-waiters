@@ -23,7 +23,7 @@ ember install ember-test-waiters
 
 ## Usage
 
-Ember test waiters uses a minimal API to provide waiting functionality. This minimal API can be composed to accomodate various complex scenarios.
+`ember-test-waiters` uses a minimal API to provide waiting functionality. This minimal API can be composed to accommodate various complex scenarios.
 
 ### TestWaiter class
 
