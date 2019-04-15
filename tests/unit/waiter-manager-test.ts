@@ -10,7 +10,7 @@ import {
 } from 'ember-test-waiters';
 import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
 
-module('test-watiers', function(hooks) {
+module('test-waiters', function(hooks) {
   hooks.afterEach(function() {
     reset();
     resetError();
