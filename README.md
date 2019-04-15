@@ -33,7 +33,7 @@ The `TestWaiter` class is, in most cases, all you will need to wait for async op
 import Component from '@ember/component';
 import { TestWaiter } from 'ember-test-waiters';
 
-if (DEBUG) {
+let waiter = DEBUG && new TestWaiter('friend-waiter');
   let waiter = new TestWaiter('friend-waiter');
 }
 
