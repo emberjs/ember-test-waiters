@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
 import { DEBUG } from '@glimmer/env';
-import { reset, buildWaiter, register, getWaiters } from 'ember-test-waiters';
+import { _reset, buildWaiter, register, getWaiters } from 'ember-test-waiters';
 import NoopTestWaiter from 'ember-test-waiters/noop-test-waiter';
 
 if (!DEBUG) {
   module('test-waiter | DEBUG: false', function(hooks) {
     hooks.afterEach(function() {
-      reset();
+      _reset();
     });
 
     test('buildWaiter returns NoopTestWaiter DEBUG: false', function(assert) {

@@ -4,7 +4,7 @@ import {
   unregister,
   hasPendingWaiters,
   getWaiters,
-  reset,
+  _reset,
   getPendingWaiterState,
   buildWaiter,
 } from 'ember-test-waiters';
@@ -14,7 +14,7 @@ import { DEBUG } from '@glimmer/env';
 if (DEBUG) {
   module('test-waiters | DEBUG: true', function(hooks) {
     hooks.afterEach(function() {
-      reset();
+      _reset();
       resetError();
     });
 
@@ -117,6 +117,36 @@ if (DEBUG) {
 
       assert.equal(getPendingWaiterState().pending, 0, 'No waiters are pending');
       assert.deepEqual(getPendingWaiterState().waiters, {}, 'No waiters are pending');
+    });
+
+    test('getPendingWaiterState contains label info when label provided', function(assert) {
+      let first = buildWaiter('first');
+      let second = buildWaiter('second');
+      let firstItem = {};
+      let secondItem = {};
+
+      overrideError(MockStableError);
+
+      first.beginAsync(firstItem, 'first-label');
+      second.beginAsync(secondItem, 'second-label');
+
+      assert.deepEqual(getPendingWaiterState(), {
+        pending: 2,
+        waiters: {
+          first: [
+            {
+              label: 'first-label',
+              stack: 'STACK',
+            },
+          ],
+          second: [
+            {
+              label: 'second-label',
+              stack: 'STACK',
+            },
+          ],
+        },
+      });
     });
 
     test('hasPendingWaiters can check if waiting is required', function(assert) {

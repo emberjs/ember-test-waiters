@@ -37,7 +37,7 @@ export function getWaiters(): IWaiter[] {
  *
  * @public
  */
-export function reset(): void {
+export function _reset(): void {
   WAITERS.clear();
 }
 

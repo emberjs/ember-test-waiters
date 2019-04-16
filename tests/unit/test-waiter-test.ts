@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { TestWaiter, reset, getWaiters } from 'ember-test-waiters';
+import { TestWaiter, _reset, getWaiters } from 'ember-test-waiters';
 import MockStableError, { overrideError } from './utils/mock-stable-error';
 
 module('test-waiter', function(hooks) {
   hooks.afterEach(function() {
-    reset();
+    _reset();
   });
 
   test('test waiter can be instantiated with a name', function(assert) {

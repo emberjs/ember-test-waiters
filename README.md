@@ -1,10 +1,9 @@
 # ember-test-waiters
 
-This addon provides APIs to allow [@ember/test-helpers](https://github.com/emberjs/ember-test-helpers/) to play nicely with other asynchronous
-events, such as an application that is waiting for a CSS3
-transition or an IndexDB transaction. Waiters runs periodically
-after each async helper (i.e. `click`, `andThen`, `visit`, etc) has executed,
-until a predetermined condition is met. After the waiters finish, the next async helper
+This addon provides APIs to allow [@ember/test-helpers](https://github.com/emberjs/ember-test-helpers/) to play nicely
+with other asynchronous events, such as an application that is waiting for a CSS transition or an IndexDB transaction.
+The async helpers inside `@ember/test-helpers` return promises (i.e. `click`, `andThen`, `visit`, etc). Waiters run periodically
+after each helper has executed until a predetermined condition is met. After the waiters finish, the next async helper
 is executed and the process repeats.
 
 This allows the test suite to pause at deterministic intervals, and helps thread together
@@ -25,17 +24,15 @@ ember install ember-test-waiters
 
 `ember-test-waiters` uses a minimal API to provide waiting functionality. This minimal API can be composed to accommodate various complex scenarios.
 
-### TestWaiter class
+### buildWaiter function
 
-The `TestWaiter` class is, in most cases, all you will need to wait for async operations to complete before continuing tests.
+The `buildWaiter` function is, in most cases, all you will need to wait for async operations to complete before continuing tests.
 
-```
+```js
 import Component from '@ember/component';
-import { TestWaiter } from 'ember-test-waiters';
+import { buildWaiter } from 'ember-test-waiters';
 
-let waiter = DEBUG && new TestWaiter('friend-waiter');
-  let waiter = new TestWaiter('friend-waiter');
-}
+let waiter = buildWaiter('friend-waiter');
 
 export default class Friendz extends Component {
   didInsertElement() {
@@ -48,6 +45,23 @@ export default class Friendz extends Component {
 }
 ```
 
+### waitForPromise function
+
+This addon also provides a `waitForPromise` function, which can be used to wrap a promise to register it with the test waiter system.
+
+```js
+import Component from '@ember/component';
+import { waitForPromise } from 'ember-test-waiters';
+
+export default class FriendzWithZenefits extends Component {
+  didInsertElement() {
+    waitForPromise(someAsyncWork).then(() => {
+      doOtherThings();
+    });
+  }
+}
+```
+
 ### Waiting on all waiters
 
 The `ember-test-waiters` addon provides a `waiter-manager` to register, unregister, iterate and invoke waiters to determine if we should wait for conditions to be met or continue test execution. This functionality is encapsulated in the `hasPendingWaiters` function, which evaluates each registered waiter to determine its current state.
@@ -55,11 +69,11 @@ The `ember-test-waiters` addon provides a `waiter-manager` to register, unregist
 ```
 import { hasPendingWaiters } from 'ember-test-waiters';
 
-//...
+// ...
 
-if (hasPendingWaiters()) {
-  // keep going in our tests
-};
+let hasPendingWaiters = hasPendingWaiters();
+
+// ...
 ```
 
 ## Contributing
