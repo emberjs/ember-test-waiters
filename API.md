@@ -18,6 +18,9 @@
 - [waitForPromise][14]
   - [Parameters][15]
   - [Examples][16]
+- [buildWaiter][17]
+  - [Parameters][18]
+  - [Examples][19]
 
 ## Test Waiter Manager
 
@@ -41,7 +44,7 @@ Unregisters a waiter with the test waiter manager.
 
 Gets an array of all test waiters current registered.
 
-Returns **[Array][17]&lt;IWaiter>**
+Returns **[Array][20]&lt;IWaiter>**
 
 ### reset
 
@@ -49,18 +52,18 @@ Clears all test waiters from the waiter manager.
 
 ### getPendingWaiterState
 
-Gets the current state of all test waiters. Any test waiters whose
+Gets the current state of all waiters. Any waiters whose
 `waitUntil` method returns false will be considered `pending`.
 
-Returns **any** a result object containing a count of all waiters pending and
-a `waiters` object containing the name of all pending waiters and their
-debug info.
+Returns **IPendingWaiterState** An object containing a count of all waiters
+pending and a `waiters` object containing the name of all pending waiters
+and their debug info.
 
 ### hasPendingWaiters
 
-Determines if there are any pending waiters in the waiter manager.
+Determines if there are any pending waiters.
 
-Returns **[boolean][18]** `true` if there are pending waiters, otherwise `false`.
+Returns **[boolean][21]** `true` if there are pending waiters, otherwise `false`.
 
 ## Test Waiter class
 
@@ -71,27 +74,6 @@ A class providing creation, registration and async waiting functionality.
 #### Parameters
 
 - `name`
-
-#### Examples
-
-```javascript
-import Component from '@ember/component';
-import { SimpleWaiter } from 'ember-test-waiters';
-
-if (DEBUG) {
-  let waiter = new SimpleWaiter('friend-waiter');
-}
-
-export default class Friendz extends Component {
-  didInsertElement() {
-    waiter.beginAsync(this);
-
-    someAsyncWork().then(() => {
-      waiter.endAsync(this);
-    });
-  }
-}
-```
 
 ### beginAsync
 
@@ -119,7 +101,7 @@ beginning of an async operation.
 Used to determine if the waiter system should still wait for async
 operations to complete.
 
-Returns **[boolean][18]**
+Returns **[boolean][21]**
 
 ### debugInfo
 
@@ -154,6 +136,39 @@ export default class Friendz extends Component {
 }
 ```
 
+## buildWaiter
+
+Builds and returns a test waiter. The type of the
+returned waiter is dependent on whether the app or
+addon is in `DEBUG` mode or not.
+
+### Parameters
+
+- `name` {string} The name of the test waiter
+
+### Examples
+
+```javascript
+import Component from '@ember/component';
+import { buildWaiter } from 'ember-test-waiters';
+
+if (DEBUG) {
+  let waiter = buildWaiter('friend-waiter');
+}
+
+export default class Friendz extends Component {
+  didInsertElement() {
+    waiter.beginAsync(this);
+
+    someAsyncWork().then(() => {
+      waiter.endAsync(this);
+    });
+  }
+}
+```
+
+Returns **([TestWaiter][22] | NoopTestWaiter)**
+
 [1]: #test-waiter-manager
 [2]: #register
 [3]: #unregister
@@ -170,5 +185,9 @@ export default class Friendz extends Component {
 [14]: #waitforpromise
 [15]: #parameters
 [16]: #examples
-[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[17]: #buildwaiter
+[18]: #parameters-1
+[19]: #examples-1
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[22]: #testwaiter

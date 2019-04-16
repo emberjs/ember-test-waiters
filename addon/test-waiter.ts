@@ -5,26 +5,7 @@ import { register } from './waiter-manager';
  * A class providing creation, registration and async waiting functionality.
  *
  * @public
- * @class SimpleWaiter<T>
- *
- * @example
- *
- * import Component from '@ember/component';
- * import { SimpleWaiter } from 'ember-test-waiters';
- *
- * if (DEBUG) {
- *   let waiter = new SimpleWaiter('friend-waiter');
- * }
- *
- * export default class Friendz extends Component {
- *   didInsertElement() {
- *     waiter.beginAsync(this);
- *
- *     someAsyncWork().then(() => {
- *       waiter.endAsync(this);
- *     });
- *   }
- * }
+ * @class TestWaiter<T>
  */
 export default class TestWaiter<T> implements IWaiter {
   public name: WaiterName;

@@ -23,7 +23,7 @@ const PROMISE_WAITER = new TestWaiter('promise-waiter');
  *   }
  * }
  */
-export function waitForPromise<T>(promise: Promise<T>, label?: string) {
+export default function waitForPromise<T>(promise: Promise<T>, label?: string) {
   let result = promise;
 
   if (DEBUG) {
