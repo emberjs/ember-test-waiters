@@ -45,6 +45,11 @@ jobs:
       script:
         - yarn test
 
+    #- stage: 'Production Tests'
+    #  name: 'Production Tests'
+    #  script:
+    #    - yarn test:prod
+
     # we recommend new addons test the current and previous LTS
     # as well as latest stable release (bonus points to beta/canary)
     - stage: 'Additional Tests'
