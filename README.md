@@ -53,7 +53,7 @@ This addon also provides a `waitForPromise` function, which can be used to wrap 
 import Component from '@ember/component';
 import { waitForPromise } from 'ember-test-waiters';
 
-export default class FriendzWithZenefits extends Component {
+export default class MoreFriendz extends Component {
   didInsertElement() {
     waitForPromise(someAsyncWork).then(() => {
       doOtherThings();
