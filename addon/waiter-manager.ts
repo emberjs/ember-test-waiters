@@ -3,7 +3,7 @@ import { IWaiter, IPendingWaiterState } from './types';
 const WAITERS = new Map();
 
 /**
- * Registers a waiter with the test waiter manager.
+ * Registers a waiter.
  *
  * @public
  * @param waiter {IWaiter} A test waiter instance
