@@ -13,7 +13,7 @@ export function register(waiter: IWaiter): void {
 }
 
 /**
- * Unregisters a waiter with the test waiter manager.
+ * Unregisters a waiter.
  *
  * @public
  * @param waiter {IWaiter} A test waiter instance
