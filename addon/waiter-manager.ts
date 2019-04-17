@@ -23,7 +23,7 @@ export function unregister(waiter: IWaiter): void {
 }
 
 /**
- * Gets an array of all test waiters current registered.
+ * Gets an array of all waiters current registered.
  *
  * @public
  * @returns {IWaiter[]}
