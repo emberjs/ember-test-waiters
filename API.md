@@ -26,7 +26,7 @@
 
 ### register
 
-Registers a waiter with the test waiter manager.
+Registers a waiter.
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Registers a waiter with the test waiter manager.
 
 ### unregister
 
-Unregisters a waiter with the test waiter manager.
+Unregisters a waiter.
 
 #### Parameters
 
@@ -42,13 +42,13 @@ Unregisters a waiter with the test waiter manager.
 
 ### getWaiters
 
-Gets an array of all test waiters current registered.
+Gets an array of all waiters current registered.
 
 Returns **[Array][20]&lt;IWaiter>**
 
 ### \_reset
 
-Clears all test waiters from the waiter manager.
+Clears all waiters.
 
 ### getPendingWaiterState
 
@@ -111,7 +111,7 @@ Returns **ITestWaiterDebugInfo**
 
 ## waitForPromise
 
-Allows for tracking the beginning and end of async operations within promises.
+A convenient utility function to simplify waiting for a promise.
 
 ### Parameters
 

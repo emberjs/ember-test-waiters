@@ -53,8 +53,12 @@ export default class TestWaiter<T> implements ITestWaiter<T> {
   beginAsync(item: T, label?: string) {
     this.register();
 
+    let error = new Error();
+
     this.items.set(item, {
-      stack: new Error().stack,
+      get stack() {
+        return error.stack;
+      },
       label,
     });
   }
