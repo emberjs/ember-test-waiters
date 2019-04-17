@@ -33,7 +33,7 @@ export function getWaiters(): IWaiter[] {
 }
 
 /**
- * Clears all test waiters from the waiter manager.
+ * Clears all waiters.
  *
  * @public
  */
