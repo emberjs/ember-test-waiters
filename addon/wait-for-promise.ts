@@ -4,7 +4,7 @@ import TestWaiter from './test-waiter';
 const PROMISE_WAITER = new TestWaiter('promise-waiter');
 
 /**
- * Allows for tracking the beginning and end of async operations within promises.
+  A convenient utility function to simplify waiting for a promise.
  *
  * @public
  * @param promise {Promise<T>} The promise to track async operations for
