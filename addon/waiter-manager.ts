@@ -3,7 +3,7 @@ import { IWaiter, IPendingWaiterState } from './types';
 const WAITERS = new Map();
 
 /**
- * Registers a waiter with the test waiter manager.
+ * Registers a waiter.
  *
  * @public
  * @param waiter {IWaiter} A test waiter instance
@@ -13,7 +13,7 @@ export function register(waiter: IWaiter): void {
 }
 
 /**
- * Unregisters a waiter with the test waiter manager.
+ * Unregisters a waiter.
  *
  * @public
  * @param waiter {IWaiter} A test waiter instance
@@ -23,7 +23,7 @@ export function unregister(waiter: IWaiter): void {
 }
 
 /**
- * Gets an array of all test waiters current registered.
+ * Gets an array of all waiters current registered.
  *
  * @public
  * @returns {IWaiter[]}
@@ -33,7 +33,7 @@ export function getWaiters(): IWaiter[] {
 }
 
 /**
- * Clears all test waiters from the waiter manager.
+ * Clears all waiters.
  *
  * @public
  */
