@@ -6,6 +6,11 @@ export interface IWaiter {
   debugInfo(): unknown;
 }
 
+export interface ITestWaiter<T> extends IWaiter {
+  beginAsync(item: T, label?: string): void;
+  endAsync(item: T): void;
+}
+
 export interface ITestWaiterDebugInfo {
   stack: string | undefined;
   label: string | undefined;

@@ -4,7 +4,7 @@ toc:
       - register
       - unregister
       - getWaiters
-      - reset
+      - _reset
       - getPendingWaiterState
       - hasPendingWaiters
   - name: Test Waiter class

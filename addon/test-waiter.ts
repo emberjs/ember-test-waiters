@@ -1,4 +1,4 @@
-import { IWaiter, WaiterName, ITestWaiterDebugInfo } from './types';
+import { ITestWaiter, WaiterName, ITestWaiterDebugInfo } from './types';
 import { register } from './waiter-manager';
 
 /**
@@ -7,7 +7,7 @@ import { register } from './waiter-manager';
  * @public
  * @class TestWaiter<T>
  */
-export default class TestWaiter<T> implements IWaiter {
+export default class TestWaiter<T> implements ITestWaiter<T> {
   public name: WaiterName;
   private isRegistered = false;
 

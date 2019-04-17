@@ -6,7 +6,7 @@
   - [register][2]
   - [unregister][3]
   - [getWaiters][4]
-  - [reset][5]
+  - [\_reset][5]
   - [getPendingWaiterState][6]
   - [hasPendingWaiters][7]
 - [Test Waiter class][8]
@@ -46,7 +46,7 @@ Gets an array of all test waiters current registered.
 
 Returns **[Array][20]&lt;IWaiter>**
 
-### reset
+### \_reset
 
 Clears all test waiters from the waiter manager.
 
@@ -167,13 +167,13 @@ export default class Friendz extends Component {
 }
 ```
 
-Returns **([TestWaiter][22] | NoopTestWaiter)**
+Returns **ITestWaiter**
 
 [1]: #test-waiter-manager
 [2]: #register
 [3]: #unregister
 [4]: #getwaiters
-[5]: #reset
+[5]: #_reset
 [6]: #getpendingwaiterstate
 [7]: #haspendingwaiters
 [8]: #test-waiter-class
@@ -190,4 +190,3 @@ Returns **([TestWaiter][22] | NoopTestWaiter)**
 [19]: #examples-1
 [20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 [21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-[22]: #testwaiter
