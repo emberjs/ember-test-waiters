@@ -73,6 +73,10 @@ export default class TestWaiter<T> implements ITestWaiter<T> {
    * @param item {T} The item to that was registered for waiting
    */
   endAsync(item: T) {
+    if (!this.items.has(item)) {
+      throw new Error(`endAsync called for ${item} but item is not currently pending.`);
+    }
+
     this.items.delete(item);
   }
 

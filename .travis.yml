@@ -45,6 +45,7 @@ jobs:
       script:
         - yarn test
 
+    # TODO: reenable once https://github.com/ember-cli/ember-cli/issues/8154 lands.
     #- stage: 'Production Tests'
     #  name: 'Production Tests'
     #  script:

@@ -41,6 +41,19 @@ module('test-waiter', function(hooks) {
     assert.equal((<TestWaiter<object>>registeredWaiters[0]).items.size, 0);
   });
 
+  test('endAsync will throw if a prior call to beginAsync with the same waiter item did not occur', function(assert) {
+    let waiter = new TestWaiter('my-waiter');
+    let waiterItem = {};
+
+    assert.throws(
+      () => {
+        waiter.endAsync(waiterItem);
+      },
+      Error,
+      /endAsync called for [object Object] but item is not currently pending./
+    );
+  });
+
   test('waitUntil returns the correct value if the waiter should wait', function(assert) {
     let waiter = new TestWaiter('my-waiter');
     let waiterItem = {};
