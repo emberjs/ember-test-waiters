@@ -6,8 +6,11 @@ The async helpers inside `@ember/test-helpers` return promises (i.e. `click`, `a
 after each helper has executed until a predetermined condition is met. After the waiters finish, the next async helper
 is executed and the process repeats.
 
-This allows the test suite to pause at deterministic intervals, and helps thread together
-the async nature of tests.
+This allows the test suite to pause at deterministic intervals, and helps thread together the async nature of tests.
+
+Test waiters can be added to application code to provide the necessary integration with the test suite. The waiters will
+function as intended in development mode, and we strip the vast majority of the functionality in production mode so as to
+minimize negative performance impact.
 
 ## Compatibility
 
