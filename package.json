@@ -38,7 +38,6 @@
     "@types/rsvp": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "^1.4.2",
     "@typescript-eslint/parser": "^1.4.2",
-    "broccoli-asset-rev": "^2.7.0",
     "documentation": "^9.3.1",
     "ember-cli": "~3.8.1",
     "ember-cli-dependency-checker": "^3.0.0",
