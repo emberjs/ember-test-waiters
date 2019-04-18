@@ -4,9 +4,9 @@ toc:
       - register
       - unregister
       - getWaiters
-      - _reset
       - getPendingWaiterState
       - hasPendingWaiters
+      - _reset
   - name: Test Waiter class
     children:
       - TestWaiter

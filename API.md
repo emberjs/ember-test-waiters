@@ -6,9 +6,9 @@
   - [register][2]
   - [unregister][3]
   - [getWaiters][4]
-  - [\_reset][5]
-  - [getPendingWaiterState][6]
-  - [hasPendingWaiters][7]
+  - [getPendingWaiterState][5]
+  - [hasPendingWaiters][6]
+  - [\_reset][7]
 - [Test Waiter class][8]
   - [TestWaiter][9]
   - [beginAsync][10]
@@ -46,10 +46,6 @@ Gets an array of all waiters current registered.
 
 Returns **[Array][20]&lt;IWaiter>**
 
-### \_reset
-
-Clears all waiters.
-
 ### getPendingWaiterState
 
 Gets the current state of all waiters. Any waiters whose
@@ -64,6 +60,10 @@ and their debug info.
 Determines if there are any pending waiters.
 
 Returns **[boolean][21]** `true` if there are pending waiters, otherwise `false`.
+
+### \_reset
+
+Clears all waiters.
 
 ## Test Waiter class
 
@@ -173,9 +173,9 @@ Returns **ITestWaiter**
 [2]: #register
 [3]: #unregister
 [4]: #getwaiters
-[5]: #_reset
-[6]: #getpendingwaiterstate
-[7]: #haspendingwaiters
+[5]: #getpendingwaiterstate
+[6]: #haspendingwaiters
+[7]: #_reset
 [8]: #test-waiter-class
 [9]: #testwaiter
 [10]: #beginasync
