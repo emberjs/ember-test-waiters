@@ -1,6 +1,12 @@
-import { IWaiter } from './types';
+import { ITestWaiter } from './types';
 
-export default class NoopTestWaiter implements IWaiter {
+/**
+ * A class providing a production, noop replacement for the {TestWaiter<T>} class.
+ *
+ * @public
+ * @class TestWaiter<T>
+ */
+export default class NoopTestWaiter<T> implements ITestWaiter<T> {
   name: string;
   constructor(name: string) {
     this.name = name;

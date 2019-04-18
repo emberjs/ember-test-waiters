@@ -69,11 +69,12 @@ export default class MoreFriendz extends Component {
 
 The `ember-test-waiters` addon provides a `waiter-manager` to register, unregister, iterate and invoke waiters to determine if we should wait for conditions to be met or continue test execution. This functionality is encapsulated in the `hasPendingWaiters` function, which evaluates each registered waiter to determine its current state.
 
-```
+```js
 import { hasPendingWaiters } from 'ember-test-waiters';
 
 // ...
 
+// true if waiters are pending, allowing us to still wait for async to complete
 let hasPendingWaiters = hasPendingWaiters();
 
 // ...
