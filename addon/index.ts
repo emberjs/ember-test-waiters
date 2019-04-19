@@ -2,10 +2,13 @@ export {
   register,
   unregister,
   getWaiters,
-  reset,
+  _reset,
   getPendingWaiterState,
-  shouldWait,
-} from './waiters';
+  hasPendingWaiters,
+} from './waiter-manager';
 
-export { SimpleWaiter } from './simple-waiter';
-export { PromiseWaiter, waitForPromise } from './promise-waiter';
+export { default as TestWaiter } from './test-waiter';
+export { default as buildWaiter } from './build-waiter';
+export { default as waitForPromise } from './wait-for-promise';
+
+export { IWaiter, ITestWaiter, IPendingWaiterState, ITestWaiterDebugInfo } from './types';

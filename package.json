@@ -15,8 +15,10 @@
   "scripts": {
     "build": "ember build",
     "lint:js": "eslint --ext ts,js .",
+    "docs": "ember ts:precompile && documentation build --document-exported \"addon/index.js\" --document-exported \"addon-test-support/index.js\" --config documentation.yml --markdown-toc-max-depth 3 -f md -o API.md && prettier --single-quote --trailing-comma es5 --write API.md && ember ts:clean",
     "start": "ember serve",
     "test": "ember test",
+    "test:prod": "ember test --environment=production",
     "test:all": "ember try:each",
     "prepublishOnly": "ember ts:precompile",
     "postpublish": "ember ts:clean"
@@ -36,7 +38,7 @@
     "@types/rsvp": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "^1.4.2",
     "@typescript-eslint/parser": "^1.4.2",
-    "broccoli-asset-rev": "^2.7.0",
+    "documentation": "^9.3.1",
     "ember-cli": "~3.8.1",
     "ember-cli-dependency-checker": "^3.0.0",
     "ember-cli-htmlbars": "^3.0.0",
