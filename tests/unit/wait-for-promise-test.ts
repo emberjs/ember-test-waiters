@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
+import { Promise } from 'rsvp';
 import { _reset, waitForPromise, getPendingWaiterState } from 'ember-test-waiters';
-import RSVP from 'rsvp';
 import MockStableError, { resetError, overrideError } from './utils/mock-stable-error';
 import { DEBUG } from '@glimmer/env';
 
@@ -11,8 +11,8 @@ if (DEBUG) {
       resetError();
     });
 
-    test('wait-for-promise', async function(assert) {
-      let promise: Promise<{}> = new RSVP.Promise(resolve => {
+    test('waitForPromise wraps and registers a waiter', async function(assert) {
+      let promise: Promise<{}> = new Promise(resolve => {
         resolve();
       });
 
@@ -35,6 +35,30 @@ if (DEBUG) {
       await promise.then(() => {
         assert.deepEqual(getPendingWaiterState(), { pending: 0, waiters: {} });
       });
+    });
+
+    test('waitForPromise transitions waiter to not pending even if promise throws', async function(assert) {
+      let promise: Promise<{}> = new Promise(() => {
+        throw new Error('Promise threw');
+      });
+
+      try {
+        await waitForPromise(promise).then();
+      } catch (e) {
+        assert.deepEqual(getPendingWaiterState(), { pending: 0, waiters: {} });
+      }
+    });
+
+    test('waitForPromise transitions waiter to not pending even if promise throws when thenable wrapped', async function(assert) {
+      let promise: Promise<{}> = new Promise(() => {
+        throw new Error('Promise threw');
+      });
+
+      try {
+        await waitForPromise(promise.then());
+      } catch (e) {
+        assert.deepEqual(getPendingWaiterState(), { pending: 0, waiters: {} });
+      }
     });
   });
 }
