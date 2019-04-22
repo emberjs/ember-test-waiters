@@ -38,7 +38,7 @@ if (DEBUG) {
     });
 
     test('waitForPromise transitions waiter to not pending even if promise throws', async function(assert) {
-      let promise: Promise<{}> = new Promise(() => {
+      let promise: Promise<{}> = Promise.resolve().then(() => {
         throw new Error('Promise threw');
       });
 
@@ -50,7 +50,7 @@ if (DEBUG) {
     });
 
     test('waitForPromise transitions waiter to not pending even if promise throws when thenable wrapped', async function(assert) {
-      let promise: Promise<{}> = new Promise(() => {
+      let promise: Promise<{}> = Promise.resolve().then(() => {
         throw new Error('Promise threw');
       });
 
