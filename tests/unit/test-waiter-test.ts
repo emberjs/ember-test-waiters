@@ -1,10 +1,12 @@
 import { module, test } from 'qunit';
-import { TestWaiter, _reset, getWaiters } from 'ember-test-waiters';
-import MockStableError, { overrideError } from './utils/mock-stable-error';
+import { Promise } from 'rsvp';
+import { TestWaiter, _reset, getWaiters, getPendingWaiterState } from 'ember-test-waiters';
+import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
 
 module('test-waiter', function(hooks) {
   hooks.afterEach(function() {
     _reset();
+    resetError();
   });
 
   test('test waiter can be instantiated with a name', function(assert) {
@@ -78,5 +80,67 @@ module('test-waiter', function(hooks) {
     waiter.beginAsync(waiterItem);
 
     assert.deepEqual(waiter.debugInfo(), [{ label: undefined, stack: 'STACK' }]);
+  });
+
+  test('waiter executes beginAsync and endAsync at the correct times in relation to thenables', async function(assert) {
+    const promiseWaiter = new TestWaiter('promise-waiter');
+    function waitForPromise<T>(promise: Promise<T>, label?: string) {
+      let result = promise;
+
+      assert.step('Waiter began async tracking');
+      promiseWaiter.beginAsync(promise, label);
+
+      result = promise.then(
+        value => {
+          assert.step('Waiter ended async tracking');
+          promiseWaiter.endAsync(promise);
+          return value;
+        },
+        error => {
+          promiseWaiter.endAsync(promise);
+          throw error;
+        }
+      );
+
+      return result;
+    }
+
+    let promise: Promise<{}> = new Promise(resolve => {
+      assert.step('Promise resolving');
+      resolve();
+    });
+
+    overrideError(MockStableError);
+
+    promise = waitForPromise(promise);
+
+    assert.deepEqual(getPendingWaiterState(), {
+      pending: 1,
+      waiters: {
+        'promise-waiter': [
+          {
+            label: undefined,
+            stack: 'STACK',
+          },
+        ],
+      },
+    });
+
+    await promise
+      .then(() => {
+        assert.step('Promise thennables run');
+        assert.deepEqual(getPendingWaiterState(), { pending: 0, waiters: {} });
+      })
+      .then(() => {
+        assert.step('All thenables are run');
+      });
+
+    assert.verifySteps([
+      'Promise resolving',
+      'Waiter began async tracking',
+      'Waiter ended async tracking',
+      'Promise thennables run',
+      'All thenables are run',
+    ]);
   });
 });
