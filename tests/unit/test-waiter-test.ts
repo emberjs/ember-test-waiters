@@ -3,7 +3,7 @@ import { Promise } from 'rsvp';
 import { TestWaiter, _reset, getWaiters, getPendingWaiterState } from 'ember-test-waiters';
 import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
 
-module('test-waiter', function(hooks) {
+module('test-waiter', function(hooks: NestedHooks) {
   hooks.afterEach(function() {
     _reset();
     resetError();
@@ -16,7 +16,30 @@ module('test-waiter', function(hooks) {
     assert.equal(waiter.name, name);
   });
 
-  test('test waiters automatically register when beginAsync is invoked', function(assert) {
+  test('test waiters return a token from beginAsync when no token provided', function(assert) {
+    let waiter = new TestWaiter('my-waiter');
+
+    let token = waiter.beginAsync();
+
+    assert.ok(typeof token === 'number', 'A token was returned from beginAsync');
+  });
+
+  test('test waiters automatically register when beginAsync is invoked when no token provied', function(assert) {
+    let waiter = new TestWaiter('my-waiter');
+
+    let token = waiter.beginAsync();
+
+    let registeredWaiters = getWaiters();
+
+    assert.equal(registeredWaiters[0], waiter, 'The waiter is registered');
+    assert.deepEqual(
+      (<TestWaiter>registeredWaiters[0]).items.keys().next().value,
+      token,
+      'Waiter item is in items'
+    );
+  });
+
+  test('test waiters automatically register when beginAsync is invoked using a custom token', function(assert) {
     let waiter = new TestWaiter('my-waiter');
     let waiterItem = {};
 
@@ -26,7 +49,7 @@ module('test-waiter', function(hooks) {
 
     assert.equal(registeredWaiters[0], waiter, 'The waiter is registered');
     assert.deepEqual(
-      (<TestWaiter<object>>registeredWaiters[0]).items.keys().next().value,
+      (<TestWaiter>registeredWaiters[0]).items.keys().next().value,
       {},
       'Waiter item is in items'
     );
@@ -34,18 +57,72 @@ module('test-waiter', function(hooks) {
 
   test('test waiters removes item from items map when endAsync is invoked', function(assert) {
     let waiter = new TestWaiter('my-waiter');
+
+    let token = waiter.beginAsync();
+    waiter.endAsync(token);
+    let registeredWaiters = getWaiters();
+
+    assert.equal((<TestWaiter>registeredWaiters[0]).items.size, 0);
+  });
+
+  test('test waiters removes item from items map when endAsync is invoked using a custom token', function(assert) {
+    let waiter = new TestWaiter('my-waiter');
     let waiterItem = {};
 
     waiter.beginAsync(waiterItem);
     waiter.endAsync(waiterItem);
     let registeredWaiters = getWaiters();
 
-    assert.equal((<TestWaiter<object>>registeredWaiters[0]).items.size, 0);
+    assert.equal((<TestWaiter>registeredWaiters[0]).items.size, 0);
   });
 
   test('endAsync will throw if a prior call to beginAsync with the same waiter item did not occur', function(assert) {
     let waiter = new TestWaiter('my-waiter');
+    let token = 0;
+
+    assert.throws(
+      () => {
+        waiter.endAsync(token);
+      },
+      Error,
+      /endAsync called for [object Object] but item is not currently pending./
+    );
+  });
+
+  test('endAsync will throw if a prior call to beginAsync with the same waiter item did not occur using custom token', function(assert) {
+    let waiter = new TestWaiter('my-waiter');
     let waiterItem = {};
+
+    assert.throws(
+      () => {
+        waiter.endAsync(waiterItem);
+      },
+      Error,
+      /endAsync called for [object Object] but item is not currently pending./
+    );
+  });
+
+  test('endAsync will throw if endAsync called twice in a row with the same token', function(assert) {
+    let waiter = new TestWaiter('my-waiter');
+    let token = waiter.beginAsync();
+
+    waiter.endAsync(token);
+
+    assert.throws(
+      () => {
+        waiter.endAsync(token);
+      },
+      Error,
+      /endAsync called for [object Object] but item is not currently pending./
+    );
+  });
+
+  test('endAsync will throw if endAsync called twice in a row with the same token using custom token', function(assert) {
+    let waiter = new TestWaiter('my-waiter');
+    let waiterItem = {};
+
+    waiter.beginAsync(waiterItem);
+    waiter.endAsync(waiterItem);
 
     assert.throws(
       () => {

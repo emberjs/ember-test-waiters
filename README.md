@@ -1,7 +1,7 @@
 # ember-test-waiters
 
 This addon provides APIs to allow [@ember/test-helpers](https://github.com/emberjs/ember-test-helpers/) to play nicely
-with other asynchronous events, such as an application that is waiting for a CSS transition or an IndexDB transaction.
+with other asynchronous operations, such as an application that is waiting for a CSS transition or an IndexDB transaction.
 The async helpers inside `@ember/test-helpers` return promises (i.e. `click`, `andThen`, `visit`, etc). Waiters run periodically
 after each helper has executed until a predetermined condition is met. After the waiters finish, the next async helper
 is executed and the process repeats.
@@ -29,7 +29,10 @@ ember install ember-test-waiters
 
 ### buildWaiter function
 
-The `buildWaiter` function is, in most cases, all you will need to wait for async operations to complete before continuing tests.
+The `buildWaiter` function is, in most cases, all you will need to wait for async operations to complete before continuing tests. It returns a waiter instance
+that provides a number of methods. The key methods that allow you to control async behavior are `beginAsync` and `endAsync`, which are expected to be called as
+a pair to _begin_ waiting and _end_ waiting respectively. The `beginAsync` method returns a `token`, which uniquely identifies that async operation. To mark the
+async operation as complete, call `endAsync`, passing in the `token` that was returned from the prior `beginAsync` call.
 
 ```js
 import Component from '@ember/component';
@@ -39,18 +42,97 @@ let waiter = buildWaiter('friend-waiter');
 
 export default class Friendz extends Component {
   didInsertElement() {
-    waiter.beginAsync(this);
+    let token = waiter.beginAsync();
+
+    someAsyncWork()
+      .then(() => {
+        //... some work
+      })
+      .finally(() => {
+        waiter.endAsync(token);
+      });
+  }
+}
+```
+
+#### Custom Tokens
+
+The `beginAsync` method also can receive a custom token, if you need to specifically define a token to represent your async operation. _Note_ - due to the nature of
+async operations, it's impossible to guarantee which order the `endAsync` calls will run. If you are making multiple `beginAsync`/`endAsync` calls wiithin a single
+class or function, _you need to ensure the uniqueness of each async operation by ensuring the uniqueness of the tokens you provide_.
+
+The following code _will not_ guarantee uniqueness, as the two `endAsync` calls _may_ be called in succession:
+
+```js
+import Component from '@ember/component';
+import { buildWaiter } from 'ember-test-waiters';
+
+let waiter = buildWaiter('friend-waiter');
+
+export default class Friendz extends Component {
+  didInsertElement() {
+    let token = waiter.beginAsync(this);
 
     someAsyncWork().then(() => {
       waiter.endAsync(this);
     });
+  }
+
+  action: {
+    someAction() {
+      let token = waiter.beginAsync(this);
+
+      someOtherAsync()
+        .then(() => {
+          //... some work
+        })
+        .finally(() => {
+          waiter.endAsync(this);
+        });
+    }
+  }
+}
+```
+
+The following code _will_ guarantee uniqueness, as the two `endAsync` calls _may_ be called in succession, but have unique tokens:
+
+```js
+import Component from '@ember/component';
+import { buildWaiter } from 'ember-test-waiters';
+
+let waiter = buildWaiter('friend-waiter');
+
+export default class Friendz extends Component {
+  didInsertElement() {
+    let token = 'fist async';
+    waiter.beginAsync(token); // if a token is provided, `beginAsync` wil simply return it
+
+    someAsyncWork().then(() => {
+      waiter.endAsync(token);
+    });
+  }
+
+  action: {
+    someAction() {
+      let token = 'second async';
+      waiter.beginAsync(token);
+
+      someOtherAsync()
+        .then(() => {
+          //... some work
+        })
+        .finally(() => {
+          waiter.endAsync(token);
+        });
+    }
   }
 }
 ```
 
 ### waitForPromise function
 
-This addon also provides a `waitForPromise` function, which can be used to wrap a promise to register it with the test waiter system.
+This addon also provides a `waitForPromise` function, which can be used to wrap a promise to register it with the test waiter system. _Note_: the
+`waitForPromise` function will ensure that `endAsync` is called correctly in the `finally` call of your promise.
 
 ```js
 import Component from '@ember/component';

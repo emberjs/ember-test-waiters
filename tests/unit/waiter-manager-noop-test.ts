@@ -26,12 +26,11 @@ if (!DEBUG) {
 
     test('a NoopTestWaiter always returns true from waitUntil', function(assert) {
       let waiter = buildWaiter('first');
-      let waiterItem = {};
 
       assert.ok(waiter.waitUntil(), 'waitUntil returns true');
-      waiter.beginAsync(waiterItem);
+      let token = waiter.beginAsync();
       assert.ok(waiter.waitUntil(), 'waitUntil returns true');
-      waiter.endAsync(waiterItem);
+      waiter.endAsync(token);
       assert.ok(waiter.waitUntil(), 'waitUntil returns true');
     });
   });
