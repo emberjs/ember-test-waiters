@@ -3,7 +3,7 @@ import { Promise } from 'rsvp';
 import { TestWaiter, _reset, getWaiters, getPendingWaiterState } from 'ember-test-waiters';
 import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
 
-module('test-waiter', function(hooks: NestedHooks) {
+module('test-waiter', function(hooks) {
   hooks.afterEach(function() {
     _reset();
     resetError();
