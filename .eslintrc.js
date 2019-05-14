@@ -44,5 +44,11 @@ module.exports = {
         // add your custom rules and overrides for node files here
       }),
     },
+    {
+      files: ['tests/**/*.[jt]s'],
+      env: {
+        qunit: true,
+      },
+    },
   ],
 };
