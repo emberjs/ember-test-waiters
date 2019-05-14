@@ -1,5 +1,11 @@
-import { ITestWaiter, WaiterName, ITestWaiterDebugInfo } from './types';
+import { ITestWaiter, WaiterName, ITestWaiterDebugInfo, Token } from './types';
 import { register } from './waiter-manager';
+
+let token: number = 0;
+
+function getNextToken(): number {
+  return token++;
+}
 
 /**
  * A class providing creation, registration and async waiting functionality.
@@ -7,8 +13,9 @@ import { register } from './waiter-manager';
  * @public
  * @class TestWaiter<T>
  */
-export default class TestWaiter<T> implements ITestWaiter<T> {
+export default class TestWaiter<T = Token> implements ITestWaiter<T> {
   public name: WaiterName;
+  private nextToken: () => T;
   private isRegistered = false;
 
   items = new Map<T, ITestWaiterDebugInfo>();
@@ -18,8 +25,10 @@ export default class TestWaiter<T> implements ITestWaiter<T> {
    * @constructor
    * @param name {WaiterName} the name of the test waiter
    */
-  constructor(name: WaiterName) {
+  constructor(name: WaiterName, nextToken?: () => T) {
     this.name = name;
+    // @ts-ignore
+    this.nextToken = nextToken || getNextToken;
   }
 
   /**
@@ -50,17 +59,23 @@ export default class TestWaiter<T> implements ITestWaiter<T> {
    * @param item {T} The item to register for waiting
    * @param label {string} An optional label to identify the item
    */
-  beginAsync(item: T, label?: string) {
+  beginAsync(token: T = this.nextToken(), label?: string) {
     this.register();
+
+    if (this.items.has(token)) {
+      throw new Error(`beginAsync called for ${token} but it is already pending.`);
+    }
 
     let error = new Error();
 
-    this.items.set(item, {
+    this.items.set(token, {
       get stack() {
         return error.stack;
       },
       label,
     });
+
+    return token;
   }
 
   /**
@@ -72,12 +87,12 @@ export default class TestWaiter<T> implements ITestWaiter<T> {
    * @method endAsync
    * @param item {T} The item to that was registered for waiting
    */
-  endAsync(item: T) {
-    if (!this.items.has(item)) {
-      throw new Error(`endAsync called for ${item} but item is not currently pending.`);
+  endAsync(token: T) {
+    if (!this.items.has(token)) {
+      throw new Error(`endAsync called for ${token} but it is not currently pending.`);
     }
 
-    this.items.delete(item);
+    this.items.delete(token);
   }
 
   /**

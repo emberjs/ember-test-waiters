@@ -1,4 +1,5 @@
 export type WaiterName = string;
+export type Token = unknown;
 
 export interface IWaiter {
   name: WaiterName;
@@ -6,9 +7,9 @@ export interface IWaiter {
   debugInfo(): unknown;
 }
 
-export interface ITestWaiter<T> extends IWaiter {
-  beginAsync(item: T, label?: string): void;
-  endAsync(item: T): void;
+export interface ITestWaiter<T = Token> extends IWaiter {
+  beginAsync(token?: T, label?: string): T;
+  endAsync(token: T): void;
 }
 
 export interface ITestWaiterDebugInfo {

@@ -1,4 +1,4 @@
-import { ITestWaiter } from './types';
+import { ITestWaiter, Token } from './types';
 
 /**
  * A class providing a production, noop replacement for the {TestWaiter<T>} class.
@@ -6,13 +6,15 @@ import { ITestWaiter } from './types';
  * @public
  * @class TestWaiter<T>
  */
-export default class NoopTestWaiter<T> implements ITestWaiter<T> {
+export default class NoopTestWaiter implements ITestWaiter {
   name: string;
   constructor(name: string) {
     this.name = name;
   }
 
-  beginAsync(): void {}
+  beginAsync(): Token {
+    return this;
+  }
 
   endAsync(): void {}
 

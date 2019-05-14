@@ -29,7 +29,7 @@ import NoopTestWaiter from './noop-test-waiter';
  *   }
  * }
  */
-export default function buildWaiter(name: string): ITestWaiter<unknown> {
+export default function buildWaiter(name: string): ITestWaiter {
   if (DEBUG) {
     return new TestWaiter(name);
   }

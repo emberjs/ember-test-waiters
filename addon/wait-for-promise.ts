@@ -1,7 +1,7 @@
 import { DEBUG } from '@glimmer/env';
 import TestWaiter from './test-waiter';
 
-const PROMISE_WAITER = new TestWaiter('promise-waiter');
+const PROMISE_WAITER = new TestWaiter<Promise<unknown>>('promise-waiter');
 
 /**
   A convenient utility function to simplify waiting for a promise.
