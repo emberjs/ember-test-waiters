@@ -18,7 +18,7 @@ export default class TestWaiter<T = Token> implements ITestWaiter<T> {
   private nextToken: () => T;
   private isRegistered = false;
 
-  items = new Map<Token, ITestWaiterDebugInfo>();
+  items = new Map<T, ITestWaiterDebugInfo>();
 
   /**
    * @public
