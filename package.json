@@ -1,6 +1,6 @@
 {
   "name": "ember-test-waiters",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
     "ember-addon"
@@ -34,8 +34,8 @@
     "@types/ember-test-helpers": "^1.0.4",
     "@types/ember-testing-helpers": "^0.0.3",
     "@types/ember__test-helpers": "^0.7.7",
-    "@types/rsvp": "^4.0.2",
     "@types/qunit": "^2.9.0",
+    "@types/rsvp": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "^1.4.2",
     "@typescript-eslint/parser": "^1.4.2",
     "documentation": "^9.3.1",
