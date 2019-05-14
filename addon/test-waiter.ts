@@ -15,7 +15,7 @@ function getNextToken(): number {
  */
 export default class TestWaiter<T = Token> implements ITestWaiter<T> {
   public name: WaiterName;
-  public nextToken: () => T;
+  private nextToken: () => T;
   private isRegistered = false;
 
   items = new Map<Token, ITestWaiterDebugInfo>();

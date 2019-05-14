@@ -76,7 +76,34 @@ module('test-waiter', function(hooks) {
     assert.equal((<TestWaiter>registeredWaiters[0]).items.size, 0);
   });
 
-  test('endAsync will throw if a prior call to beginAsync with the same waiter item did not occur', function(assert) {
+  test('beginAsync will throw if a prior call to beginAsync with the same token occurred', function(assert) {
+    let waiter = new TestWaiter('my-waiter');
+
+    assert.throws(
+      () => {
+        let token = waiter.beginAsync();
+        waiter.beginAsync(token);
+      },
+      Error,
+      /beginAsync called for [object Object] but item already pending./
+    );
+  });
+
+  test('beginAsync will throw if a prior call to beginAsync with the same token occurred', function(assert) {
+    let waiter = new TestWaiter('my-waiter');
+    let token = {};
+
+    assert.throws(
+      () => {
+        waiter.beginAsync(token);
+        waiter.beginAsync(token);
+      },
+      Error,
+      /beginAsync called for [object Object] but item already pending./
+    );
+  });
+
+  test('endAsync will throw if a prior call to beginAsync with the same token did not occur', function(assert) {
     let waiter = new TestWaiter('my-waiter');
     let token = 0;
 
@@ -89,7 +116,7 @@ module('test-waiter', function(hooks) {
     );
   });
 
-  test('endAsync will throw if a prior call to beginAsync with the same waiter item did not occur using custom token', function(assert) {
+  test('endAsync will throw if a prior call to beginAsync with the same token did not occur using custom token', function(assert) {
     let waiter = new TestWaiter('my-waiter');
     let waiterItem = {};
 
