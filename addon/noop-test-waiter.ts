@@ -1,4 +1,4 @@
-import { ITestWaiter, Token } from './types';
+import { ITestWaiter, Token, ITestWaiterDebugInfo } from './types';
 
 /**
  * A class providing a production, noop replacement for the {TestWaiter<T>} class.
@@ -21,7 +21,7 @@ export default class NoopTestWaiter implements ITestWaiter {
   waitUntil(): boolean {
     return true;
   }
-  debugInfo(): unknown {
-    return undefined;
+  debugInfo(): ITestWaiterDebugInfo[] {
+    return [];
   }
 }

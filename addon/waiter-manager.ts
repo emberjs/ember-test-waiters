@@ -1,6 +1,6 @@
-import { IWaiter, IPendingWaiterState } from './types';
+import { WaiterName, IWaiter, IPendingWaiterState } from './types';
 
-const WAITERS = new Map();
+const WAITERS: Map<WaiterName, IWaiter> = new Map<WaiterName, IWaiter>();
 
 /**
  * Registers a waiter.
