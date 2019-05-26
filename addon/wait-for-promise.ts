@@ -4,11 +4,12 @@ import TestWaiter from './test-waiter';
 const PROMISE_WAITER = new TestWaiter<Promise<unknown>>('promise-waiter');
 
 /**
-  A convenient utility function to simplify waiting for a promise.
+ * A convenient utility function to simplify waiting for a promise.
  *
  * @public
  * @param promise {Promise<T>} The promise to track async operations for
  * @param label {string} An optional string to identify the promise
+ *
  * @example
  *
  * import Component from '@ember/component';

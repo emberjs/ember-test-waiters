@@ -21,10 +21,10 @@ import NoopTestWaiter from './noop-test-waiter';
  *
  * export default class Friendz extends Component {
  *   didInsertElement() {
- *     waiter.beginAsync(this);
+ *     let token = waiter.beginAsync(this);
  *
  *     someAsyncWork().then(() => {
- *       waiter.endAsync(this);
+ *       waiter.endAsync(token);
  *     });
  *   }
  * }
