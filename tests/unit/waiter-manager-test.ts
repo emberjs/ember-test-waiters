@@ -10,6 +10,7 @@ import {
 } from 'ember-test-waiters';
 import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
 import { DEBUG } from '@glimmer/env';
+import { WaiterName, ITestWaiterDebugInfo, IWaiter, Token } from 'ember-test-waiters/types';
 
 if (DEBUG) {
   module('test-waiters | DEBUG: true', function(hooks) {
@@ -172,27 +173,36 @@ if (DEBUG) {
 
     test('custom waiters can be registered', function(assert) {
       let customWaiterCounter = 0;
-      let customWaiter = {
-        name: 'custom waiter' as string,
-        waiterItems: new Map<string, string>(),
+      let customWaiter;
 
-        beginAsync() {
+      class CustomWaiter<T = Token> implements IWaiter {
+        public name: WaiterName;
+        private waiterItems: Map<T, ITestWaiterDebugInfo>;
+
+        constructor(name: WaiterName) {
+          this.name = name;
+          this.waiterItems = new Map<T, ITestWaiterDebugInfo>();
+        }
+
+        beginAsync(token: T) {
           customWaiterCounter++;
-          this.waiterItems.set(`waiterItem${customWaiterCounter}`, <string>new Error().stack);
-        },
+          this.waiterItems.set(token, { stack: new Error().stack, label: '' });
+        }
 
         endAsync() {
           customWaiterCounter--;
-        },
+        }
 
-        waitUntil() {
+        waitUntil(): boolean {
           return customWaiterCounter === 0;
-        },
+        }
 
-        debugInfo() {
-          return this.waiterItems;
-        },
-      };
+        debugInfo(): ITestWaiterDebugInfo[] {
+          return [...this.waiterItems.values()];
+        }
+      }
+
+      customWaiter = new CustomWaiter('custom-waiter');
 
       register(customWaiter);
 

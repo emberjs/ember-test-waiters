@@ -4,7 +4,7 @@ export type Token = unknown;
 export interface IWaiter {
   name: WaiterName;
   waitUntil(): boolean;
-  debugInfo(): unknown;
+  debugInfo(): ITestWaiterDebugInfo[];
 }
 
 export interface ITestWaiter<T = Token> extends IWaiter {
@@ -20,6 +20,6 @@ export interface ITestWaiterDebugInfo {
 export interface IPendingWaiterState {
   pending: number;
   waiters: {
-    [waiterName: string]: true | unknown[];
+    [waiterName: string]: ITestWaiterDebugInfo[] | true;
   };
 }
