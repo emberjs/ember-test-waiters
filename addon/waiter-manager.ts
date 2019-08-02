@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { registerWaiter } from '@ember/test';
 import { WaiterName, IWaiter, IPendingWaiterState } from './types';
 
@@ -10,7 +11,10 @@ const WAITERS: Map<WaiterName, IWaiter> = new Map<WaiterName, IWaiter>();
  * now if consumers are not on the right version of @ember/test-helpers, using
  * this addon will result in none of these waiters waiting.
  */
-registerWaiter(hasPendingWaiters);
+// eslint-disable-next-line ember/new-module-imports
+if (Ember.Test) {
+  registerWaiter(hasPendingWaiters);
+}
 
 /**
  * Registers a waiter.
