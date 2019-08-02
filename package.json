@@ -25,8 +25,7 @@
     "postpublish": "ember ts:clean"
   },
   "dependencies": {
-    "ember-cli-babel": "^7.1.2",
-    "ember-compatibility-helpers": "^1.2.0"
+    "ember-cli-babel": "^7.1.2"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",

@@ -1,6 +1,16 @@
+import { registerWaiter } from '@ember/test';
 import { WaiterName, IWaiter, IPendingWaiterState } from './types';
 
 const WAITERS: Map<WaiterName, IWaiter> = new Map<WaiterName, IWaiter>();
+
+/**
+ * Backwards compatibility with legacy waiters system.
+ *
+ * We want to always register a waiter using the legacy waiter system, as right
+ * now if consumers are not on the right version of @ember/test-helpers, using
+ * this addon will result in none of these waiters waiting.
+ */
+registerWaiter(hasPendingWaiters);
 
 /**
  * Registers a waiter.
