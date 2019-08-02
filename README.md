@@ -1,5 +1,9 @@
 # ember-test-waiters
 
+[![Build Status](https://travis-ci.com/rwjblue/ember-test-waiters.svg?branch=master)](https://travis-ci.com/rwjblue/ember-test-waiters)
+[![npm version](https://badge.fury.io/js/ember-test-waiters.svg)](https://badge.fury.io/js/ember-test-waiters)
+[![Code Style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](#badge)
+
 This addon provides APIs to allow [@ember/test-helpers](https://github.com/emberjs/ember-test-helpers/) to play nicely
 with other asynchronous operations, such as an application that is waiting for a CSS transition or an IndexDB transaction.
 The async helpers inside `@ember/test-helpers` return promises (i.e. `click`, `andThen`, `visit`, etc). Waiters run periodically
