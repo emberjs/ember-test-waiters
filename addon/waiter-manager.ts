@@ -13,7 +13,7 @@ const WAITERS: Map<WaiterName, IWaiter> = new Map<WaiterName, IWaiter>();
  */
 // eslint-disable-next-line ember/new-module-imports
 if (Ember.Test) {
-  registerWaiter(hasPendingWaiters);
+  registerWaiter(() => !hasPendingWaiters());
 }
 
 /**
