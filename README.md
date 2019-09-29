@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.com/rwjblue/ember-test-waiters.svg?branch=master)](https://travis-ci.com/rwjblue/ember-test-waiters)
 [![npm version](https://badge.fury.io/js/ember-test-waiters.svg)](https://badge.fury.io/js/ember-test-waiters)
+[![Monthly Downloads from NPM](https://img.shields.io/npm/dm/ember-test-waiters.svg?style=flat-square)](https://www.npmjs.com/package/ember-test-waiters)
 [![Code Style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](#badge)
 
 This addon provides APIs to allow [@ember/test-helpers](https://github.com/emberjs/ember-test-helpers/) to play nicely
