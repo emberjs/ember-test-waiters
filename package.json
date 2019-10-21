@@ -66,6 +66,9 @@
     "qunit": "^2.9.2",
     "typescript": "^3.5.3"
   },
+  "resolutions": {
+    "**/engine.io": "~3.3.0"
+  },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
   },
