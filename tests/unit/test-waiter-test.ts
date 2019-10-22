@@ -1,6 +1,6 @@
+import { getPendingWaiterState, getWaiters, TestWaiter, _reset } from 'ember-test-waiters';
 import { module, test } from 'qunit';
 import { Promise } from 'rsvp';
-import { TestWaiter, _reset, getWaiters, getPendingWaiterState } from 'ember-test-waiters';
 import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
 
 module('test-waiter', function(hooks) {
@@ -137,35 +137,25 @@ module('test-waiter', function(hooks) {
     );
   });
 
-  test('endAsync will throw if endAsync called twice in a row with the same token', function(assert) {
+  test('endAsync will not throw if endAsync called twice in a row with the same token', function(assert) {
+    assert.expect(0);
+
     let waiter = new TestWaiter('my-waiter');
     let token = waiter.beginAsync();
 
     waiter.endAsync(token);
-
-    assert.throws(
-      () => {
-        waiter.endAsync(token);
-      },
-      Error,
-      /endAsync called for [object Object] but item is not currently pending./
-    );
+    waiter.endAsync(token);
   });
 
-  test('endAsync will throw if endAsync called twice in a row with the same token using custom token', function(assert) {
+  test('endAsync will not throw if endAsync called twice in a row with the same token using custom token', function(assert) {
+    assert.expect(0);
+
     let waiter = new TestWaiter('my-waiter');
     let waiterItem = {};
 
     waiter.beginAsync(waiterItem);
     waiter.endAsync(waiterItem);
-
-    assert.throws(
-      () => {
-        waiter.endAsync(waiterItem);
-      },
-      Error,
-      /endAsync called for [object Object] but item is not currently pending./
-    );
+    waiter.endAsync(waiterItem);
   });
 
   test('waitUntil returns the correct value if the waiter should wait', function(assert) {

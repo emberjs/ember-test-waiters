@@ -20,6 +20,7 @@ export default class TestWaiter<T = Token> implements ITestWaiter<T> {
   private isRegistered = false;
 
   items = new Map<T, ITestWaiterDebugInfo>();
+  endedItems = new Map<T, boolean>();
 
   /**
    * @public
@@ -89,11 +90,11 @@ export default class TestWaiter<T = Token> implements ITestWaiter<T> {
    * @param item {T} The item to that was registered for waiting
    */
   endAsync(token: T) {
-    if (!this.items.has(token)) {
+    if (!this.items.has(token) && !this.endedItems.has(token)) {
       throw new Error(`endAsync called for ${token} but it is not currently pending.`);
     }
-
     this.items.delete(token);
+    this.endedItems.set(token, true);
   }
 
   /**
