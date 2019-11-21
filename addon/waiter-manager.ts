@@ -53,6 +53,7 @@ export function getWaiters(): IWaiter[] {
  * @public
  */
 export function _reset(): void {
+  WAITERS.forEach(waiter => ((waiter as any).isRegistered = false));
   WAITERS.clear();
 }
 

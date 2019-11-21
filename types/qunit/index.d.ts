@@ -9,3 +9,7 @@ declare module 'qunit' {
 
   export default QUnit;
 }
+
+declare module 'ember-concurrency' {
+  export const task: Function;
+}

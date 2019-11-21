@@ -78,6 +78,50 @@ export default class MoreFriendz extends Component {
 }
 ```
 
+### waitForCoroutine function
+
+This addon also provides a `waitForCoroutine` function, which can be used to wrap a coroutine, such as an `ember-concurrency` task function, so calls to it are registered with the test waiter system.
+
+```js
+import Component from '@ember/component';
+import { waitForCoroutine } from 'ember-test-waiters';
+import { task } from 'ember-concurrency-decorators';
+
+export default class MoreFriendz extends Component {
+  @task
+  @waitForCoroutine
+  *doAsyncStuff() {
+    yield someAsyncWork();
+  }
+
+  didInsertElement() {
+    this.doAsyncStuff.perform().then(() => {
+      doOtherThings();
+    });
+  }
+}
+```
+
+or in non-decorator form:
+
+```js
+import Component from '@ember/component';
+import { waitForCoroutine } from 'ember-test-waiters';
+import { task } from 'ember-concurrency';
+
+export default Component.extend({
+  doAsyncStuff: task(waitForCoroutine(function* doAsyncStuff() {
+    yield someAsyncWork();
+  })),
+
+  didInsertElement() {
+    this.doAsyncStuff().then(() => {
+      doOtherThings();
+    });
+  }
+})
+```
+
 ### Waiting on all waiters
 
 The `ember-test-waiters` addon provides a `waiter-manager` to register, unregister, iterate and invoke waiters to determine if we should wait for conditions to be met or continue test execution. This functionality is encapsulated in the `hasPendingWaiters` function, which evaluates each registered waiter to determine its current state.

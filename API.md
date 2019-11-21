@@ -15,12 +15,14 @@
   - [endAsync][11]
   - [waitUntil][12]
   - [debugInfo][13]
-- [waitForPromise][14]
+- [waitForCoroutine][14]
   - [Parameters][15]
-  - [Examples][16]
-- [buildWaiter][17]
-  - [Parameters][18]
-  - [Examples][19]
+- [waitForPromise][16]
+  - [Parameters][17]
+  - [Examples][18]
+- [buildWaiter][19]
+  - [Parameters][20]
+  - [Examples][21]
 
 ## Test Waiter Manager
 
@@ -44,7 +46,7 @@ Unregisters a waiter.
 
 Gets an array of all waiters current registered.
 
-Returns **[Array][20]&lt;IWaiter>**
+Returns **[Array][22]&lt;IWaiter>**
 
 ### getPendingWaiterState
 
@@ -59,7 +61,7 @@ and their debug info.
 
 Determines if there are any pending waiters.
 
-Returns **[boolean][21]** `true` if there are pending waiters, otherwise `false`.
+Returns **[boolean][23]** `true` if there are pending waiters, otherwise `false`.
 
 ### \_reset
 
@@ -74,6 +76,7 @@ A class providing creation, registration and async waiting functionality.
 #### Parameters
 
 - `name`
+- `nextToken`
 
 ### beginAsync
 
@@ -101,13 +104,19 @@ beginning of an async operation.
 Used to determine if the waiter system should still wait for async
 operations to complete.
 
-Returns **[boolean][21]**
+Returns **[boolean][23]**
 
 ### debugInfo
 
 Returns the `debugInfo` for each item tracking async operations in this waiter.
 
 Returns **ITestWaiterDebugInfo**
+
+## waitForCoroutine
+
+### Parameters
+
+- `args` **...any**
 
 ## waitForPromise
 
@@ -158,10 +167,10 @@ if (DEBUG) {
 
 export default class Friendz extends Component {
   didInsertElement() {
-    waiter.beginAsync(this);
+    let token = waiter.beginAsync(this);
 
     someAsyncWork().then(() => {
-      waiter.endAsync(this);
+      waiter.endAsync(token);
     });
   }
 }
@@ -182,11 +191,13 @@ Returns **ITestWaiter**
 [11]: #endasync
 [12]: #waituntil
 [13]: #debuginfo
-[14]: #waitforpromise
+[14]: #waitforcoroutine
 [15]: #parameters
-[16]: #examples
-[17]: #buildwaiter
-[18]: #parameters-1
-[19]: #examples-1
-[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[16]: #waitforpromise
+[17]: #parameters-1
+[18]: #examples
+[19]: #buildwaiter
+[20]: #parameters-2
+[21]: #examples-1
+[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
