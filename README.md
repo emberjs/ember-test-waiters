@@ -78,6 +78,45 @@ export default class MoreFriendz extends Component {
 }
 ```
 
+It can also be used in decorator form to wrap an async function so calls to it are registered with the test waiter system.
+
+```js
+import Component from '@ember/component';
+import { waitForPromise } from 'ember-test-waiters';
+
+export default class MoreFriendz extends Component {
+  @waitForPromise
+  async doAsyncStuff() {
+    await someAsyncWork();
+  }
+
+  didInsertElement() {
+    this.doAsyncStuff().then(() => {
+      doOtherThings();
+    });
+  }
+}
+```
+
+or in non-decorator form to wrap an async function.
+
+```js
+import Component from '@ember/component';
+import { waitForPromise } from 'ember-test-waiters';
+
+export default Component.extend({
+  doAsyncStuff: waitForPromise(async function doAsyncStuff() {
+    await someAsyncWork();
+  }),
+
+  didInsertElement() {
+    this.doAsyncStuff().then(() => {
+      doOtherThings();
+    });
+  }
+})
+```
+
 ### waitForCoroutine function
 
 This addon also provides a `waitForCoroutine` function, which can be used to wrap a coroutine, such as an `ember-concurrency` task function, so calls to it are registered with the test waiter system.

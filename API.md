@@ -15,14 +15,13 @@
   - [endAsync][11]
   - [waitUntil][12]
   - [debugInfo][13]
-- [waitForCoroutine][14]
+- [waitForPromise][14]
   - [Parameters][15]
-- [waitForPromise][16]
+- [waitForCoroutine][16]
   - [Parameters][17]
-  - [Examples][18]
-- [buildWaiter][19]
-  - [Parameters][20]
-  - [Examples][21]
+- [buildWaiter][18]
+  - [Parameters][19]
+  - [Examples][20]
 
 ## Test Waiter Manager
 
@@ -46,7 +45,7 @@ Unregisters a waiter.
 
 Gets an array of all waiters current registered.
 
-Returns **[Array][22]&lt;IWaiter>**
+Returns **[Array][21]&lt;IWaiter>**
 
 ### getPendingWaiterState
 
@@ -61,7 +60,7 @@ and their debug info.
 
 Determines if there are any pending waiters.
 
-Returns **[boolean][23]** `true` if there are pending waiters, otherwise `false`.
+Returns **[boolean][22]** `true` if there are pending waiters, otherwise `false`.
 
 ### \_reset
 
@@ -104,7 +103,7 @@ beginning of an async operation.
 Used to determine if the waiter system should still wait for async
 operations to complete.
 
-Returns **[boolean][23]**
+Returns **[boolean][22]**
 
 ### debugInfo
 
@@ -112,38 +111,17 @@ Returns the `debugInfo` for each item tracking async operations in this waiter.
 
 Returns **ITestWaiterDebugInfo**
 
-## waitForCoroutine
+## waitForPromise
 
 ### Parameters
 
 - `args` **...any**
 
-## waitForPromise
-
-A convenient utility function to simplify waiting for a promise.
+## waitForCoroutine
 
 ### Parameters
 
-- `promise` {Promise<T>} The promise to track async operations for
-- `label` {string} An optional string to identify the promise
-
-### Examples
-
-```javascript
-import Component from '@ember/component';
-import { waitForPromise } from 'ember-test-waiters';
-
-export default class Friendz extends Component {
-  didInsertElement() {
-    waitForPromise(
-      new Promise(resolve => {
-        doSomeWork();
-        resolve();
-      })
-    );
-  }
-}
-```
+- `args` **...any**
 
 ## buildWaiter
 
@@ -191,13 +169,12 @@ Returns **ITestWaiter**
 [11]: #endasync
 [12]: #waituntil
 [13]: #debuginfo
-[14]: #waitforcoroutine
+[14]: #waitforpromise
 [15]: #parameters
-[16]: #waitforpromise
+[16]: #waitforcoroutine
 [17]: #parameters-1
-[18]: #examples
-[19]: #buildwaiter
-[20]: #parameters-2
-[21]: #examples-1
-[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[18]: #buildwaiter
+[19]: #parameters-2
+[20]: #examples
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
