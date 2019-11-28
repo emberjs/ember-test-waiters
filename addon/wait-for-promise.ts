@@ -1,4 +1,3 @@
-import { DEBUG } from '@glimmer/env';
 import RSVP from 'rsvp';
 import buildWaiter from './build-waiter';
 
@@ -35,22 +34,16 @@ export default function waitForPromise<T, KindOfPromise extends PromiseType<T>>(
   promise: KindOfPromise,
   label?: string
 ): KindOfPromise {
-  let result = promise;
+  PROMISE_WAITER.beginAsync(promise, label);
 
-  if (DEBUG) {
-    PROMISE_WAITER.beginAsync(promise, label);
-
-    result = ((promise as unknown) as Thenable<T, KindOfPromise>).then(
-      (value: T) => {
-        PROMISE_WAITER.endAsync(promise);
-        return value;
-      },
-      (error: Error) => {
-        PROMISE_WAITER.endAsync(promise);
-        throw error;
-      }
-    );
-  }
-
-  return result;
+  return ((promise as unknown) as Thenable<T, KindOfPromise>).then(
+    (value: T) => {
+      PROMISE_WAITER.endAsync(promise);
+      return value;
+    },
+    (error: Error) => {
+      PROMISE_WAITER.endAsync(promise);
+      throw error;
+    }
+  );
 }
