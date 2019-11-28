@@ -1,4 +1,3 @@
-import { DEBUG } from '@glimmer/env';
 import TestWaiter from './test-waiter';
 
 const PROMISE_WAITER = new TestWaiter<Promise<unknown>>('promise-waiter');
@@ -76,17 +75,11 @@ export default function waitForPromise<T>(
 
     if (isArgumentPromise) {
       let [promise, label] = args as [Promise<T>, string?];
-      if (!DEBUG) {
-        return promise;
-      }
 
       return wait(promise, label);
     } else {
       // argument is async function
       let [fn, label] = args as [Function, string?];
-      if (!DEBUG) {
-        return fn;
-      }
 
       return function(this: any, ...args: any[]) {
         let promise = fn.call(this, ...args);
@@ -95,13 +88,11 @@ export default function waitForPromise<T>(
     }
   } else {
     let [, , descriptor, label] = args as [object, string, PropertyDescriptor, string];
-    if (DEBUG) {
-      let fn = descriptor.value;
-      descriptor.value = function(...args: any[]) {
-        let promise = fn.call(this, ...args);
-        return wait(promise, label);
-      };
-    }
+    let fn = descriptor.value;
+    descriptor.value = function(...args: any[]) {
+      let promise = fn.call(this, ...args);
+      return wait(promise, label);
+    };
     return descriptor;
   }
 }

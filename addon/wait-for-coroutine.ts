@@ -1,4 +1,3 @@
-import { DEBUG } from '@glimmer/env';
 import TestWaiter from './test-waiter';
 
 const COROUTINE_WAITER = new TestWaiter<Generator>('coroutine-waiter');
@@ -53,17 +52,12 @@ export default function waitForCoroutine(
 
   if (isFunctionalInvocation) {
     let [fn, label] = args as [Function, string?];
-    if (!DEBUG) {
-      return fn;
-    }
 
     return wrap(fn, label);
   } else {
     let [, , descriptor, label] = args as [object, string, PropertyDescriptor, string];
-    if (DEBUG) {
-      let fn = descriptor.value;
-      descriptor.value = wrap(fn, label);
-    }
+    let fn = descriptor.value;
+    descriptor.value = wrap(fn, label);
     return descriptor;
   }
 }

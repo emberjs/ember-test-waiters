@@ -23,6 +23,7 @@ module.exports = {
         '.eslintrc.js',
         '.prettierrc.js',
         '.template-lintrc.js',
+        'babel-plugin-strip-wrappers.js',
         'ember-cli-build.js',
         'index.js',
         'force-highlander-addon.js',
@@ -30,6 +31,7 @@ module.exports = {
         'blueprints/*/index.js',
         'config/**/*.js',
         'tests/dummy/config/**/*.js',
+        'node-tests/**/*.js',
       ],
       excludedFiles: ['addon/**', 'addon-test-support/**', 'app/**', 'tests/dummy/app/**'],
       parserOptions: {
@@ -60,6 +62,32 @@ module.exports = {
       rules: {
         'func-names': 0,
       },
+    },
+    {
+      files: ['babel-plugin-strip-wrappers.js'],
+      rules: {
+        'node/no-extraneous-require': [
+          'error',
+          {
+            allowModules: ['@babel/plugin-syntax-decorators'],
+          },
+        ],
+      },
+    },
+    {
+      files: ['node-tests/**/*.js'],
+      env: {
+        qunit: true,
+      },
+      rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
+        'node/no-unpublished-require': 'off',
+        'node/no-extraneous-require': [
+          'error',
+          {
+            allowModules: ['@babel/core', '@babel/plugin-syntax-decorators'],
+          },
+        ],
+      }),
     },
   ],
 };
