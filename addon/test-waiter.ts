@@ -117,4 +117,14 @@ export default class TestWaiter<T = Token> implements ITestWaiter<T> {
   debugInfo(): ITestWaiterDebugInfo[] {
     return [...this.items.values()];
   }
+
+  /**
+   * Resets the waiter state, clearing items tracking async operations in this waiter.
+   *
+   * @public
+   * @method reset
+   */
+  reset(): void {
+    this.items.clear();
+  }
 }

@@ -247,4 +247,16 @@ module('test-waiter', function(hooks) {
       'All thenables are run',
     ]);
   });
+
+  test('waiter can clear items', function(assert) {
+    let waiter = new TestWaiter('my-waiter');
+
+    waiter.beginAsync();
+
+    assert.equal(waiter.items.size, 1);
+
+    waiter.reset();
+
+    assert.equal(waiter.items.size, 0);
+  });
 });

@@ -10,6 +10,7 @@ export interface IWaiter {
 export interface ITestWaiter<T = Token> extends IWaiter {
   beginAsync(token?: T, label?: string): T;
   endAsync(token: T): void;
+  reset(): void;
 }
 
 export interface ITestWaiterDebugInfo {
