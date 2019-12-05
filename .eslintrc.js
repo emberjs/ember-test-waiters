@@ -25,6 +25,7 @@ module.exports = {
         '.template-lintrc.js',
         'ember-cli-build.js',
         'index.js',
+        'force-highlander-addon.js',
         'testem.js',
         'blueprints/*/index.js',
         'config/**/*.js',
@@ -48,6 +49,16 @@ module.exports = {
       files: ['tests/**/*.[jt]s'],
       env: {
         qunit: true,
+      },
+    },
+    {
+      files: ['node-tests/**/*.js'],
+      env: {
+        node: true,
+        qunit: true,
+      },
+      rules: {
+        'func-names': 0,
       },
     },
   ],
