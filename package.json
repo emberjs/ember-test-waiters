@@ -79,7 +79,8 @@
     "typescript": "^3.7.4"
   },
   "resolutions": {
-    "**/engine.io": "~3.3.0"
+    "**/engine.io": "~3.3.0",
+    "**/sort-package-json": "1.23.0"
   },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
