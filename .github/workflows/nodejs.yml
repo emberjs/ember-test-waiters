@@ -1,6 +1,6 @@
 name: CI Build
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   test:
@@ -20,8 +20,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 8.x
-      - name: install yarn
-        run: npm install -g yarn
       - name: install dependencies
         run: yarn install
       - name: lint
@@ -43,6 +41,7 @@ jobs:
           - ember-lts-2.18
           - ember-lts-3.4
           - ember-lts-3.8
+          - ember-lts-3.12
           - ember-release
           - ember-beta
           - ember-canary
@@ -54,8 +53,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - name: install yarn
-        run: npm install -g yarn
       - name: install dependencies
         run: yarn install
       - name: test
