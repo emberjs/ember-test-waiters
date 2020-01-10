@@ -14,15 +14,15 @@
   },
   "scripts": {
     "build": "ember build",
+    "docs": "ember ts:precompile && documentation build --document-exported \"addon/index.js\" --document-exported \"addon-test-support/index.js\" --config documentation.yml --markdown-toc-max-depth 3 -f md -o API.md && prettier --single-quote --trailing-comma es5 --write API.md && ember ts:clean",
     "lint:js": "eslint --ext ts,js .",
     "lint:ts": "tsc -p tsconfig.json --noEmit",
-    "docs": "ember ts:precompile && documentation build --document-exported \"addon/index.js\" --document-exported \"addon-test-support/index.js\" --config documentation.yml --markdown-toc-max-depth 3 -f md -o API.md && prettier --single-quote --trailing-comma es5 --write API.md && ember ts:clean",
+    "prepublishOnly": "ember ts:precompile",
+    "postpublish": "ember ts:clean",
     "start": "ember serve",
     "test": "ember test",
-    "test:prod": "ember test --environment=production",
     "test:all": "ember try:each",
-    "prepublishOnly": "ember ts:precompile",
-    "postpublish": "ember ts:clean"
+    "test:prod": "ember test --environment=production"
   },
   "dependencies": {
     "ember-cli-babel": "^7.11.0"
@@ -64,6 +64,8 @@
     "loader.js": "^4.7.0",
     "prettier": "^1.18.2",
     "qunit": "^2.9.2",
+    "release-it": "^12.2.1",
+    "release-it-lerna-changelog": "^1.0.3",
     "typescript": "^3.5.3"
   },
   "resolutions": {
@@ -72,7 +74,24 @@
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "ember-addon": {
     "configPath": "tests/dummy/config"
+  },
+  "release-it": {
+    "plugins": {
+      "release-it-lerna-changelog": {
+        "infile": "CHANGELOG.md"
+      }
+    },
+    "git": {
+      "tagName": "v${version}",
+      "changelog": "git log --pretty=format:\"* %s (%h)\" --no-merges --perl-regexp --author=\"^((?!dependabot-preview).*)$\" ${latestTag}...HEAD"
+    },
+    "github": {
+      "release": true
+    }
   }
 }
