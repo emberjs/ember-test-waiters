@@ -22,10 +22,12 @@
     "start": "ember serve",
     "test": "ember test",
     "test:all": "ember try:each",
+    "test:node": "qunit node-tests",
     "test:prod": "ember test --environment=production"
   },
   "dependencies": {
-    "ember-cli-babel": "^7.11.0"
+    "ember-cli-babel": "^7.11.0",
+    "semver": "^6.3.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.7.0",
