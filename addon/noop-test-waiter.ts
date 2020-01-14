@@ -21,7 +21,10 @@ export default class NoopTestWaiter implements ITestWaiter {
   waitUntil(): boolean {
     return true;
   }
+
   debugInfo(): ITestWaiterDebugInfo[] {
     return [];
   }
+
+  reset(): void {}
 }
