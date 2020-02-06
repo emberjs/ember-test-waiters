@@ -1,7 +1,8 @@
-import { ITestWaiter, WaiterName, ITestWaiterDebugInfo, Token } from './types';
+import { ITestWaiter, ITestWaiterDebugInfo, Token, WaiterName } from './types';
+
 import { register } from './waiter-manager';
 
-let token: number = 0;
+let token: number = 1;
 
 function getNextToken(): number {
   return token++;
