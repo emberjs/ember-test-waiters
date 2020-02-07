@@ -1,11 +1,11 @@
-import { ITestWaiter, ITestWaiterDebugInfo, Token, WaiterName } from './types';
+import { ITestWaiter, ITestWaiterDebugInfo, WaiterName } from './types';
 
+
+import Token from './token';
 import { register } from './waiter-manager';
 
-let token: number = 1;
-
-function getNextToken(): number {
-  return token++;
+function getNextToken(): Token {
+  return new Token();
 }
 
 /**
@@ -14,13 +14,13 @@ function getNextToken(): number {
  * @public
  * @class TestWaiter<T>
  */
-export default class TestWaiter<T = Token> implements ITestWaiter<T> {
+export default class TestWaiter<T extends object = Token> implements ITestWaiter<T> {
   public name: WaiterName;
   private nextToken: () => T;
   private isRegistered = false;
 
   items = new Map<T, ITestWaiterDebugInfo>();
-  endedItems = new Map<T, boolean>();
+  completedOperations = new WeakMap<T, boolean>();
 
   /**
    * @public
@@ -82,7 +82,7 @@ export default class TestWaiter<T = Token> implements ITestWaiter<T> {
 
   /**
    * Should be used to signal the end of an async operation. Invocation of this
-   * method should be paired with a preceeding `beginAsync` call, which would indicate the
+   * method should be paired with a preceding `beginAsync` call, which would indicate the
    * beginning of an async operation.
    *
    * @public
@@ -90,11 +90,14 @@ export default class TestWaiter<T = Token> implements ITestWaiter<T> {
    * @param item {T} The item to that was registered for waiting
    */
   endAsync(token: T) {
-    if (!this.items.has(token) && !this.endedItems.has(token)) {
+    if (!this.items.has(token) && !this.completedOperations.has(token)) {
       throw new Error(`endAsync called for ${token} but it is not currently pending.`);
     }
+
     this.items.delete(token);
-    this.endedItems.set(token, true);
+    // Mark when a waiter operation has completed so we can distinguish
+    // whether endAsync is being called before a prior beginAsync call above.
+    this.completedOperations.set(token, true);
   }
 
   /**

@@ -1,4 +1,4 @@
-import { getPendingWaiterState, getWaiters, TestWaiter, _reset } from 'ember-test-waiters';
+import { getPendingWaiterState, getWaiters, TestWaiter, Token, _reset } from 'ember-test-waiters';
 import { module, test } from 'qunit';
 import { Promise } from 'rsvp';
 import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
@@ -21,9 +21,9 @@ module('test-waiter', function(hooks) {
 
     let token = waiter.beginAsync();
 
-    assert.ok(typeof token === 'number', 'A token was returned from beginAsync');
+    assert.ok(token instanceof Token, 'A token was returned from beginAsync');
   });
-
+  
   test('test waiters return a truthy token from beginAsync when no token provided', function(assert) {
     let waiter = new TestWaiter('my-waiter');
 
@@ -230,7 +230,7 @@ module('test-waiter', function(hooks) {
 
     await promise
       .then(() => {
-        assert.step('Promise thennables run');
+        assert.step('Promise thenables run');
         assert.deepEqual(getPendingWaiterState(), { pending: 0, waiters: {} });
       })
       .then(() => {
@@ -241,7 +241,7 @@ module('test-waiter', function(hooks) {
       'Promise resolving',
       'Waiter began async tracking',
       'Waiter ended async tracking',
-      'Promise thennables run',
+      'Promise thenables run',
       'All thenables are run',
     ]);
   });

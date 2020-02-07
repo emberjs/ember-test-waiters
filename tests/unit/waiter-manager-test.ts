@@ -1,16 +1,18 @@
-import { module, test } from 'qunit';
+import { ITestWaiterDebugInfo, IWaiter, WaiterName } from 'ember-test-waiters/types';
+import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
 import {
+  Token,
+  _reset,
+  buildWaiter,
+  getPendingWaiterState,
+  getWaiters,
+  hasPendingWaiters,
   register,
   unregister,
-  hasPendingWaiters,
-  getWaiters,
-  _reset,
-  getPendingWaiterState,
-  buildWaiter,
 } from 'ember-test-waiters';
-import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
+import { module, test } from 'qunit';
+
 import { DEBUG } from '@glimmer/env';
-import { WaiterName, ITestWaiterDebugInfo, IWaiter, Token } from 'ember-test-waiters/types';
 
 if (DEBUG) {
   module('test-waiters | DEBUG: true', function(hooks) {
@@ -64,7 +66,7 @@ if (DEBUG) {
 
       unregister(waiter);
 
-      assert.equal(getWaiters(), 0, 'No waiters are registerd');
+      assert.equal(getWaiters(), 0, 'No waiters are registered');
     });
 
     test('getPendingWaiterState returns information on pending waiters', function(assert) {
