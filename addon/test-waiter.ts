@@ -60,7 +60,7 @@ export default class TestWaiter<T extends object = Token> implements ITestWaiter
    * @param item {T} The item to register for waiting
    * @param label {string} An optional label to identify the item
    */
-  beginAsync(token: T = this.nextToken(), label?: string) {
+  beginAsync(token: T = this.nextToken(), label?: string): T {
     this.register();
 
     if (this.items.has(token)) {
@@ -81,16 +81,16 @@ export default class TestWaiter<T extends object = Token> implements ITestWaiter
 
   /**
    * Should be used to signal the end of an async operation. Invocation of this
-   * method should be paired with a preceding `beginAsync` call, which would indicate the
-   * beginning of an async operation.
+   * method should be paired with a preceding `beginAsync` call from this instance,
+   * which would indicate the beginning of an async operation.
    *
    * @public
    * @method endAsync
    * @param item {T} The item to that was registered for waiting
    */
-  endAsync(token: T) {
+  endAsync(token: T): void {
     if (!this.items.has(token) && !this.completedOperations.has(token)) {
-      throw new Error(`endAsync called for ${token} but it is not currently pending.`);
+      throw new Error(`endAsync called with no preceding beginAsync call.`);
     }
 
     this.items.delete(token);

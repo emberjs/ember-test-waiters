@@ -23,7 +23,7 @@ module('test-waiter', function(hooks) {
 
     assert.ok(token instanceof Token, 'A token was returned from beginAsync');
   });
-  
+
   test('test waiters return a truthy token from beginAsync when no token provided', function(assert) {
     let waiter = new TestWaiter('my-waiter');
 
