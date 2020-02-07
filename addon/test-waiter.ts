@@ -1,6 +1,5 @@
 import { ITestWaiter, ITestWaiterDebugInfo, WaiterName } from './types';
 
-
 import Token from './token';
 import { register } from './waiter-manager';
 
