@@ -13,13 +13,14 @@ function getNextToken(): Token {
  * @public
  * @class TestWaiter<T>
  */
-export default class TestWaiter<T extends object = Token> implements ITestWaiter<T> {
+export default class TestWaiter<T extends object | number = Token> implements ITestWaiter<T> {
   public name: WaiterName;
   private nextToken: () => T;
   private isRegistered = false;
 
   items = new Map<T, ITestWaiterDebugInfo>();
-  completedOperations = new WeakMap<T, boolean>();
+  completedOperationsForTokens = new WeakMap<Token, boolean>();
+  completedOperationsForNumbers = new Map<number, boolean>();
 
   /**
    * @public
@@ -89,14 +90,14 @@ export default class TestWaiter<T extends object = Token> implements ITestWaiter
    * @param item {T} The item to that was registered for waiting
    */
   endAsync(token: T): void {
-    if (!this.items.has(token) && !this.completedOperations.has(token)) {
+    if (!this.items.has(token) && !this.getCompletedOperations(token).has(token)) {
       throw new Error(`endAsync called with no preceding beginAsync call.`);
     }
 
     this.items.delete(token);
     // Mark when a waiter operation has completed so we can distinguish
     // whether endAsync is being called before a prior beginAsync call above.
-    this.completedOperations.set(token, true);
+    this.getCompletedOperations(token).set(token, true);
   }
 
   /**
@@ -130,5 +131,11 @@ export default class TestWaiter<T extends object = Token> implements ITestWaiter
    */
   reset(): void {
     this.items.clear();
+  }
+
+  private getCompletedOperations(token: T) {
+    return typeof token === 'number'
+      ? this.completedOperationsForNumbers
+      : this.completedOperationsForTokens;
   }
 }

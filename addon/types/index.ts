@@ -8,7 +8,7 @@ export interface IWaiter {
   debugInfo(): ITestWaiterDebugInfo[];
 }
 
-export interface ITestWaiter<T extends object = Token> extends IWaiter {
+export interface ITestWaiter<T extends object | number = Token> extends IWaiter {
   beginAsync(token?: T, label?: string): T;
   endAsync(token: T): void;
   reset(): void;

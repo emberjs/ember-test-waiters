@@ -32,7 +32,7 @@ module('test-waiter', function(hooks) {
     assert.ok(token, 'A token was returned from beginAsync and is truthy');
   });
 
-  test('test waiters automatically register when beginAsync is invoked when no token provied', function(assert) {
+  test('test waiters automatically register when beginAsync is invoked when no token provided', function(assert) {
     let waiter = new TestWaiter('my-waiter');
 
     let token = waiter.beginAsync();
