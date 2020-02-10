@@ -1,6 +1,6 @@
+import { getPendingWaiterState, getWaiters, TestWaiter, Token, _reset } from 'ember-test-waiters';
 import { module, test } from 'qunit';
 import { Promise } from 'rsvp';
-import { TestWaiter, _reset, getWaiters, getPendingWaiterState } from 'ember-test-waiters';
 import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
 
 module('test-waiter', function(hooks) {
@@ -21,7 +21,7 @@ module('test-waiter', function(hooks) {
 
     let token = waiter.beginAsync();
 
-    assert.ok(typeof token === 'number', 'A token was returned from beginAsync');
+    assert.ok(token instanceof Token, 'A token was returned from beginAsync');
   });
 
   test('test waiters return a truthy token from beginAsync when no token provided', function(assert) {
@@ -32,7 +32,7 @@ module('test-waiter', function(hooks) {
     assert.ok(token, 'A token was returned from beginAsync and is truthy');
   });
 
-  test('test waiters automatically register when beginAsync is invoked when no token provied', function(assert) {
+  test('test waiters automatically register when beginAsync is invoked when no token provided', function(assert) {
     let waiter = new TestWaiter('my-waiter');
 
     let token = waiter.beginAsync();
@@ -137,35 +137,25 @@ module('test-waiter', function(hooks) {
     );
   });
 
-  test('endAsync will throw if endAsync called twice in a row with the same token', function(assert) {
+  test('endAsync will not throw if endAsync called twice in a row with the same token', function(assert) {
+    assert.expect(0);
+
     let waiter = new TestWaiter('my-waiter');
     let token = waiter.beginAsync();
 
     waiter.endAsync(token);
-
-    assert.throws(
-      () => {
-        waiter.endAsync(token);
-      },
-      Error,
-      /endAsync called for [object Object] but item is not currently pending./
-    );
+    waiter.endAsync(token);
   });
 
-  test('endAsync will throw if endAsync called twice in a row with the same token using custom token', function(assert) {
+  test('endAsync will not throw if endAsync called twice in a row with the same token using custom token', function(assert) {
+    assert.expect(0);
+
     let waiter = new TestWaiter('my-waiter');
     let waiterItem = {};
 
     waiter.beginAsync(waiterItem);
     waiter.endAsync(waiterItem);
-
-    assert.throws(
-      () => {
-        waiter.endAsync(waiterItem);
-      },
-      Error,
-      /endAsync called for [object Object] but item is not currently pending./
-    );
+    waiter.endAsync(waiterItem);
   });
 
   test('waitUntil returns the correct value if the waiter should wait', function(assert) {
@@ -240,7 +230,7 @@ module('test-waiter', function(hooks) {
 
     await promise
       .then(() => {
-        assert.step('Promise thennables run');
+        assert.step('Promise thenables run');
         assert.deepEqual(getPendingWaiterState(), { pending: 0, waiters: {} });
       })
       .then(() => {
@@ -251,7 +241,7 @@ module('test-waiter', function(hooks) {
       'Promise resolving',
       'Waiter began async tracking',
       'Waiter ended async tracking',
-      'Promise thennables run',
+      'Promise thenables run',
       'All thenables are run',
     ]);
   });

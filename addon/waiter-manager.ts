@@ -1,6 +1,7 @@
+import { IPendingWaiterState, IWaiter, WaiterName } from './types';
+
 import Ember from 'ember';
 import { registerWaiter } from '@ember/test';
-import { WaiterName, IWaiter, IPendingWaiterState } from './types';
 
 const WAITERS: Map<WaiterName, IWaiter> = new Map<WaiterName, IWaiter>();
 
@@ -27,7 +28,7 @@ export function register(waiter: IWaiter): void {
 }
 
 /**
- * Unregisters a waiter.
+ * Un-registers a waiter.
  *
  * @public
  * @param waiter {IWaiter} A test waiter instance

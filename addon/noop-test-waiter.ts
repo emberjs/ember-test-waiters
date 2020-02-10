@@ -1,4 +1,6 @@
-import { ITestWaiter, Token, ITestWaiterDebugInfo } from './types';
+import { ITestWaiter, ITestWaiterDebugInfo } from './types';
+
+import Token from './token';
 
 /**
  * A class providing a production, noop replacement for the {TestWaiter<T>} class.
