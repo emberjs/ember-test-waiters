@@ -34,24 +34,6 @@ export default class TestWaiter<T extends object | number = Token> implements IT
   }
 
   /**
-   * Will register the waiter, allowing it to be opted in to pausing async
-   * operations until they're completed within your tests. You should invoke
-   * it after instantiating your `TestWaiter` instance.
-   *
-   * **Note**, if you forget to register your waiter, it will be registered
-   * for you on the first invocation of `beginAsync`.
-   *
-   * @private
-   * @method register
-   */
-  private register() {
-    if (!this.isRegistered) {
-      register(this);
-      this.isRegistered = true;
-    }
-  }
-
-  /**
    * Should be used to signal the beginning of an async operation that
    * is to be waited for. Invocation of this method should be paired with a subsequent
    * `endAsync` call to indicate to the waiter system that the async operation is completed.
@@ -62,7 +44,7 @@ export default class TestWaiter<T extends object | number = Token> implements IT
    * @param label {string} An optional label to identify the item
    */
   beginAsync(token: T = this.nextToken(), label?: string): T {
-    this.register();
+    this._register();
 
     if (this.items.has(token)) {
       throw new Error(`beginAsync called for ${token} but it is already pending.`);
@@ -90,14 +72,14 @@ export default class TestWaiter<T extends object | number = Token> implements IT
    * @param item {T} The item to that was registered for waiting
    */
   endAsync(token: T): void {
-    if (!this.items.has(token) && !this.getCompletedOperations(token).has(token)) {
+    if (!this.items.has(token) && !this._getCompletedOperations(token).has(token)) {
       throw new Error(`endAsync called with no preceding beginAsync call.`);
     }
 
     this.items.delete(token);
     // Mark when a waiter operation has completed so we can distinguish
     // whether endAsync is being called before a prior beginAsync call above.
-    this.getCompletedOperations(token).set(token, true);
+    this._getCompletedOperations(token).set(token, true);
   }
 
   /**
@@ -133,7 +115,35 @@ export default class TestWaiter<T extends object | number = Token> implements IT
     this.items.clear();
   }
 
-  private getCompletedOperations(token: T) {
+  /**
+   * Will register the waiter, allowing it to be opted in to pausing async
+   * operations until they're completed within your tests. You should invoke
+   * it after instantiating your `TestWaiter` instance.
+   *
+   * **Note**, if you forget to register your waiter, it will be registered
+   * for you on the first invocation of `beginAsync`.
+   *
+   * @private
+   * @method register
+   */
+  private _register() {
+    if (!this.isRegistered) {
+      register(this);
+      this.isRegistered = true;
+    }
+  }
+
+  /**
+   * Gets the map-like object used for tracking completed async operations.
+   *
+   * A completed operation is defined as a call to `beginAsync` having occurred, and a
+   * subsequent call to `endAsync` having also occurred using the `token` received from
+   * the prior `beginAsync` call, thus ending the contiguous async operation.
+   *
+   * @private
+   * @param token {T}
+   */
+  private _getCompletedOperations(token: T) {
     return typeof token === 'number'
       ? this.completedOperationsForNumbers
       : this.completedOperationsForTokens;
