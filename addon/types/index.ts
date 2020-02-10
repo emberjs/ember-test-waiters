@@ -1,6 +1,7 @@
 import Token from '../token';
 
 export type WaiterName = string;
+export type Primitive = string | number | boolean | symbol | bigint;
 
 export interface IWaiter {
   name: WaiterName;
@@ -8,7 +9,7 @@ export interface IWaiter {
   debugInfo(): ITestWaiterDebugInfo[];
 }
 
-export interface ITestWaiter<T extends object | number = Token> extends IWaiter {
+export interface ITestWaiter<T extends object | Primitive = Token> extends IWaiter {
   beginAsync(token?: T, label?: string): T;
   endAsync(token: T): void;
   reset(): void;

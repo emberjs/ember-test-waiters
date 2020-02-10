@@ -1,4 +1,4 @@
-import { ITestWaiter, ITestWaiterDebugInfo, WaiterName } from './types';
+import { ITestWaiter, ITestWaiterDebugInfo, Primitive, WaiterName } from './types';
 
 import Token from './token';
 import { register } from './waiter-manager';
@@ -13,14 +13,14 @@ function getNextToken(): Token {
  * @public
  * @class TestWaiter<T>
  */
-export default class TestWaiter<T extends object | number = Token> implements ITestWaiter<T> {
+export default class TestWaiter<T extends object | Primitive = Token> implements ITestWaiter<T> {
   public name: WaiterName;
   private nextToken: () => T;
   private isRegistered = false;
 
   items = new Map<T, ITestWaiterDebugInfo>();
   completedOperationsForTokens = new WeakMap<Token, boolean>();
-  completedOperationsForNumbers = new Map<number, boolean>();
+  completedOperationsForPrimitives = new Map<Primitive, boolean>();
 
   /**
    * @public
@@ -126,7 +126,7 @@ export default class TestWaiter<T extends object | number = Token> implements IT
    * @private
    * @method register
    */
-  private _register() {
+  private _register(): void {
     if (!this.isRegistered) {
       register(this);
       this.isRegistered = true;
@@ -144,8 +144,10 @@ export default class TestWaiter<T extends object | number = Token> implements IT
    * @param token {T}
    */
   private _getCompletedOperations(token: T) {
-    return typeof token === 'number'
-      ? this.completedOperationsForNumbers
+    let type = typeof token;
+
+    return token !== null || (type !== 'function' && type !== 'object')
+      ? this.completedOperationsForPrimitives
       : this.completedOperationsForTokens;
   }
 }
