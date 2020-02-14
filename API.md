@@ -9,18 +9,20 @@
   - [getPendingWaiterState][5]
   - [hasPendingWaiters][6]
   - [\_reset][7]
-- [Test Waiter class][8]
-  - [TestWaiter][9]
+- [Async Test Waiter class][8]
+  - [AsyncTestWaiter][9]
   - [beginAsync][10]
   - [endAsync][11]
   - [waitUntil][12]
   - [debugInfo][13]
-- [waitForPromise][14]
-  - [Parameters][15]
-  - [Examples][16]
-- [buildWaiter][17]
-  - [Parameters][18]
-  - [Examples][19]
+- [Token][14]
+- [waitForPromise][15]
+  - [Parameters][16]
+  - [Examples][17]
+- [buildWaiter][18]
+  - [Parameters][19]
+  - [Examples][20]
+- [reset][21]
 
 ## Test Waiter Manager
 
@@ -30,28 +32,28 @@ Registers a waiter.
 
 #### Parameters
 
-- `waiter` {IWaiter} A test waiter instance
+- `waiter` {Waiter} A test waiter instance
 
 ### unregister
 
-Unregisters a waiter.
+Un-registers a waiter.
 
 #### Parameters
 
-- `waiter` {IWaiter} A test waiter instance
+- `waiter` {Waiter} A test waiter instance
 
 ### getWaiters
 
 Gets an array of all waiters current registered.
 
-Returns **[Array][20]&lt;IWaiter>**
+Returns **[Array][22]&lt;Waiter>**
 
 ### getPendingWaiterState
 
 Gets the current state of all waiters. Any waiters whose
 `waitUntil` method returns false will be considered `pending`.
 
-Returns **IPendingWaiterState** An object containing a count of all waiters
+Returns **PendingWaiterState** An object containing a count of all waiters
 pending and a `waiters` object containing the name of all pending waiters
 and their debug info.
 
@@ -59,21 +61,22 @@ and their debug info.
 
 Determines if there are any pending waiters.
 
-Returns **[boolean][21]** `true` if there are pending waiters, otherwise `false`.
+Returns **[boolean][23]** `true` if there are pending waiters, otherwise `false`.
 
 ### \_reset
 
 Clears all waiters.
 
-## Test Waiter class
+## Async Test Waiter class
 
-### TestWaiter
+### AsyncTestWaiter
 
 A class providing creation, registration and async waiting functionality.
 
 #### Parameters
 
 - `name`
+- `nextToken`
 
 ### beginAsync
 
@@ -89,8 +92,8 @@ is to be waited for. Invocation of this method should be paired with a subsequen
 ### endAsync
 
 Should be used to signal the end of an async operation. Invocation of this
-method should be paired with a preceeding `beginAsync` call, which would indicate the
-beginning of an async operation.
+method should be paired with a preceding `beginAsync` call from this instance,
+which would indicate the beginning of an async operation.
 
 #### Parameters
 
@@ -101,13 +104,17 @@ beginning of an async operation.
 Used to determine if the waiter system should still wait for async
 operations to complete.
 
-Returns **[boolean][21]**
+Returns **[boolean][23]**
 
 ### debugInfo
 
 Returns the `debugInfo` for each item tracking async operations in this waiter.
 
-Returns **ITestWaiterDebugInfo**
+Returns **TestWaiterDebugInfo**
+
+## Token
+
+A class representing a test waiter token.
 
 ## waitForPromise
 
@@ -158,16 +165,20 @@ if (DEBUG) {
 
 export default class Friendz extends Component {
   didInsertElement() {
-    waiter.beginAsync(this);
+    let token = waiter.beginAsync(this);
 
     someAsyncWork().then(() => {
-      waiter.endAsync(this);
+      waiter.endAsync(token);
     });
   }
 }
 ```
 
-Returns **ITestWaiter**
+Returns **TestWaiter**
+
+## reset
+
+Resets the waiter state, clearing items tracking async operations in this waiter.
 
 [1]: #test-waiter-manager
 [2]: #register
@@ -176,17 +187,19 @@ Returns **ITestWaiter**
 [5]: #getpendingwaiterstate
 [6]: #haspendingwaiters
 [7]: #_reset
-[8]: #test-waiter-class
-[9]: #testwaiter
+[8]: #async-test-waiter-class
+[9]: #asynctestwaiter
 [10]: #beginasync
 [11]: #endasync
 [12]: #waituntil
 [13]: #debuginfo
-[14]: #waitforpromise
-[15]: #parameters
-[16]: #examples
-[17]: #buildwaiter
-[18]: #parameters-1
-[19]: #examples-1
-[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[14]: #token
+[15]: #waitforpromise
+[16]: #parameters
+[17]: #examples
+[18]: #buildwaiter
+[19]: #parameters-1
+[20]: #examples-1
+[21]: #reset
+[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

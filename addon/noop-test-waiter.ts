@@ -1,4 +1,4 @@
-import { ITestWaiter, ITestWaiterDebugInfo } from './types';
+import { TestWaiter, TestWaiterDebugInfo } from './types';
 
 import Token from './token';
 
@@ -8,7 +8,7 @@ import Token from './token';
  * @public
  * @class TestWaiter<T>
  */
-export default class NoopTestWaiter implements ITestWaiter {
+export default class NoopTestWaiter implements TestWaiter {
   name: string;
   constructor(name: string) {
     this.name = name;
@@ -24,7 +24,7 @@ export default class NoopTestWaiter implements ITestWaiter {
     return true;
   }
 
-  debugInfo(): ITestWaiterDebugInfo[] {
+  debugInfo(): TestWaiterDebugInfo[] {
     return [];
   }
 

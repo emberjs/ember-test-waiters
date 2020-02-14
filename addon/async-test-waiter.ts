@@ -1,4 +1,4 @@
-import { ITestWaiter, ITestWaiterDebugInfo, Primitive, WaiterName } from './types';
+import { Primitive, TestWaiter, TestWaiterDebugInfo, WaiterName } from './types';
 
 import Token from './token';
 import { register } from './waiter-manager';
@@ -13,12 +13,13 @@ function getNextToken(): Token {
  * @public
  * @class TestWaiter<T>
  */
-export default class TestWaiter<T extends object | Primitive = Token> implements ITestWaiter<T> {
+export default class AsyncTestWaiter<T extends object | Primitive = Token>
+  implements TestWaiter<T> {
   public name: WaiterName;
   private nextToken: () => T;
   private isRegistered = false;
 
-  items = new Map<T, ITestWaiterDebugInfo>();
+  items = new Map<T, TestWaiterDebugInfo>();
   completedOperationsForTokens = new WeakMap<Token, boolean>();
   completedOperationsForPrimitives = new Map<Primitive, boolean>();
 
@@ -99,9 +100,9 @@ export default class TestWaiter<T extends object | Primitive = Token> implements
    *
    * @public
    * @method debugInfo
-   * @returns {ITestWaiterDebugInfo}
+   * @returns {TestWaiterDebugInfo}
    */
-  debugInfo(): ITestWaiterDebugInfo[] {
+  debugInfo(): TestWaiterDebugInfo[] {
     return [...this.items.values()];
   }
 

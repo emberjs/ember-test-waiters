@@ -3,26 +3,26 @@ import Token from '../token';
 export type WaiterName = string;
 export type Primitive = string | number | boolean | symbol | bigint;
 
-export interface IWaiter {
+export interface Waiter {
   name: WaiterName;
   waitUntil(): boolean;
-  debugInfo(): ITestWaiterDebugInfo[];
+  debugInfo(): TestWaiterDebugInfo[];
 }
 
-export interface ITestWaiter<T extends object | Primitive = Token> extends IWaiter {
+export interface TestWaiter<T extends object | Primitive = Token> extends Waiter {
   beginAsync(token?: T, label?: string): T;
   endAsync(token: T): void;
   reset(): void;
 }
 
-export interface ITestWaiterDebugInfo {
+export interface TestWaiterDebugInfo {
   stack: string | undefined;
   label: string | undefined;
 }
 
-export interface IPendingWaiterState {
+export interface PendingWaiterState {
   pending: number;
   waiters: {
-    [waiterName: string]: ITestWaiterDebugInfo[] | true;
+    [waiterName: string]: TestWaiterDebugInfo[] | true;
   };
 }

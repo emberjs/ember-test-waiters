@@ -1,5 +1,6 @@
+import { AsyncTestWaiter, TestWaiter } from 'ember-test-waiters';
+
 import { DEBUG } from '@glimmer/env';
-import { TestWaiter, ITestWaiter } from 'ember-test-waiters';
 import NoopTestWaiter from './noop-test-waiter';
 
 /**
@@ -8,7 +9,7 @@ import NoopTestWaiter from './noop-test-waiter';
  * addon is in `DEBUG` mode or not.
  *
  * @param name {string} The name of the test waiter
- * @returns {ITestWaiter}
+ * @returns {TestWaiter}
  *
  * @example
  *
@@ -29,9 +30,9 @@ import NoopTestWaiter from './noop-test-waiter';
  *   }
  * }
  */
-export default function buildWaiter(name: string): ITestWaiter {
+export default function buildWaiter(name: string): TestWaiter {
   if (DEBUG) {
-    return new TestWaiter(name);
+    return new AsyncTestWaiter(name);
   }
   return new NoopTestWaiter(name);
 }
