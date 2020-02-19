@@ -50,7 +50,7 @@ export function getWaiters(): Waiter[] {
 /**
  * Clears all waiters.
  *
- * @public
+ * @private
  */
 export function _reset(): void {
   WAITERS.clear();

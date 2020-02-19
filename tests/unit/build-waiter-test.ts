@@ -1,13 +1,8 @@
-import {
-  getPendingWaiterState,
-  getWaiters,
-  AsyncTestWaiter,
-  Token,
-  _reset,
-} from 'ember-test-waiters';
+import { getPendingWaiterState, getWaiters, buildWaiter, Token, _reset } from 'ember-test-waiters';
 import { module, test } from 'qunit';
 import { Promise } from 'rsvp';
 import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
+import { TestWaiterImpl } from 'ember-test-waiters/build-waiter';
 
 module('test-waiter', function(hooks) {
   hooks.afterEach(function() {
@@ -17,13 +12,13 @@ module('test-waiter', function(hooks) {
 
   test('test waiter can be instantiated with a name', function(assert) {
     let name = 'my-waiter';
-    let waiter = new AsyncTestWaiter(name);
+    let waiter = buildWaiter(name);
 
     assert.equal(waiter.name, name);
   });
 
   test('test waiters return a token from beginAsync when no token provided', function(assert) {
-    let waiter = new AsyncTestWaiter('my-waiter');
+    let waiter = buildWaiter('my-waiter');
 
     let token = waiter.beginAsync();
 
@@ -31,7 +26,7 @@ module('test-waiter', function(hooks) {
   });
 
   test('test waiters return a truthy token from beginAsync when no token provided', function(assert) {
-    let waiter = new AsyncTestWaiter('my-waiter');
+    let waiter = buildWaiter('my-waiter');
 
     let token = waiter.beginAsync();
 
@@ -39,7 +34,7 @@ module('test-waiter', function(hooks) {
   });
 
   test('test waiters automatically register when beginAsync is invoked when no token provided', function(assert) {
-    let waiter = new AsyncTestWaiter('my-waiter');
+    let waiter = buildWaiter('my-waiter');
 
     let token = waiter.beginAsync();
 
@@ -47,14 +42,14 @@ module('test-waiter', function(hooks) {
 
     assert.equal(registeredWaiters[0], waiter, 'The waiter is registered');
     assert.deepEqual(
-      (<AsyncTestWaiter>registeredWaiters[0]).items.keys().next().value,
+      (<TestWaiterImpl>registeredWaiters[0]).items.keys().next().value,
       token,
       'Waiter item is in items'
     );
   });
 
   test('test waiters automatically register when beginAsync is invoked using a custom token', function(assert) {
-    let waiter = new AsyncTestWaiter('my-waiter');
+    let waiter = buildWaiter('my-waiter');
     let waiterItem = {};
 
     waiter.beginAsync(waiterItem);
@@ -63,35 +58,35 @@ module('test-waiter', function(hooks) {
 
     assert.equal(registeredWaiters[0], waiter, 'The waiter is registered');
     assert.deepEqual(
-      (<AsyncTestWaiter>registeredWaiters[0]).items.keys().next().value,
+      (<TestWaiterImpl>registeredWaiters[0]).items.keys().next().value,
       {},
       'Waiter item is in items'
     );
   });
 
   test('test waiters removes item from items map when endAsync is invoked', function(assert) {
-    let waiter = new AsyncTestWaiter('my-waiter');
+    let waiter = buildWaiter('my-waiter');
 
     let token = waiter.beginAsync();
     waiter.endAsync(token);
     let registeredWaiters = getWaiters();
 
-    assert.equal((<AsyncTestWaiter>registeredWaiters[0]).items.size, 0);
+    assert.equal((<TestWaiterImpl>registeredWaiters[0]).items.size, 0);
   });
 
   test('test waiters removes item from items map when endAsync is invoked using a custom token', function(assert) {
-    let waiter = new AsyncTestWaiter('my-waiter');
+    let waiter = buildWaiter('my-waiter');
     let waiterItem = {};
 
     waiter.beginAsync(waiterItem);
     waiter.endAsync(waiterItem);
     let registeredWaiters = getWaiters();
 
-    assert.equal((<AsyncTestWaiter>registeredWaiters[0]).items.size, 0);
+    assert.equal((<TestWaiterImpl>registeredWaiters[0]).items.size, 0);
   });
 
   test('beginAsync will throw if a prior call to beginAsync with the same token occurred', function(assert) {
-    let waiter = new AsyncTestWaiter('my-waiter');
+    let waiter = buildWaiter('my-waiter');
 
     assert.throws(
       () => {
@@ -104,7 +99,7 @@ module('test-waiter', function(hooks) {
   });
 
   test('beginAsync will throw if a prior call to beginAsync with the same token occurred', function(assert) {
-    let waiter = new AsyncTestWaiter('my-waiter');
+    let waiter = buildWaiter('my-waiter');
     let token = {};
 
     assert.throws(
@@ -118,7 +113,7 @@ module('test-waiter', function(hooks) {
   });
 
   test('endAsync will throw if a prior call to beginAsync with the same token did not occur', function(assert) {
-    let waiter = new AsyncTestWaiter('my-waiter');
+    let waiter = buildWaiter('my-waiter');
     let token = 0;
 
     assert.throws(
@@ -131,7 +126,7 @@ module('test-waiter', function(hooks) {
   });
 
   test('endAsync will throw if a prior call to beginAsync with the same token did not occur using custom token', function(assert) {
-    let waiter = new AsyncTestWaiter('my-waiter');
+    let waiter = buildWaiter('my-waiter');
     let waiterItem = {};
 
     assert.throws(
@@ -146,7 +141,7 @@ module('test-waiter', function(hooks) {
   test('endAsync will not throw if endAsync called twice in a row with the same token', function(assert) {
     assert.expect(0);
 
-    let waiter = new AsyncTestWaiter('my-waiter');
+    let waiter = buildWaiter('my-waiter');
     let token = waiter.beginAsync();
 
     waiter.endAsync(token);
@@ -156,7 +151,7 @@ module('test-waiter', function(hooks) {
   test('endAsync will not throw if endAsync called twice in a row with the same token using custom token', function(assert) {
     assert.expect(0);
 
-    let waiter = new AsyncTestWaiter('my-waiter');
+    let waiter = buildWaiter('my-waiter');
     let waiterItem = {};
 
     waiter.beginAsync(waiterItem);
@@ -165,7 +160,7 @@ module('test-waiter', function(hooks) {
   });
 
   test('waitUntil returns the correct value if the waiter should wait', function(assert) {
-    let waiter = new AsyncTestWaiter('my-waiter');
+    let waiter = buildWaiter('my-waiter');
     let waiterItem = {};
 
     assert.ok(waiter.waitUntil(), 'waitUntil returns true');
@@ -180,7 +175,7 @@ module('test-waiter', function(hooks) {
   });
 
   test('waiter contains debug info for a waiter item', function(assert) {
-    let waiter = new AsyncTestWaiter('my-waiter');
+    let waiter = buildWaiter('my-waiter');
     let waiterItem = {};
 
     overrideError(MockStableError);
@@ -191,7 +186,7 @@ module('test-waiter', function(hooks) {
   });
 
   test('waiter executes beginAsync and endAsync at the correct times in relation to thenables', async function(assert) {
-    const promiseWaiter = new AsyncTestWaiter('promise-waiter');
+    const promiseWaiter = buildWaiter('promise-waiter');
     function waitForPromise<T>(promise: Promise<T>, label?: string) {
       let result = promise;
 
@@ -253,14 +248,14 @@ module('test-waiter', function(hooks) {
   });
 
   test('waiter can clear items', function(assert) {
-    let waiter = new AsyncTestWaiter('my-waiter');
+    let waiter = buildWaiter('my-waiter');
 
     waiter.beginAsync();
 
-    assert.equal(waiter.items.size, 1);
+    assert.equal((<TestWaiterImpl>waiter).items.size, 1);
 
     waiter.reset();
 
-    assert.equal(waiter.items.size, 0);
+    assert.equal((<TestWaiterImpl>waiter).items.size, 0);
   });
 });

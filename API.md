@@ -8,21 +8,13 @@
   - [getWaiters][4]
   - [getPendingWaiterState][5]
   - [hasPendingWaiters][6]
-  - [\_reset][7]
-- [Async Test Waiter class][8]
-  - [AsyncTestWaiter][9]
-  - [beginAsync][10]
-  - [endAsync][11]
-  - [waitUntil][12]
-  - [debugInfo][13]
-- [Token][14]
-- [waitForPromise][15]
-  - [Parameters][16]
-  - [Examples][17]
-- [buildWaiter][18]
-  - [Parameters][19]
-  - [Examples][20]
-- [reset][21]
+- [Token][7]
+- [waitForPromise][8]
+  - [Parameters][9]
+  - [Examples][10]
+- [buildWaiter][11]
+  - [Parameters][12]
+  - [Examples][13]
 
 ## Test Waiter Manager
 
@@ -46,7 +38,7 @@ Un-registers a waiter.
 
 Gets an array of all waiters current registered.
 
-Returns **[Array][22]&lt;Waiter>**
+Returns **[Array][14]&lt;Waiter>**
 
 ### getPendingWaiterState
 
@@ -61,56 +53,7 @@ and their debug info.
 
 Determines if there are any pending waiters.
 
-Returns **[boolean][23]** `true` if there are pending waiters, otherwise `false`.
-
-### \_reset
-
-Clears all waiters.
-
-## Async Test Waiter class
-
-### AsyncTestWaiter
-
-A class providing creation, registration and async waiting functionality.
-
-#### Parameters
-
-- `name`
-- `nextToken`
-
-### beginAsync
-
-Should be used to signal the beginning of an async operation that
-is to be waited for. Invocation of this method should be paired with a subsequent
-`endAsync` call to indicate to the waiter system that the async operation is completed.
-
-#### Parameters
-
-- `item` {T} The item to register for waiting
-- `label` {string} An optional label to identify the item
-
-### endAsync
-
-Should be used to signal the end of an async operation. Invocation of this
-method should be paired with a preceding `beginAsync` call from this instance,
-which would indicate the beginning of an async operation.
-
-#### Parameters
-
-- `item` {T} The item to that was registered for waiting
-
-### waitUntil
-
-Used to determine if the waiter system should still wait for async
-operations to complete.
-
-Returns **[boolean][23]**
-
-### debugInfo
-
-Returns the `debugInfo` for each item tracking async operations in this waiter.
-
-Returns **TestWaiterDebugInfo**
+Returns **[boolean][15]** `true` if there are pending waiters, otherwise `false`.
 
 ## Token
 
@@ -176,30 +119,18 @@ export default class Friendz extends Component {
 
 Returns **TestWaiter**
 
-## reset
-
-Resets the waiter state, clearing items tracking async operations in this waiter.
-
 [1]: #test-waiter-manager
 [2]: #register
 [3]: #unregister
 [4]: #getwaiters
 [5]: #getpendingwaiterstate
 [6]: #haspendingwaiters
-[7]: #_reset
-[8]: #async-test-waiter-class
-[9]: #asynctestwaiter
-[10]: #beginasync
-[11]: #endasync
-[12]: #waituntil
-[13]: #debuginfo
-[14]: #token
-[15]: #waitforpromise
-[16]: #parameters
-[17]: #examples
-[18]: #buildwaiter
-[19]: #parameters-1
-[20]: #examples-1
-[21]: #reset
-[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[7]: #token
+[8]: #waitforpromise
+[9]: #parameters
+[10]: #examples
+[11]: #buildwaiter
+[12]: #parameters-1
+[13]: #examples-1
+[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
