@@ -143,7 +143,7 @@ Type: [string][28]
 
 ### Token
 
-A class representing a test waiter token.
+Type: ([Primitive][31] | any)
 
 ### TestWaiterDebugInfo
 
@@ -179,3 +179,4 @@ A class representing a test waiter token.
 [28]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 [29]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 [30]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol
+[31]: #primitive

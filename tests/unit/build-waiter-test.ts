@@ -1,4 +1,5 @@
-import { getPendingWaiterState, getWaiters, buildWaiter, Token, _reset } from 'ember-test-waiters';
+import { getPendingWaiterState, getWaiters, buildWaiter, _reset } from 'ember-test-waiters';
+import Token from 'ember-test-waiters/token';
 import { module, test } from 'qunit';
 import { Promise } from 'rsvp';
 import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';

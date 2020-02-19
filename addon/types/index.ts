@@ -1,11 +1,14 @@
-import Token from '../token';
-
 /**
  * @type WaiterName
  *
  * A string representing the test waiter name
  */
 export type WaiterName = string;
+
+/**
+ * @type Token
+ */
+export type Token = Primitive | unknown;
 
 /**
  * @type Primitive
@@ -51,7 +54,7 @@ export interface Waiter {
  * @public
  * @interface TestWaiter<T>
  */
-export interface TestWaiter<T extends object | Primitive = Token> extends Waiter {
+export interface TestWaiter<T extends object | Primitive | unknown = Token> extends Waiter {
   /**
    * Should be used to signal the beginning of an async operation that
    * is to be waited for. Invocation of this method should be paired with a subsequent
