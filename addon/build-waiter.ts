@@ -14,7 +14,7 @@ function getNextToken(): Token {
  * @private
  * @class
  */
-export class TestWaiterImpl<T extends object | Primitive = Token> implements TestWaiter<T> {
+class TestWaiterImpl<T extends object | Primitive = Token> implements TestWaiter<T> {
   public name: WaiterName;
   private nextToken: () => T;
   private isRegistered = false;
@@ -159,7 +159,7 @@ export class TestWaiterImpl<T extends object | Primitive = Token> implements Tes
  * @private
  * @class
  */
-export class NoopTestWaiter implements TestWaiter {
+class NoopTestWaiter implements TestWaiter {
   name: string;
   constructor(name: string) {
     this.name = name;
