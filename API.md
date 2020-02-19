@@ -4,17 +4,27 @@
 
 - [Test Waiter Manager][1]
   - [register][2]
-  - [unregister][3]
-  - [getWaiters][4]
-  - [getPendingWaiterState][5]
-  - [hasPendingWaiters][6]
-- [Token][7]
-- [waitForPromise][8]
-  - [Parameters][9]
-  - [Examples][10]
-- [buildWaiter][11]
-  - [Parameters][12]
-  - [Examples][13]
+    - [Parameters][3]
+  - [unregister][4]
+    - [Parameters][5]
+  - [getWaiters][6]
+  - [getPendingWaiterState][7]
+  - [hasPendingWaiters][8]
+- [Utility functions][9]
+  - [buildWaiter][10]
+    - [Parameters][11]
+    - [Examples][12]
+  - [waitForPromise][13]
+    - [Parameters][14]
+    - [Examples][15]
+- [Waiter][16]
+- [TestWaiter&lt;T>][17]
+- [Types][18]
+  - [Primitive][19]
+  - [WaiterName][20]
+  - [Token][21]
+  - [TestWaiterDebugInfo][22]
+  - [PendingWaiterState][23]
 
 ## Test Waiter Manager
 
@@ -38,14 +48,14 @@ Un-registers a waiter.
 
 Gets an array of all waiters current registered.
 
-Returns **[Array][14]&lt;Waiter>**
+Returns **[Array][24]&lt;[Waiter][25]>**
 
 ### getPendingWaiterState
 
 Gets the current state of all waiters. Any waiters whose
 `waitUntil` method returns false will be considered `pending`.
 
-Returns **PendingWaiterState** An object containing a count of all waiters
+Returns **[PendingWaiterState][26]** An object containing a count of all waiters
 pending and a `waiters` object containing the name of all pending waiters
 and their debug info.
 
@@ -53,50 +63,21 @@ and their debug info.
 
 Determines if there are any pending waiters.
 
-Returns **[boolean][15]** `true` if there are pending waiters, otherwise `false`.
+Returns **[boolean][27]** `true` if there are pending waiters, otherwise `false`.
 
-## Token
+## Utility functions
 
-A class representing a test waiter token.
-
-## waitForPromise
-
-A convenient utility function to simplify waiting for a promise.
-
-### Parameters
-
-- `promise` {Promise<T>} The promise to track async operations for
-- `label` {string} An optional string to identify the promise
-
-### Examples
-
-```javascript
-import Component from '@ember/component';
-import { waitForPromise } from 'ember-test-waiters';
-
-export default class Friendz extends Component {
-  didInsertElement() {
-    waitForPromise(
-      new Promise(resolve => {
-        doSomeWork();
-        resolve();
-      })
-    );
-  }
-}
-```
-
-## buildWaiter
+### buildWaiter
 
 Builds and returns a test waiter. The type of the
 returned waiter is dependent on whether the app or
 addon is in `DEBUG` mode or not.
 
-### Parameters
+#### Parameters
 
 - `name` {string} The name of the test waiter
 
-### Examples
+#### Examples
 
 ```javascript
 import Component from '@ember/component';
@@ -119,18 +100,82 @@ export default class Friendz extends Component {
 
 Returns **TestWaiter**
 
+### waitForPromise
+
+A convenient utility function to simplify waiting for a promise.
+
+#### Parameters
+
+- `promise` {Promise<T>} The promise to track async operations for
+- `label` {string} An optional string to identify the promise
+
+#### Examples
+
+```javascript
+import Component from '@ember/component';
+import { waitForPromise } from 'ember-test-waiters';
+
+export default class Friendz extends Component {
+  didInsertElement() {
+    waitForPromise(
+      new Promise(resolve => {
+        doSomeWork();
+        resolve();
+      })
+    );
+  }
+}
+```
+
+## Waiter
+
+## TestWaiter&lt;T>
+
+## Types
+
+### Primitive
+
+Type: ([string][28] \| [number][29] \| [boolean][27] \| [symbol][30] | bigint)
+
+### WaiterName
+
+Type: [string][28]
+
+### Token
+
+A class representing a test waiter token.
+
+### TestWaiterDebugInfo
+
+### PendingWaiterState
+
 [1]: #test-waiter-manager
 [2]: #register
-[3]: #unregister
-[4]: #getwaiters
-[5]: #getpendingwaiterstate
-[6]: #haspendingwaiters
-[7]: #token
-[8]: #waitforpromise
-[9]: #parameters
-[10]: #examples
-[11]: #buildwaiter
-[12]: #parameters-1
-[13]: #examples-1
-[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[3]: #parameters
+[4]: #unregister
+[5]: #parameters-1
+[6]: #getwaiters
+[7]: #getpendingwaiterstate
+[8]: #haspendingwaiters
+[9]: #utility-functions
+[10]: #buildwaiter
+[11]: #parameters-2
+[12]: #examples
+[13]: #waitforpromise
+[14]: #parameters-3
+[15]: #examples-1
+[16]: #waiter
+[17]: #testwaitert
+[18]: #types
+[19]: #primitive
+[20]: #waitername
+[21]: #token
+[22]: #testwaiterdebuginfo
+[23]: #pendingwaiterstate
+[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[25]: #waiter
+[26]: #pendingwaiterstate
+[27]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[28]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[29]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[30]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol

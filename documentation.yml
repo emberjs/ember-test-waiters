@@ -6,4 +6,16 @@ toc:
       - getWaiters
       - getPendingWaiterState
       - hasPendingWaiters
-      - _reset
+  - name: Utility functions
+    children:
+      - buildWaiter
+      - waitForPromise
+  - Waiter
+  - TestWaiter<T>
+  - name: Types
+    children:
+      - Primitive
+      - WaiterName
+      - Token
+      - TestWaiterDebugInfo
+      - PendingWaiterState
