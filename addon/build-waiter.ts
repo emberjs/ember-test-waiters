@@ -11,7 +11,7 @@ function getNextToken(): Token {
 /**
  * A class providing creation, registration and async waiting functionality.
  *
- * @public
+ * @private
  * @class
  */
 export class TestWaiterImpl<T extends object | Primitive = Token> implements TestWaiter<T> {
@@ -156,7 +156,7 @@ export class TestWaiterImpl<T extends object | Primitive = Token> implements Tes
 /**
  * A class providing a production, noop replacement for the {TestWaiter<T>} class.
  *
- * @public
+ * @private
  * @class
  */
 export class NoopTestWaiter implements TestWaiter {
@@ -186,6 +186,8 @@ export class NoopTestWaiter implements TestWaiter {
  * Builds and returns a test waiter. The type of the
  * returned waiter is dependent on whether the app or
  * addon is in `DEBUG` mode or not.
+ *
+ * @public
  *
  * @param name {string} The name of the test waiter
  * @returns {TestWaiter}
