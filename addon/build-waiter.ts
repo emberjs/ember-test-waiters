@@ -12,7 +12,7 @@ function getNextToken(): Token {
  * A class providing creation, registration and async waiting functionality.
  *
  * @public
- * @class TestWaiterImpl<T>
+ * @class
  */
 export class TestWaiterImpl<T extends object | Primitive = Token> implements TestWaiter<T> {
   public name: WaiterName;
@@ -157,7 +157,7 @@ export class TestWaiterImpl<T extends object | Primitive = Token> implements Tes
  * A class providing a production, noop replacement for the {TestWaiter<T>} class.
  *
  * @public
- * @class TestWaiter<T>
+ * @class
  */
 export class NoopTestWaiter implements TestWaiter {
   name: string;
