@@ -1,4 +1,5 @@
 import { DEBUG } from '@glimmer/env';
+import { Promise } from 'rsvp';
 import buildWaiter from './build-waiter';
 
 const PROMISE_WAITER = buildWaiter('promise-waiter');
@@ -24,7 +25,7 @@ const PROMISE_WAITER = buildWaiter('promise-waiter');
  *   }
  * }
  */
-export default function waitForPromise<T>(promise: Promise<T>, label?: string) {
+export default function waitForPromise<T>(promise: Promise<T>, label?: string): Promise<T> {
   let result = promise;
 
   if (DEBUG) {

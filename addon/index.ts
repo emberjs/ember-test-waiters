@@ -1,4 +1,14 @@
 export {
+  WaiterName,
+  Token,
+  Primitive,
+  Waiter,
+  TestWaiter,
+  TestWaiterDebugInfo,
+  PendingWaiterState,
+} from './types';
+
+export {
   register,
   unregister,
   getWaiters,
@@ -9,5 +19,3 @@ export {
 
 export { default as buildWaiter } from './build-waiter';
 export { default as waitForPromise } from './wait-for-promise';
-
-export * from './types';
