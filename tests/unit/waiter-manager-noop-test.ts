@@ -1,7 +1,7 @@
+import { _reset, buildWaiter, getWaiters, register } from 'ember-test-waiters';
 import { module, test } from 'qunit';
+
 import { DEBUG } from '@glimmer/env';
-import { _reset, buildWaiter, register, getWaiters } from 'ember-test-waiters';
-import NoopTestWaiter from 'ember-test-waiters/noop-test-waiter';
 
 if (!DEBUG) {
   module('test-waiter | DEBUG: false', function(hooks) {
@@ -12,7 +12,11 @@ if (!DEBUG) {
     test('buildWaiter returns NoopTestWaiter DEBUG: false', function(assert) {
       let waiter = buildWaiter('first');
 
-      assert.ok(waiter instanceof NoopTestWaiter, 'Returned instance is NoopTestWaiter');
+      assert.equal(
+        waiter.constructor.name,
+        'NoopTestWaiter',
+        'Returned instance is NoopTestWaiter'
+      );
     });
 
     test('register will correctly add a waiter', function(assert) {

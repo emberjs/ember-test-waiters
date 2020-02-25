@@ -1,5 +1,5 @@
-import { ITestWaiterDebugInfo, IWaiter, WaiterName } from 'ember-test-waiters/types';
 import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
+import { TestWaiterDebugInfo, Waiter, WaiterName } from 'ember-test-waiters/types';
 import {
   Token,
   _reset,
@@ -177,13 +177,13 @@ if (DEBUG) {
       let customWaiterCounter = 0;
       let customWaiter;
 
-      class CustomWaiter<T = Token> implements IWaiter {
+      class CustomWaiter<T = Token> implements Waiter {
         public name: WaiterName;
-        private waiterItems: Map<T, ITestWaiterDebugInfo>;
+        private waiterItems: Map<T, TestWaiterDebugInfo>;
 
         constructor(name: WaiterName) {
           this.name = name;
-          this.waiterItems = new Map<T, ITestWaiterDebugInfo>();
+          this.waiterItems = new Map<T, TestWaiterDebugInfo>();
         }
 
         beginAsync(token: T) {
@@ -199,7 +199,7 @@ if (DEBUG) {
           return customWaiterCounter === 0;
         }
 
-        debugInfo(): ITestWaiterDebugInfo[] {
+        debugInfo(): TestWaiterDebugInfo[] {
           return [...this.waiterItems.values()];
         }
       }

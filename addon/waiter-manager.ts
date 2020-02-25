@@ -1,9 +1,9 @@
-import { IPendingWaiterState, IWaiter, WaiterName } from './types';
+import { PendingWaiterState, Waiter, WaiterName } from './types';
 
 import Ember from 'ember';
 import { registerWaiter } from '@ember/test';
 
-const WAITERS: Map<WaiterName, IWaiter> = new Map<WaiterName, IWaiter>();
+const WAITERS: Map<WaiterName, Waiter> = new Map<WaiterName, Waiter>();
 
 /**
  * Backwards compatibility with legacy waiters system.
@@ -21,9 +21,9 @@ if (Ember.Test) {
  * Registers a waiter.
  *
  * @public
- * @param waiter {IWaiter} A test waiter instance
+ * @param waiter {Waiter} A test waiter instance
  */
-export function register(waiter: IWaiter): void {
+export function register(waiter: Waiter): void {
   WAITERS.set(waiter.name, waiter);
 }
 
@@ -31,9 +31,9 @@ export function register(waiter: IWaiter): void {
  * Un-registers a waiter.
  *
  * @public
- * @param waiter {IWaiter} A test waiter instance
+ * @param waiter {Waiter} A test waiter instance
  */
-export function unregister(waiter: IWaiter): void {
+export function unregister(waiter: Waiter): void {
   WAITERS.delete(waiter.name);
 }
 
@@ -41,16 +41,16 @@ export function unregister(waiter: IWaiter): void {
  * Gets an array of all waiters current registered.
  *
  * @public
- * @returns {IWaiter[]}
+ * @returns {Waiter[]}
  */
-export function getWaiters(): IWaiter[] {
+export function getWaiters(): Waiter[] {
   return [...WAITERS.values()];
 }
 
 /**
  * Clears all waiters.
  *
- * @public
+ * @private
  */
 export function _reset(): void {
   WAITERS.clear();
@@ -60,12 +60,12 @@ export function _reset(): void {
  * Gets the current state of all waiters. Any waiters whose
  * `waitUntil` method returns false will be considered `pending`.
  *
- * @returns {IPendingWaiterState} An object containing a count of all waiters
+ * @returns {PendingWaiterState} An object containing a count of all waiters
  * pending and a `waiters` object containing the name of all pending waiters
  * and their debug info.
  */
-export function getPendingWaiterState(): IPendingWaiterState {
-  let result: IPendingWaiterState = {
+export function getPendingWaiterState(): PendingWaiterState {
+  let result: PendingWaiterState = {
     pending: 0,
     waiters: {},
   };

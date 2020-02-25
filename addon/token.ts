@@ -2,6 +2,6 @@
  * A class representing a test waiter token.
  *
  * @public
- * @class Token
+ * @class
  */
 export default class Token {}
