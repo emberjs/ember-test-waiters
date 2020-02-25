@@ -4,27 +4,23 @@
 
 - [Test Waiter Manager][1]
   - [register][2]
-    - [Parameters][3]
-  - [unregister][4]
-    - [Parameters][5]
-  - [getWaiters][6]
-  - [getPendingWaiterState][7]
-  - [hasPendingWaiters][8]
-- [Utility functions][9]
-  - [buildWaiter][10]
-    - [Parameters][11]
-    - [Examples][12]
-  - [waitForPromise][13]
-    - [Parameters][14]
-    - [Examples][15]
-- [Waiter][16]
-- [TestWaiter&lt;T>][17]
-- [Types][18]
-  - [Primitive][19]
-  - [WaiterName][20]
-  - [Token][21]
-  - [TestWaiterDebugInfo][22]
-  - [PendingWaiterState][23]
+  - [unregister][3]
+  - [getWaiters][4]
+  - [getPendingWaiterState][5]
+  - [hasPendingWaiters][6]
+  - [\_reset][7]
+- [Test Waiter class][8]
+  - [TestWaiter][9]
+  - [beginAsync][10]
+  - [endAsync][11]
+  - [waitUntil][12]
+  - [debugInfo][13]
+- [waitForPromise][14]
+  - [Parameters][15]
+  - [Examples][16]
+- [buildWaiter][17]
+  - [Parameters][18]
+  - [Examples][19]
 
 ## Test Waiter Manager
 
@@ -34,28 +30,28 @@ Registers a waiter.
 
 #### Parameters
 
-- `waiter` {Waiter} A test waiter instance
+- `waiter` {IWaiter} A test waiter instance
 
 ### unregister
 
-Un-registers a waiter.
+Unregisters a waiter.
 
 #### Parameters
 
-- `waiter` {Waiter} A test waiter instance
+- `waiter` {IWaiter} A test waiter instance
 
 ### getWaiters
 
 Gets an array of all waiters current registered.
 
-Returns **[Array][24]&lt;[Waiter][25]>**
+Returns **[Array][20]&lt;IWaiter>**
 
 ### getPendingWaiterState
 
 Gets the current state of all waiters. Any waiters whose
 `waitUntil` method returns false will be considered `pending`.
 
-Returns **[PendingWaiterState][26]** An object containing a count of all waiters
+Returns **IPendingWaiterState** An object containing a count of all waiters
 pending and a `waiters` object containing the name of all pending waiters
 and their debug info.
 
@@ -63,53 +59,66 @@ and their debug info.
 
 Determines if there are any pending waiters.
 
-Returns **[boolean][27]** `true` if there are pending waiters, otherwise `false`.
+Returns **[boolean][21]** `true` if there are pending waiters, otherwise `false`.
 
-## Utility functions
+### \_reset
 
-### buildWaiter
+Clears all waiters.
 
-Builds and returns a test waiter. The type of the
-returned waiter is dependent on whether the app or
-addon is in `DEBUG` mode or not.
+## Test Waiter class
+
+### TestWaiter
+
+A class providing creation, registration and async waiting functionality.
 
 #### Parameters
 
-- `name` {string} The name of the test waiter
+- `name`
 
-#### Examples
+### beginAsync
 
-```javascript
-import Component from '@ember/component';
-import { buildWaiter } from 'ember-test-waiters';
+Should be used to signal the beginning of an async operation that
+is to be waited for. Invocation of this method should be paired with a subsequent
+`endAsync` call to indicate to the waiter system that the async operation is completed.
 
-if (DEBUG) {
-  let waiter = buildWaiter('friend-waiter');
-}
+#### Parameters
 
-export default class Friendz extends Component {
-  didInsertElement() {
-    let token = waiter.beginAsync(this);
+- `item` {T} The item to register for waiting
+- `label` {string} An optional label to identify the item
 
-    someAsyncWork().then(() => {
-      waiter.endAsync(token);
-    });
-  }
-}
-```
+### endAsync
 
-Returns **TestWaiter**
+Should be used to signal the end of an async operation. Invocation of this
+method should be paired with a preceeding `beginAsync` call, which would indicate the
+beginning of an async operation.
 
-### waitForPromise
+#### Parameters
+
+- `item` {T} The item to that was registered for waiting
+
+### waitUntil
+
+Used to determine if the waiter system should still wait for async
+operations to complete.
+
+Returns **[boolean][21]**
+
+### debugInfo
+
+Returns the `debugInfo` for each item tracking async operations in this waiter.
+
+Returns **ITestWaiterDebugInfo**
+
+## waitForPromise
 
 A convenient utility function to simplify waiting for a promise.
 
-#### Parameters
+### Parameters
 
 - `promise` {Promise<T>} The promise to track async operations for
 - `label` {string} An optional string to identify the promise
 
-#### Examples
+### Examples
 
 ```javascript
 import Component from '@ember/component';
@@ -127,56 +136,57 @@ export default class Friendz extends Component {
 }
 ```
 
-## Waiter
+## buildWaiter
 
-## TestWaiter&lt;T>
+Builds and returns a test waiter. The type of the
+returned waiter is dependent on whether the app or
+addon is in `DEBUG` mode or not.
 
-## Types
+### Parameters
 
-### Primitive
+- `name` {string} The name of the test waiter
 
-Type: ([string][28] \| [number][29] \| [boolean][27] \| [symbol][30] | bigint)
+### Examples
 
-### WaiterName
+```javascript
+import Component from '@ember/component';
+import { buildWaiter } from 'ember-test-waiters';
 
-Type: [string][28]
+if (DEBUG) {
+  let waiter = buildWaiter('friend-waiter');
+}
 
-### Token
+export default class Friendz extends Component {
+  didInsertElement() {
+    waiter.beginAsync(this);
 
-Type: ([Primitive][31] | any)
+    someAsyncWork().then(() => {
+      waiter.endAsync(this);
+    });
+  }
+}
+```
 
-### TestWaiterDebugInfo
-
-### PendingWaiterState
+Returns **ITestWaiter**
 
 [1]: #test-waiter-manager
 [2]: #register
-[3]: #parameters
-[4]: #unregister
-[5]: #parameters-1
-[6]: #getwaiters
-[7]: #getpendingwaiterstate
-[8]: #haspendingwaiters
-[9]: #utility-functions
-[10]: #buildwaiter
-[11]: #parameters-2
-[12]: #examples
-[13]: #waitforpromise
-[14]: #parameters-3
-[15]: #examples-1
-[16]: #waiter
-[17]: #testwaitert
-[18]: #types
-[19]: #primitive
-[20]: #waitername
-[21]: #token
-[22]: #testwaiterdebuginfo
-[23]: #pendingwaiterstate
-[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-[25]: #waiter
-[26]: #pendingwaiterstate
-[27]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-[28]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-[29]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
-[30]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol
-[31]: #primitive
+[3]: #unregister
+[4]: #getwaiters
+[5]: #getpendingwaiterstate
+[6]: #haspendingwaiters
+[7]: #_reset
+[8]: #test-waiter-class
+[9]: #testwaiter
+[10]: #beginasync
+[11]: #endasync
+[12]: #waituntil
+[13]: #debuginfo
+[14]: #waitforpromise
+[15]: #parameters
+[16]: #examples
+[17]: #buildwaiter
+[18]: #parameters-1
+[19]: #examples-1
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
