@@ -70,11 +70,8 @@
     "release-it-lerna-changelog": "^1.0.3",
     "typescript": "^3.7.4"
   },
-  "resolutions": {
-    "**/engine.io": "~3.3.0"
-  },
   "engines": {
-    "node": "6.* || 8.* || >= 10.*"
+    "node": "10.* || >= 12.*"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
