@@ -14,7 +14,6 @@
   },
   "scripts": {
     "build": "ember build",
-    "docs": "ember ts:precompile && documentation build --document-exported \"addon/index.js\" --document-exported \"addon-test-support/index.js\" --config documentation.yml --markdown-toc-max-depth 3 -f md -o API.md && prettier --single-quote --trailing-comma es5 --write API.md && ember ts:clean",
     "lint:js": "eslint --ext ts,js .",
     "lint:ts": "tsc -p tsconfig.json --noEmit",
     "prepublishOnly": "ember ts:precompile",
