@@ -17,6 +17,8 @@ Test waiters can be added to application code to provide the necessary integrati
 function as intended in development mode, and we strip the vast majority of the functionality in production mode so as to
 minimize negative performance impact.
 
+This addon implements the design specified in [RFC 581](https://github.com/emberjs/rfcs/blob/master/text/0581-new-test-waiters.md).
+
 ## Table of Contents
 
 - [Compatibility](#compatibility)
