@@ -1,8 +1,9 @@
+import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
+import { _reset, getPendingWaiterState, waitForPromise } from 'ember-test-waiters';
 import { module, test } from 'qunit';
-import { Promise } from 'rsvp';
-import { _reset, waitForPromise, getPendingWaiterState } from 'ember-test-waiters';
-import MockStableError, { resetError, overrideError } from './utils/mock-stable-error';
+
 import { DEBUG } from '@glimmer/env';
+import { Promise } from 'rsvp';
 
 if (DEBUG) {
   module('wait-for-promise', function(hooks) {
@@ -12,7 +13,7 @@ if (DEBUG) {
     });
 
     test('waitForPromise wraps and registers a waiter', async function(assert) {
-      let promise: Promise<{}> = new Promise(resolve => {
+      let promise = new Promise(resolve => {
         resolve();
       });
 
@@ -38,7 +39,7 @@ if (DEBUG) {
     });
 
     test('waitForPromise transitions waiter to not pending even if promise throws', async function(assert) {
-      let promise: Promise<{}> = Promise.resolve().then(() => {
+      let promise = Promise.resolve().then(() => {
         throw new Error('Promise threw');
       });
 
@@ -50,7 +51,7 @@ if (DEBUG) {
     });
 
     test('waitForPromise transitions waiter to not pending even if promise throws when thenable wrapped', async function(assert) {
-      let promise: Promise<{}> = Promise.resolve().then(() => {
+      let promise = Promise.resolve().then(() => {
         throw new Error('Promise threw');
       });
 
