@@ -1,3 +1,24 @@
+## v2.0.0 (2020-02-26)
+
+#### :boom: Breaking Change
+* [#122](https://github.com/rwjblue/ember-test-waiters/pull/122) Update dependencies / devDependencies to latest. ([@rwjblue](https://github.com/rwjblue))
+* [#95](https://github.com/rwjblue/ember-test-waiters/pull/95) Dropping support for node 8 ([@scalvert](https://github.com/scalvert))
+* [#117](https://github.com/rwjblue/ember-test-waiters/pull/117) Rename interfaces, remove class exports. ([@scalvert](https://github.com/scalvert))
+
+#### :rocket: Enhancement
+* [#112](https://github.com/rwjblue/ember-test-waiters/pull/112) Do not throw errors for endAsync being called multiple times ([@scalvert](https://github.com/scalvert))
+
+#### :bug: Bug Fix
+* [#111](https://github.com/rwjblue/ember-test-waiters/pull/111) Fixes default tokens to be truthy ([@scalvert](https://github.com/scalvert))
+
+#### :house: Internal
+* [#122](https://github.com/rwjblue/ember-test-waiters/pull/122) Update dependencies / devDependencies to latest. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 3
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- Steve Calvert ([@scalvert](https://github.com/scalvert))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
 ## v1.2.0 (2020-01-14)
 
 #### :rocket: Enhancement
