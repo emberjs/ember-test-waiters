@@ -40,7 +40,6 @@
     "@types/rsvp": "^4.0.3",
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
-    "documentation": "^12.1.4",
     "ember-cli": "~3.16.0",
     "ember-cli-dependency-checker": "^3.2.0",
     "ember-cli-htmlbars": "^4.2.3",
