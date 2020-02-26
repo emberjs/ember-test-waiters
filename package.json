@@ -5,7 +5,7 @@
   "keywords": [
     "ember-addon"
   ],
-  "repository": "https://github.com/rwjblue/ember-test-waiters",
+  "repository": "https://github.com/emberjs/ember-test-waiters",
   "license": "MIT",
   "author": "",
   "directories": {
