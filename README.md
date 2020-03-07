@@ -25,6 +25,7 @@ This addon implements the design specified in [RFC 581](https://github.com/ember
 - [Installation](#installation)
 - [Quickstart](#quickstart)
   - [buildWaiter function](#buildwaiter-function)
+    - [Waiter naming conventions](#waiter-naming-conventions)
   - [waitForPromise function](#waitforpromise-function)
   - [Waiting on all waiters](#waiting-on-all-waiters)
 - [General Design](#general-design)
@@ -59,17 +60,31 @@ that provides a number of methods. The key methods that allow you to control asy
 a pair to _begin_ waiting and _end_ waiting respectively. The `beginAsync` method returns a `token`, which uniquely identifies that async operation. To mark the
 async operation as complete, call `endAsync`, passing in the `token` that was returned from the prior `beginAsync` call.
 
+#### Waiter naming conventions
+
+When building your waiter, you should ensure you use a meaningful name. At a minimum, your name needs to be constructed of a `namespace`, and optionally a `descriptor` in the format `namespace[:descriptor]`. Suggestions for naming conventions are as follows:
+
+For apps:
+
+1. `file-name` - if your file has only one waiter, the file name becomes the namespace
+1. `file-name:waiter-1`, `file-name:waiter-2`, ... - if your file has more than one waiter, the file name becomes the namespace and we add descriptors
+
+For addons:
+
+1. `addon-name` - if your addon has only one waiter, the addon name becomes the namespace
+1. `addon-name:waiter-1`, `addon-name:waiter-2`, ... - if your addon has more than one waiter, the addon name becomes the namespace and we add descriptors
+
 ```js
 import Component from '@ember/component';
 import { buildWaiter } from 'ember-test-waiters';
 
-let waiter = buildWaiter('friend-waiter');
+let waiter = buildWaiter('ember-friendz:friend-waiter');
 
 export default class Friendz extends Component {
   didInsertElement() {
     let token = waiter.beginAsync();
 
-    someAsyncWork()
+    makeFriendz()
       .then(() => {
         //... some work
       })
@@ -91,8 +106,8 @@ import { waitForPromise } from 'ember-test-waiters';
 
 export default class MoreFriendz extends Component {
   didInsertElement() {
-    waitForPromise(someAsyncWork).then(() => {
-      doOtherThings();
+    waitForPromise(makeFriendz).then(() => {
+      return goForDrinks();
     });
   }
 }

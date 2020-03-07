@@ -3,6 +3,14 @@ import { Primitive, TestWaiter, TestWaiterDebugInfo, WaiterName } from 'ember-te
 import { DEBUG } from '@glimmer/env';
 import Token from './token';
 import { register } from './waiter-manager';
+import { warn } from '@ember/debug';
+
+const WAITER_NAME_PATTERN = /^[^:]*:?.*/;
+let WAITER_NAMES = DEBUG ? new Set() : undefined;
+
+export function _resetWaiterNames() {
+  WAITER_NAMES = new Set();
+}
 
 function getNextToken(): Token {
   return new Token();
@@ -135,7 +143,25 @@ class NoopTestWaiter implements TestWaiter {
  */
 export default function buildWaiter(name: string): TestWaiter {
   if (DEBUG) {
-    return new TestWaiterImpl(name);
+    warn(`The waiter name '${name}' is already in use`, !WAITER_NAMES!.has(name), {
+      id: 'ember-test-waiters.duplicate-waiter-name',
+    });
+    WAITER_NAMES!.add(name);
   }
-  return new NoopTestWaiter(name);
+
+  if (!DEBUG) {
+    return new NoopTestWaiter(name);
+  }
+
+  warn(
+    `You must provide a name that contains a descriptive prefix separated by a colon.
+
+      Example: ember-fictitious-addon:some-file
+
+      You passed: ${name}`,
+    WAITER_NAME_PATTERN.test(name),
+    { id: 'ember-test-waiters.invalid-waiter-name' }
+  );
+
+  return new TestWaiterImpl(name);
 }
