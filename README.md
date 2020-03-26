@@ -27,6 +27,9 @@ This addon implements the design specified in [RFC 581](https://github.com/ember
   - [buildWaiter function](#buildwaiter-function)
   - [waitForPromise function](#waitforpromise-function)
   - [Waiting on all waiters](#waiting-on-all-waiters)
+- [Best Practices](#best-practices)
+  - [Use buildWaiter in module scope](#use-buildwaiter-in-module-scope)
+  - [Keep beginAsync/endAsync in same block scope](#keep-beginasyncendasync-in-same-block-scope)
 - [General Design](#general-design)
   - [Comparison of old waiters system to new](#comparison-of-old-waiters-system-to-new)
   - [New Test Waiters Design](#new-test-waiters-design)
@@ -112,6 +115,23 @@ let hasPendingWaiters = hasPendingWaiters();
 
 // ...
 ```
+
+## Best Practices
+
+### Use buildWaiter in module scope
+
+**TL;DR - _invoke `buildWaiter` in module scope rather than inside a class itself_**
+
+The `buildWaiter` function, as previously mentioned, returns an instance of a test waiter. That waiter
+is then used to mark the beginning and end of async operations. Internally, the test waiter instance manages _n_ async operations via a token system, allowing it to work across class instances. Due to this, it's recommended that you _do not_ invoke `buildWaiter` as part of the class itself. Doing so would require you to provide a unique name, per instance, of each test waiter.
+
+Instead, the best practice is to invoke `buildWaiter` in module scope - creating one test waiter instance per module. The waiter can then be used in methods of a class and will automatically provide the type of instance encapsulation that you need.
+
+### Keep beginAsync/endAsync in same block scope
+
+**TL;DR - _ensure you keep `beginAsync`/`endAsync` calls within the same block scope_**
+
+Beginning and ending async operation marking with the `beginAsync`/`endAsync` methods of a test waiter should be done as close together as possible. It's very easy to incorrectly invoke `beginAsync`, and subsequently _not_ invoke a paired `endAsync` call if your calls are easy to visualize in the same scope. Invoking these methods in different parts of your code, separate from one another, can increase the chances of making this mistake. As such, the best practice is to keep these related calls as close together as possible.
 
 ## General Design
 
