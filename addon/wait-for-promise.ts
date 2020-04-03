@@ -1,5 +1,5 @@
 import { DEBUG } from '@glimmer/env';
-import { Promise } from 'rsvp';
+import { Promise as RSVPPromise } from 'rsvp';
 import buildWaiter from './build-waiter';
 
 const PROMISE_WAITER = buildWaiter('promise-waiter');
@@ -8,7 +8,7 @@ const PROMISE_WAITER = buildWaiter('promise-waiter');
  * A convenient utility function to simplify waiting for a promise.
  *
  * @public
- * @param promise {Promise<T>} The promise to track async operations for
+ * @param promise {Promise<T> | RSVPPromise<T>} The promise to track async operations for
  * @param label {string} An optional string to identify the promise
  *
  * @example
@@ -25,18 +25,21 @@ const PROMISE_WAITER = buildWaiter('promise-waiter');
  *   }
  * }
  */
-export default function waitForPromise<T>(promise: Promise<T>, label?: string): Promise<T> {
+export default function waitForPromise<T>(
+  promise: Promise<T> | RSVPPromise<T>,
+  label?: string
+): Promise<T> | RSVPPromise<T> {
   let result = promise;
 
   if (DEBUG) {
     PROMISE_WAITER.beginAsync(promise, label);
 
     result = promise.then(
-      value => {
+      (value: T) => {
         PROMISE_WAITER.endAsync(promise);
         return value;
       },
-      error => {
+      (error: Error) => {
         PROMISE_WAITER.endAsync(promise);
         throw error;
       }
