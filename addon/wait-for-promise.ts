@@ -34,7 +34,7 @@ export default function waitForPromise<T>(
   if (DEBUG) {
     PROMISE_WAITER.beginAsync(promise, label);
 
-    result = promise.then(
+    result = (promise as Promise<T>).then(
       (value: T) => {
         PROMISE_WAITER.endAsync(promise);
         return value;
