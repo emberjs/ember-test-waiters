@@ -25,25 +25,26 @@ const PROMISE_WAITER = buildWaiter('promise-waiter');
  *   }
  * }
  */
-export default function waitForPromise<T>(
-  promise: Promise<T> | RSVPPromise<T>,
+export default function waitForPromise<T, PromiseType extends Promise<T> | RSVPPromise<T>>(
+  promise: PromiseType,
   label?: string
-): Promise<T> | RSVPPromise<T> {
+): PromiseType {
   let result = promise;
 
   if (DEBUG) {
     PROMISE_WAITER.beginAsync(promise, label);
 
-    result = (promise as Promise<T>).then(
-      (value: T) => {
-        PROMISE_WAITER.endAsync(promise);
-        return value;
-      },
-      (error: Error) => {
-        PROMISE_WAITER.endAsync(promise);
-        throw error;
-      }
-    );
+    result = (promise as any) // sorry
+      .then(
+        (value: T) => {
+          PROMISE_WAITER.endAsync(promise);
+          return value;
+        },
+        (error: Error) => {
+          PROMISE_WAITER.endAsync(promise);
+          throw error;
+        }
+      );
   }
 
   return result;
