@@ -1,3 +1,16 @@
+## v2.0.1 (2020-04-04)
+
+#### :bug: Bug Fix
+* [#130](https://github.com/emberjs/ember-test-waiters/pull/130) Fix Type Errors ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :memo: Documentation
+* [#123](https://github.com/emberjs/ember-test-waiters/pull/123) Refactoring documentation. ([@scalvert](https://github.com/scalvert))
+
+#### Committers: 3
+- Preston Sego ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- Steve Calvert ([@scalvert](https://github.com/scalvert))
+
 ## v2.0.0 (2020-02-26)
 
 #### :boom: Breaking Change
