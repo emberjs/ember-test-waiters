@@ -53,6 +53,10 @@ export function getWaiters(): Waiter[] {
  * @private
  */
 export function _reset(): void {
+  for (let waiter of getWaiters()) {
+    (waiter as any).isRegistered = false;
+  }
+
   WAITERS.clear();
 }
 

@@ -4,6 +4,12 @@ import buildWaiter from './build-waiter';
 
 const PROMISE_WAITER = buildWaiter('promise-waiter');
 
+type PromiseType<T> = Promise<T> | RSVP.Promise<T>;
+
+interface Thenable<T, Return extends PromiseType<T>> {
+  then(resolve: (value: T) => T, reject?: (error: Error) => T): Return;
+}
+
 /**
  * A convenient utility function to simplify waiting for a promise.
  *
@@ -25,26 +31,25 @@ const PROMISE_WAITER = buildWaiter('promise-waiter');
  *   }
  * }
  */
-export default function waitForPromise<T, PromiseType extends Promise<T> | RSVP.Promise<T>>(
-  promise: PromiseType,
+export default function waitForPromise<T, KindOfPromise extends PromiseType<T>>(
+  promise: KindOfPromise,
   label?: string
-): PromiseType {
+): KindOfPromise {
   let result = promise;
 
   if (DEBUG) {
     PROMISE_WAITER.beginAsync(promise, label);
 
-    result = (promise as any) // sorry
-      .then(
-        (value: T) => {
-          PROMISE_WAITER.endAsync(promise);
-          return value;
-        },
-        (error: Error) => {
-          PROMISE_WAITER.endAsync(promise);
-          throw error;
-        }
-      );
+    result = ((promise as unknown) as Thenable<T, KindOfPromise>).then(
+      (value: T) => {
+        PROMISE_WAITER.endAsync(promise);
+        return value;
+      },
+      (error: Error) => {
+        PROMISE_WAITER.endAsync(promise);
+        throw error;
+      }
+    );
   }
 
   return result;
