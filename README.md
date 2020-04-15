@@ -131,7 +131,7 @@ Instead, the best practice is to invoke `buildWaiter` in module scope - creating
 
 **TL;DR - _ensure you keep `beginAsync`/`endAsync` calls within the same block scope_**
 
-Beginning and ending async operation marking with the `beginAsync`/`endAsync` methods of a test waiter should be done as close together as possible. It's very easy to incorrectly invoke `beginAsync`, and subsequently _not_ invoke a paired `endAsync` call if your calls are easy to visualize in the same scope. Invoking these methods in different parts of your code, separate from one another, can increase the chances of making this mistake. As such, the best practice is to keep these related calls as close together as possible.
+Beginning and ending async operation marking with the `beginAsync`/`endAsync` methods of a test waiter should be done as close together as possible. It's very easy to incorrectly invoke `beginAsync`, and subsequently _not_ invoke a paired `endAsync` call **_if your calls are not easy to visualize in the same scope_**. Invoking these methods in different parts of your code, separate from one another, can increase the chances of making this mistake. As such, the best practice is to keep these related calls as close together as possible.
 
 ## General Design
 
