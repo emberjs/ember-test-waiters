@@ -10,4 +10,8 @@ module.exports = {
 
     forceHighlander(this.project);
   },
+
+  treeForAddon(tree) {
+    return this.processedAddonJsFiles(tree);
+  },
 };

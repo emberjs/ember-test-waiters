@@ -1,4 +1,4 @@
-import { Primitive, TestWaiter, TestWaiterDebugInfo, WaiterName } from 'ember-test-waiters';
+import { Primitive, TestWaiter, TestWaiterDebugInfo, WaiterName } from '@ember/test-waiters';
 
 import { DEBUG } from '@glimmer/env';
 import Token from './token';

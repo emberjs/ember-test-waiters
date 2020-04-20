@@ -21,28 +21,15 @@
     "module": "es6",
     "experimentalDecorators": true,
     "paths": {
-      "dummy/tests/*": [
-        "tests/*"
-      ],
-      "dummy/*": [
-        "tests/dummy/app/*",
-        "app/*"
-      ],
-      "ember-test-waiters": [
-        "addon"
-      ],
-      "ember-test-waiters/*": [
-        "addon/*"
-      ],
-      "ember-test-waiters/test-support": [
-        "addon-test-support"
-      ],
-      "ember-test-waiters/test-support/*": [
-        "addon-test-support/*"
-      ],
-      "*": [
-        "types/*"
-      ]
+      "dummy/tests/*": ["tests/*"],
+      "dummy/*": ["tests/dummy/app/*", "app/*"],
+      "ember-test-waiters": ["addon/ember-test-waiters"],
+      "ember-test-waiters/*": ["addon/ember-test-waiters/*"],
+      "@ember/test-waiters": ["addon/@ember/test-waiters"],
+      "@ember/test-waiters/*": ["addon/@ember/test-waiters/*"],
+      "ember-test-waiters/test-support": ["addon-test-support"],
+      "ember-test-waiters/test-support/*": ["addon-test-support/*"],
+      "*": ["types/*"]
     }
   },
   "include": [
