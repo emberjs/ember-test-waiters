@@ -1,4 +1,4 @@
-# ember-test-waiters
+# @ember/test-waiters
 
 ![CI Build](https://github.com/emberjs/ember-test-waiters/workflows/CI%20Build/badge.svg)
 [![npm version](https://badge.fury.io/js/ember-test-waiters.svg)](https://badge.fury.io/js/ember-test-waiters)
@@ -49,12 +49,12 @@ This addon implements the design specified in [RFC 581](https://github.com/ember
 ## Installation
 
 ```
-ember install ember-test-waiters
+ember install @ember/test-waiters
 ```
 
 ## Quickstart
 
-`ember-test-waiters` uses a minimal API to provide waiting functionality. This minimal API can be composed to accommodate various complex scenarios.
+`@ember/test-waiters` uses a minimal API to provide waiting functionality. This minimal API can be composed to accommodate various complex scenarios.
 
 ### buildWaiter function
 
@@ -79,7 +79,7 @@ For addons:
 
 ```js
 import Component from '@ember/component';
-import { buildWaiter } from 'ember-test-waiters';
+import { buildWaiter } from '@ember/test-waiters';
 
 let waiter = buildWaiter('ember-friendz:friend-waiter');
 
@@ -105,7 +105,7 @@ This addon also provides a `waitForPromise` function, which can be used to wrap 
 
 ```js
 import Component from '@ember/component';
-import { waitForPromise } from 'ember-test-waiters';
+import { waitForPromise } from '@ember/test-waiters';
 
 export default class MoreFriendz extends Component {
   didInsertElement() {
@@ -118,10 +118,10 @@ export default class MoreFriendz extends Component {
 
 ### Waiting on all waiters
 
-The `ember-test-waiters` addon provides a `waiter-manager` to register, unregister, iterate and invoke waiters to determine if we should wait for conditions to be met or continue test execution. This functionality is encapsulated in the `hasPendingWaiters` function, which evaluates each registered waiter to determine its current state.
+The `@ember/test-waiters` addon provides a `waiter-manager` to register, unregister, iterate and invoke waiters to determine if we should wait for conditions to be met or continue test execution. This functionality is encapsulated in the `hasPendingWaiters` function, which evaluates each registered waiter to determine its current state.
 
 ```js
-import { hasPendingWaiters } from 'ember-test-waiters';
+import { hasPendingWaiters } from '@ember/test-waiters';
 
 // ...
 
@@ -172,7 +172,7 @@ To address this, a new addon was written to experiment on a new test waiter syst
 1. A more robust way to gather debugging information for the test waiter
 1. Default test waiters with the ability to author your own, more complex test waiters
 
-This allows developers to utilize `ember-test-waiters` to annotate their asynchronous operations that are not tracked by an `await settled()` check, and for those annotations to provide useful debugging information in the event their async extended past the expected duration of the test.
+This allows developers to utilize `@ember/test-waiters` to annotate their asynchronous operations that are not tracked by an `await settled()` check, and for those annotations to provide useful debugging information in the event their async extended past the expected duration of the test.
 
 ## Comparison of old waiters system to new
 
@@ -196,7 +196,7 @@ The new test waiters system looks like this:
 
 ```js
 import Component from '@ember/component';
-import { buildWaiter } from 'ember-test-waiters';
+import { buildWaiter } from '@ember/test-waiters';
 
 let waiter = buildWaiter('friend-waiter');
 
@@ -283,7 +283,7 @@ To annotate the example provided above:
 
 ```js
 import Component from '@ember/component';
-import { buildWaiter } from 'ember-test-waiters';
+import { buildWaiter } from '@ember/test-waiters';
 
 // Creates a test waiter with the name 'friend-waiter' that
 // is usable by all instances of the `Friendz` component.
@@ -315,7 +315,7 @@ The `waitForPromise` utility provides a convenience wrapper around the `TestWait
 
 ```js
 import Component from '@ember/component';
-import { waitForPromise } from 'ember-test-waiters';
+import { waitForPromise } from '@ember/test-waiters';
 
 export default class MoreFriendz extends Component {
   didInsertElement() {

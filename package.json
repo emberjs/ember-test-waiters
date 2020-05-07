@@ -1,5 +1,5 @@
 {
-  "name": "ember-test-waiters",
+  "name": "@ember/test-waiters",
   "version": "2.0.1",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [

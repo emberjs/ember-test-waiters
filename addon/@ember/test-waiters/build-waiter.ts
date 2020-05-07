@@ -125,7 +125,7 @@ class NoopTestWaiter implements TestWaiter {
  * @example
  *
  * import Component from '@ember/component';
- * import { buildWaiter } from 'ember-test-waiters';
+ * import { buildWaiter } from '@ember/test-waiters';
  *
  * if (DEBUG) {
  *   let waiter = buildWaiter('friend-waiter');

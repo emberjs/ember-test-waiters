@@ -1,8 +1,10 @@
 'use strict';
 const semver = require('semver');
 
+const MODULE_NAMES = ['ember-test-waiters', '@ember/test-waiters'];
+
 function discoverAddons(addon, testWaiterAddons) {
-  let testWaiterAddon = addon.addons.find(addon => addon.name === 'ember-test-waiters');
+  let testWaiterAddon = addon.addons.find(addon => MODULE_NAMES.includes(addon.name));
 
   if (testWaiterAddon) {
     testWaiterAddons.push(testWaiterAddon);
