@@ -1,17 +1,6 @@
 'use strict';
 const semver = require('semver');
-
-function discoverAddons(addon, testWaiterAddons) {
-  let testWaiterAddon = addon.addons.find(addon => addon.name === 'ember-test-waiters');
-
-  if (testWaiterAddon) {
-    testWaiterAddons.push(testWaiterAddon);
-  }
-
-  addon.addons.forEach(addon => discoverAddons(addon, testWaiterAddons));
-
-  return testWaiterAddons;
-}
+const VersionChecker = require('ember-cli-version-checker');
 
 function findLatestVersion(addons) {
   let latestVersion = addons[0];
@@ -26,7 +15,8 @@ function findLatestVersion(addons) {
 }
 
 function forceHighlander(project) {
-  let testWaiterAddons = discoverAddons(project, []);
+  let checker = VersionChecker.forProject(project);
+  let testWaiterAddons = checker.filterAddonsByName('ember-test-waiters');
   let latestVersion = findLatestVersion(testWaiterAddons);
   let noop = () => {};
 
@@ -45,7 +35,6 @@ function forceHighlander(project) {
 }
 
 module.exports = {
-  discoverAddons,
   findLatestVersion,
   forceHighlander,
 };

@@ -1,4 +1,5 @@
 const QUnit = require('qunit');
+const VersionChecker = require('ember-cli-version-checker');
 const highlander = require('../force-highlander-addon');
 
 const test = QUnit.test;
@@ -94,14 +95,9 @@ QUnit.module('force-highlander-addon', function(hooks) {
     };
   });
 
-  test('discoverAddons can discover all test waiter addons', function(assert) {
-    let addons = highlander.discoverAddons(this.project, []);
-
-    assert.equal(addons.length, 4);
-  });
-
   test('findLatestVersion can find the latest version from the set', function(assert) {
-    let addons = highlander.discoverAddons(this.project, []);
+    let checker = VersionChecker.forProject(this.project);
+    let addons = checker.filterAddonsByName('ember-test-waiters');
     let latestVersion = highlander.findLatestVersion(addons);
 
     assert.equal(latestVersion.pkg.version, '3.0.1');
