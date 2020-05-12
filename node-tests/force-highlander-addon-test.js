@@ -10,6 +10,8 @@ QUnit.module('force-highlander-addon', function(hooks) {
     this.project = {
       name: 'ember-top-level-package',
       pkg: { version: '1.0.0' },
+      isEmberCLIProject() {},
+      _addonsInitialized: true,
       addons: [
         {
           name: 'baz',
