@@ -1,3 +1,18 @@
+## v2.1.0 (2020-05-13)
+
+#### :rocket: Enhancement
+* [#133](https://github.com/emberjs/ember-test-waiters/pull/133) Expose `@ember/test-waiters` in addition to `ember-test-waiters` module names ([@scalvert](https://github.com/scalvert))
+* [#126](https://github.com/emberjs/ember-test-waiters/pull/126) Adding constraints around naming test waiters ([@scalvert](https://github.com/scalvert))
+
+#### :memo: Documentation
+* [#126](https://github.com/emberjs/ember-test-waiters/pull/126) Adding constraints around naming test waiters ([@scalvert](https://github.com/scalvert))
+
+#### :house: Internal
+* [#135](https://github.com/emberjs/ember-test-waiters/pull/135) Switch to using `ember-cli-version-checker` for gathering addons ([@scalvert](https://github.com/scalvert))
+
+#### Committers: 1
+- Steve Calvert ([@scalvert](https://github.com/scalvert))
+
 ## v2.0.1 (2020-04-04)
 
 #### :bug: Bug Fix
