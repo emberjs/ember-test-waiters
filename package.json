@@ -12,6 +12,8 @@
     "doc": "doc",
     "test": "tests"
   },
+  "main": "addon/@ember/test-helpers/index.ts",
+  "types": "addon/@ember/test-helpers/index.d.ts",
   "scripts": {
     "build": "ember build",
     "lint:js": "eslint --ext ts,js .",
@@ -75,7 +77,8 @@
     "registry": "https://registry.npmjs.org"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "main": "index.js"
   },
   "release-it": {
     "plugins": {

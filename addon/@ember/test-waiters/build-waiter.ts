@@ -1,4 +1,4 @@
-import { Primitive, TestWaiter, TestWaiterDebugInfo, WaiterName } from 'ember-test-waiters';
+import { Primitive, TestWaiter, TestWaiterDebugInfo, WaiterName } from './';
 
 import { DEBUG } from '@glimmer/env';
 import Token from './token';
@@ -125,7 +125,7 @@ class NoopTestWaiter implements TestWaiter {
  * @example
  *
  * import Component from '@ember/component';
- * import { buildWaiter } from 'ember-test-waiters';
+ * import { buildWaiter } from '@ember/test-waiters';
  *
  * if (DEBUG) {
  *   let waiter = buildWaiter('friend-waiter');

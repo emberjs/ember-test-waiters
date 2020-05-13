@@ -20,7 +20,7 @@ interface Thenable<T, Return extends PromiseType<T>> {
  * @example
  *
  * import Component from '@ember/component';
- * import { waitForPromise } from 'ember-test-waiters';
+ * import { waitForPromise } from '@ember/test-waiters';
  *
  * export default class Friendz extends Component {
  *   didInsertElement() {
