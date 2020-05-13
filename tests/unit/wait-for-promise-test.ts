@@ -30,7 +30,7 @@ if (DEBUG) {
         assert.deepEqual(getPendingWaiterState(), {
           pending: 1,
           waiters: {
-            'promise-waiter': [
+            'ember-test-waiters:promise-waiter': [
               {
                 label: undefined,
                 stack: 'STACK',
@@ -87,7 +87,7 @@ if (DEBUG) {
         assert.deepEqual(getPendingWaiterState(), {
           pending: 1,
           waiters: {
-            'promise-waiter': [
+            'ember-test-waiters:promise-waiter': [
               {
                 label: undefined,
                 stack: 'STACK',

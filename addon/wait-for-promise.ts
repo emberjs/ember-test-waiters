@@ -2,7 +2,7 @@ import { DEBUG } from '@glimmer/env';
 import RSVP from 'rsvp';
 import buildWaiter from './build-waiter';
 
-const PROMISE_WAITER = buildWaiter('promise-waiter');
+const PROMISE_WAITER = buildWaiter('ember-test-waiters:promise-waiter');
 
 type PromiseType<T> = Promise<T> | RSVP.Promise<T>;
 
