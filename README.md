@@ -49,7 +49,7 @@ This addon implements the design specified in [RFC 581](https://github.com/ember
 ## Installation
 
 ```
-ember install @ember/test-waiters
+ember install ember-test-waiters
 ```
 
 ## Quickstart
