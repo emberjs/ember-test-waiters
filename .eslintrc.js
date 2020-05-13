@@ -41,9 +41,7 @@ module.exports = {
         node: true,
       },
       plugins: ['node'],
-      rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
-        'node/no-unpublished-require': 'off',
-      }),
+      extends: ['plugin:node/recommended'],
     },
     {
       files: ['tests/**/*.[jt]s'],
