@@ -1,5 +1,5 @@
 import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
-import { TestWaiterDebugInfo, Waiter, WaiterName } from '@ember/test-waiters/types';
+import { TestWaiterDebugInfo, Waiter, WaiterName } from 'ember-test-waiters/types';
 import {
   Token,
   _reset,
@@ -10,7 +10,7 @@ import {
   hasPendingWaiters,
   register,
   unregister,
-} from '@ember/test-waiters';
+} from 'ember-test-waiters';
 import { module, test } from 'qunit';
 
 import { DEBUG } from '@glimmer/env';

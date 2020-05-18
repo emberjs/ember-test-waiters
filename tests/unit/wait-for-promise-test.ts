@@ -1,5 +1,5 @@
 import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
-import { _reset, getPendingWaiterState, waitForPromise } from '@ember/test-waiters';
+import { _reset, getPendingWaiterState, waitForPromise } from 'ember-test-waiters';
 import { module, test } from 'qunit';
 
 import { DEBUG } from '@glimmer/env';

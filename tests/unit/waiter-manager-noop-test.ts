@@ -1,4 +1,4 @@
-import { _reset, buildWaiter, getWaiters, register } from '@ember/test-waiters';
+import { _reset, buildWaiter, getWaiters, register } from 'ember-test-waiters';
 import { module, test } from 'qunit';
 
 import { DEBUG } from '@glimmer/env';
