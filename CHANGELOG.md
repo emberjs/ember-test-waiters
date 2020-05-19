@@ -1,3 +1,12 @@
+## v2.1.1 (2020-05-19)
+
+#### :bug: Bug Fix
+* [#148](https://github.com/emberjs/ember-test-waiters/pull/148) Inverting module export locations for multi-module publishing ([@scalvert](https://github.com/scalvert))
+
+#### Committers: 2
+- Steve Calvert ([@scalvert](https://github.com/scalvert))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
 ## v2.1.0 (2020-05-13)
 
 #### :rocket: Enhancement
