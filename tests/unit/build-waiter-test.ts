@@ -5,11 +5,11 @@ import {
   buildWaiter,
   getPendingWaiterState,
   getWaiters,
-} from '@ember/test-waiters';
+} from 'ember-test-waiters';
 import { module, test } from 'qunit';
 
 import { Promise } from 'rsvp';
-import Token from '@ember/test-waiters/token';
+import Token from 'ember-test-waiters/token';
 import { registerWarnHandler } from '@ember/debug';
 
 module('build-waiter', function(hooks) {
