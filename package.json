@@ -12,8 +12,8 @@
     "doc": "doc",
     "test": "tests"
   },
-  "main": "addon/@ember/test-helpers/index.ts",
-  "types": "addon/@ember/test-helpers/index.d.ts",
+  "main": "addon/ember-test-waiters/index.ts",
+  "types": "index.d.ts",
   "scripts": {
     "build": "ember build",
     "lint:js": "eslint --ext ts,js .",
