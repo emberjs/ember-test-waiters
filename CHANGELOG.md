@@ -1,3 +1,12 @@
+## v2.1.2 (2020-06-04)
+
+#### :bug: Bug Fix
+* [#156](https://github.com/emberjs/ember-test-waiters/pull/156) Updating paths for types in package.json ([@scalvert](https://github.com/scalvert))
+
+#### Committers: 2
+- Steve Calvert ([@scalvert](https://github.com/scalvert))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
 ## v2.1.1 (2020-05-19)
 
 #### :bug: Bug Fix
