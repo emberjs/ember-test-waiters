@@ -37,7 +37,7 @@
     "@glimmer/env": "^0.1.7",
     "@types/ember": "^3.16.0",
     "@types/ember-test-helpers": "^1.0.6",
-    "@types/ember-testing-helpers": "^0.0.3",
+    "@types/ember-testing-helpers": "^0.0.4",
     "@types/ember__test-helpers": "^0.7.9",
     "@types/qunit": "^2.9.1",
     "@types/rsvp": "^4.0.3",
