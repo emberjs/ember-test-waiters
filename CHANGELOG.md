@@ -1,3 +1,12 @@
+## v2.1.3 (2020-07-28)
+
+#### :bug: Bug Fix
+* [#165](https://github.com/emberjs/ember-test-waiters/pull/165) Fixes incorrectly nested exports for users of ember-cli < 3.13.x ([@scalvert](https://github.com/scalvert))
+
+#### Committers: 2
+- Steve Calvert ([@scalvert](https://github.com/scalvert))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
 ## v2.1.2 (2020-06-04)
 
 #### :bug: Bug Fix
