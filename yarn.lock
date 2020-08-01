@@ -1427,10 +1427,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/ember-test-helpers@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@types/ember-test-helpers/-/ember-test-helpers-1.0.6.tgz#4d63faf26bae0511289c281fce019800b167f7fd"
-  integrity sha512-NhYw7NdY+l/R94ePq3FqGoejJDRrqU0wPLU1itZBLGS8z6BGOBPS0stip9oWnGs5kDgTVWD/m56gkY3mbSbz0Q==
+"@types/ember-test-helpers@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@types/ember-test-helpers/-/ember-test-helpers-1.0.8.tgz#f391a65177e1924a4defcf57e49304144abc3c40"
+  integrity sha512-tkFfW4fblFfXxJboCodVaw2PVjFIvSzhO+m/cXqunRyN4VffC6gcaPMnfJYQ68h25jLMDyuTrks9SsnITjs3pg==
   dependencies:
     "@types/ember" "*"
     "@types/htmlbars-inline-precompile" "*"
