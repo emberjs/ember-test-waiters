@@ -1,3 +1,5 @@
+import RSVP from 'rsvp';
+
 /**
  * @type WaiterName
  *
@@ -105,4 +107,10 @@ export interface PendingWaiterState {
   waiters: {
     [waiterName: string]: TestWaiterDebugInfo[] | true;
   };
+}
+
+export type PromiseType<T> = Promise<T> | RSVP.Promise<T>;
+
+export interface Thenable<T, Return extends PromiseType<T>> {
+  then(resolve: (value: T) => T, reject?: (error: Error) => T): Return;
 }
