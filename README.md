@@ -78,16 +78,16 @@ For addons:
 1. `addon-name:waiter-1`, `addon-name:waiter-2`, ... - if your addon has more than one waiter, the addon name becomes the namespace and we add descriptors
 
 ```js
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { buildWaiter } from '@ember/test-waiters';
 
 let waiter = buildWaiter('ember-friendz:friend-waiter');
 
 export default class Friendz extends Component {
-  didInsertElement() {
+  funcWithAsync() {
     let token = waiter.beginAsync();
 
-    makeFriendz()
+    return makeFriendz()
       .then(() => {
         //... some work
       })
@@ -104,13 +104,54 @@ This addon also provides a `waitForPromise` function, which can be used to wrap 
 `waitForPromise` function will ensure that `endAsync` is called correctly in the `finally` call of your promise.
 
 ```js
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { waitForPromise } from '@ember/test-waiters';
 
 export default class MoreFriendz extends Component {
-  didInsertElement() {
-    waitForPromise(makeFriendz).then(() => {
+  funcWithAsync() {
+    return waitForPromise(makeFriendz).then(() => {
       return goForDrinks();
+    });
+  }
+}
+```
+
+### waitFor function
+
+Similar to the `waitForPromise` function, the `waitFor` function can be use to wait for async calls. It can be used with async functions, and in decorator form to wrap an async function so calls to it are registered with the test waiter system.
+
+```js
+// wrapping async functions
+import Component from '@glimmer/component';
+import { waitFor } from 'ember-test-waiters';
+
+export default Component.extend({
+  doAsyncStuff: waitFor(async function doAsyncStuff() {
+    await someAsyncWork();
+  }),
+
+  funcWithAsync() {
+    return this.doAsyncStuff().then(() => {
+      doOtherThings();
+    });
+  },
+});
+```
+
+```js
+// decorator form
+import Component from '@glimmer/component';
+import { waitFor } from 'ember-test-waiters';
+
+export default class MoreFriendz extends Component {
+  @waitFor
+  async doAsyncStuff() {
+    await someAsyncWork();
+  }
+
+  funcWithAsync() {
+    return this.doAsyncStuff().then(() => {
+      doOtherThings();
     });
   }
 }
@@ -195,13 +236,13 @@ The new system captures an error object when the waiter's `beginAsync` method is
 The new test waiters system looks like this:
 
 ```js
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { buildWaiter } from '@ember/test-waiters';
 
 let waiter = buildWaiter('friend-waiter');
 
 export default class Friendz extends Component {
-  didInsertElement() {
+  funcWithAsync() {
     let token = waiter.beginAsync();
 
     someAsyncWork()
@@ -282,7 +323,7 @@ The API used to signal whether an asynchronous operation has begun and ultimatel
 To annotate the example provided above:
 
 ```js
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { buildWaiter } from '@ember/test-waiters';
 
 // Creates a test waiter with the name 'friend-waiter' that
@@ -290,7 +331,7 @@ import { buildWaiter } from '@ember/test-waiters';
 let waiter = buildWaiter('friend-waiter');
 
 export default class Friendz extends Component {
-  didInsertElement() {
+  funcWithAsync() {
     // Alerts the test waiter system that an async operation has started,
     // storing the resulting unique token to be used to notify the test
     // waiter system that the operation has ended.
@@ -314,11 +355,11 @@ export default class Friendz extends Component {
 The `waitForPromise` utility provides a convenience wrapper around the `TestWaiter` class for use with promises. It ensures the `endAsync` call is invoked in the `finally` of the configured promise.
 
 ```js
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { waitForPromise } from '@ember/test-waiters';
 
 export default class MoreFriendz extends Component {
-  didInsertElement() {
+  funcWithAsync() {
     waitForPromise(someAsyncWork).then(() => {
       doOtherThings();
     });

@@ -1,14 +1,9 @@
 import { DEBUG } from '@glimmer/env';
-import RSVP from 'rsvp';
 import buildWaiter from './build-waiter';
 
+import { PromiseType, Thenable } from './types';
+
 const PROMISE_WAITER = buildWaiter('ember-test-waiters:promise-waiter');
-
-type PromiseType<T> = Promise<T> | RSVP.Promise<T>;
-
-interface Thenable<T, Return extends PromiseType<T>> {
-  then(resolve: (value: T) => T, reject?: (error: Error) => T): Return;
-}
 
 /**
  * A convenient utility function to simplify waiting for a promise.
