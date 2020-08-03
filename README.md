@@ -116,14 +116,35 @@ export default class MoreFriendz extends Component {
 }
 ```
 
-It can also be used in decorator form to wrap an async function so calls to it are registered with the test waiter system.
+### waitFor function
+
+Similar to the `waitForPromise` function, the `waitFor` function can be use to wait for async calls. It can be used with async functions, and in decorator form to wrap an async function so calls to it are registered with the test waiter system.
 
 ```js
+// wrapping async functions
 import Component from '@ember/component';
-import { waitForPromise } from 'ember-test-waiters';
+import { waitFor } from 'ember-test-waiters';
+
+export default Component.extend({
+  doAsyncStuff: waitFor(async function doAsyncStuff() {
+    await someAsyncWork();
+  }),
+
+  didInsertElement() {
+    this.doAsyncStuff().then(() => {
+      doOtherThings();
+    });
+  },
+});
+```
+
+```js
+// decorator form
+import Component from '@ember/component';
+import { waitFor } from 'ember-test-waiters';
 
 export default class MoreFriendz extends Component {
-  @waitForPromise
+  @waitFor
   async doAsyncStuff() {
     await someAsyncWork();
   }
@@ -134,25 +155,6 @@ export default class MoreFriendz extends Component {
     });
   }
 }
-```
-
-or in non-decorator form to wrap an async function.
-
-```js
-import Component from '@ember/component';
-import { waitForPromise } from 'ember-test-waiters';
-
-export default Component.extend({
-  doAsyncStuff: waitForPromise(async function doAsyncStuff() {
-    await someAsyncWork();
-  }),
-
-  didInsertElement() {
-    this.doAsyncStuff().then(() => {
-      doOtherThings();
-    });
-  }
-})
 ```
 
 ### Waiting on all waiters

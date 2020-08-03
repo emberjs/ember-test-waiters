@@ -6,27 +6,9 @@ type AsyncFunctionArguments = [AsyncFunction<any[], any>, string?];
 type DecoratorArguments = [object, string, PropertyDescriptor, string?];
 
 /**
- * A convenient utility function to simplify waiting for a promise. Can be used
- * in both decorator and function form, and the function form either accepts a
- * promise or an async function.
+ * A convenient utility function to simplify waiting for async. Can be used
+ * in both decorator and function form.
  *
- * @public
- * @param promise {Promise<T> | RSVP.Promise<T>} The promise to track async operations for
- * @param label {string} An optional string to identify the promise
- *
- * @example
- *
- * import Component from '@ember/component';
- * import { waitForPromise } from '@ember/test-waiters';
- *
- * export default class Friendz extends Component {
- *   didInsertElement() {
- *     waitForPromise(new Promise(resolve => {
- *       doSomeWork();
- *       resolve();
- *     }));
- *   }
- * }
  *
  * @public
  * @param promise {Function} An async function
@@ -35,10 +17,10 @@ type DecoratorArguments = [object, string, PropertyDescriptor, string?];
  * @example
  *
  * import Component from '@ember/component';
- * import { waitForPromise } from 'ember-test-waiters';
+ * import { waitFor } from 'ember-test-waiters';
  *
  * export default Component.extend({
- *   doAsyncStuff: waitForPromise(async function doAsyncStuff() {
+ *   doAsyncStuff: waitFor(async function doAsyncStuff() {
  *     await somethingAsync();
  *   }
  * });
@@ -46,10 +28,10 @@ type DecoratorArguments = [object, string, PropertyDescriptor, string?];
  * @example
  *
  * import Component from '@ember/component';
- * import { waitForPromise } from 'ember-test-waiters';
+ * import { waitFor } from 'ember-test-waiters';
  *
  * export default class Friendz extends Component {
- *   @waitForPromise
+ *   @waitFor
  *   async doAsyncStuff() {
  *     await somethingAsync();
  *   }
@@ -69,7 +51,6 @@ export default function waitFor(
   let isAsyncFunction = args.length < 3;
 
   if (isAsyncFunction) {
-    // argument is async function
     let [fn, label] = args as AsyncFunctionArguments;
 
     if (!DEBUG) {

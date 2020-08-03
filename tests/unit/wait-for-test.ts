@@ -14,7 +14,7 @@ interface PromiseClassType<T> {
 
 interface PromiseDef {
   name: string;
-  PromiseClass: PromiseClassType<any>;
+  Promise: PromiseClassType<any>;
 }
 
 interface ModeDef {
@@ -30,24 +30,23 @@ if (DEBUG) {
       resetError();
     });
 
-    // We want to ensure we test against both RSVP and Native promises
-    const promiseImpls: PromiseDef[] = [
-      { name: 'Native Promise', PromiseClass: Promise },
-      { name: 'RSVP.Promise', PromiseClass: RSVP.Promise },
+    const promiseImplementations: PromiseDef[] = [
+      { name: 'Native Promise', Promise },
+      { name: 'RSVP.Promise', Promise: RSVP.Promise },
     ];
 
-    promiseImpls.forEach(({ name, PromiseClass }: PromiseDef) => {
+    promiseImplementations.forEach(({ name, Promise }: PromiseDef) => {
       module(name, function() {
         class EmberObjectThing extends EmberObject.extend({
           doAsyncStuff: waitFor(async function doAsyncStuff(...args: any) {
-            await new PromiseClass(resolve => {
+            await new Promise(resolve => {
               setTimeout(resolve, 10);
             });
             return Array.from(args).reverse();
           }),
 
           asyncThrow: waitFor(async function asyncThrow() {
-            await new PromiseClass(resolve => {
+            await new Promise(resolve => {
               setTimeout(resolve, 10);
             });
             throw new Error('doh!');
@@ -57,7 +56,7 @@ if (DEBUG) {
         class NativeThing {
           @waitFor
           async doAsyncStuff(...args: any) {
-            await new PromiseClass(resolve => {
+            await new Promise(resolve => {
               setTimeout(resolve, 10);
             });
             return Array.from(args).reverse();
@@ -65,16 +64,15 @@ if (DEBUG) {
 
           @waitFor
           async asyncThrow() {
-            await new PromiseClass(resolve => {
+            await new Promise(resolve => {
               setTimeout(resolve, 10);
             });
             throw new Error('doh!');
           }
         }
 
-        const modes = [
+        const invocationType = [
           {
-            // call an EmberObject class function that is wrapped in waitFor()
             name: 'class function',
             createPromise(...args: any[]) {
               return EmberObjectThing.create().doAsyncStuff(...args);
@@ -84,7 +82,6 @@ if (DEBUG) {
             },
           },
           {
-            // call a native class function that is decorated with @waitFor
             name: 'decorator',
             createPromise(...args: any[]) {
               return new NativeThing().doAsyncStuff(...args);
@@ -95,7 +92,7 @@ if (DEBUG) {
           },
         ];
 
-        modes.forEach(({ name, createPromise, createThrowingPromise }: ModeDef) => {
+        invocationType.forEach(({ name, createPromise, createThrowingPromise }: ModeDef) => {
           module(name, function() {
             test('waitFor wraps and registers a waiter', async function(assert) {
               overrideError(MockStableError);
