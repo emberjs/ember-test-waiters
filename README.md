@@ -87,7 +87,7 @@ export default class Friendz extends Component {
   funcWithAsync() {
     let token = waiter.beginAsync();
 
-    makeFriendz()
+    return makeFriendz()
       .then(() => {
         //... some work
       })
@@ -109,7 +109,7 @@ import { waitForPromise } from '@ember/test-waiters';
 
 export default class MoreFriendz extends Component {
   funcWithAsync() {
-    waitForPromise(makeFriendz).then(() => {
+    return waitForPromise(makeFriendz).then(() => {
       return goForDrinks();
     });
   }
@@ -131,7 +131,7 @@ export default Component.extend({
   }),
 
   funcWithAsync() {
-    this.doAsyncStuff().then(() => {
+    return this.doAsyncStuff().then(() => {
       doOtherThings();
     });
   },
@@ -150,7 +150,7 @@ export default class MoreFriendz extends Component {
   }
 
   funcWithAsync() {
-    this.doAsyncStuff().then(() => {
+    return this.doAsyncStuff().then(() => {
       doOtherThings();
     });
   }

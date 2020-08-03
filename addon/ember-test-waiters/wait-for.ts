@@ -1,5 +1,6 @@
 import { DEBUG } from '@glimmer/env';
 import waitForPromise from './wait-for-promise';
+import { PromiseType } from './types';
 
 type AsyncFunction<A extends Array<any>, PromiseReturn> = (...args: A) => Promise<PromiseReturn>;
 type AsyncFunctionArguments = [AsyncFunction<any[], any>, string?];
@@ -53,15 +54,7 @@ export default function waitFor(
   if (isAsyncFunction) {
     let [fn, label] = args as AsyncFunctionArguments;
 
-    if (!DEBUG) {
-      return fn;
-    }
-
-    return function(this: any, ...args: any[]) {
-      let promise = fn.call(this, ...args);
-
-      return waitForPromise(promise, label);
-    };
+    return wrapFunction(fn, label);
   } else {
     let [, , descriptor, label] = args as DecoratorArguments;
 
@@ -71,11 +64,35 @@ export default function waitFor(
 
     let fn = descriptor.value;
 
-    descriptor.value = function(...args: any[]) {
-      let promise = fn.call(this, ...args);
-      return waitForPromise(promise, label);
-    };
+    descriptor.value = wrapFunction(fn, label);
 
     return descriptor;
   }
+}
+
+function wrapFunction(fn: Function, label?: string) {
+  if (!DEBUG) {
+    return fn;
+  }
+
+  return function(this: any, ...args: any[]) {
+    let result = fn.call(this, ...args);
+
+    if (isThenable(result)) {
+      return waitForPromise(result, label);
+    } else {
+      return result;
+    }
+  };
+}
+
+function isThenable(
+  maybePromise: any | PromiseType<unknown>
+): maybePromise is PromiseType<unknown> {
+  let type = typeof maybePromise;
+
+  return (
+    ((maybePromise !== null && type === 'object') || type === 'function') &&
+    typeof maybePromise.then === 'function'
+  );
 }
