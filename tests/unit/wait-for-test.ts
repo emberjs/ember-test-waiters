@@ -1,12 +1,12 @@
 import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
-import { _reset, getPendingWaiterState, waitFor } from 'ember-test-waiters';
+import { _reset, getPendingWaiterState, waitFor } from '@ember/test-waiters';
 import { module, test } from 'qunit';
 
 import EmberObject from '@ember/object';
 import { DEBUG } from '@glimmer/env';
 import RSVP from 'rsvp';
 
-import { PromiseType, Thenable } from 'ember-test-waiters/types';
+import { PromiseType, Thenable } from '@ember/test-waiters/types';
 
 interface PromiseClassType<T> {
   new (resolve: (value: T) => T, ...args: any[]): PromiseType<T>;
@@ -102,7 +102,7 @@ if (DEBUG) {
               assert.deepEqual(getPendingWaiterState(), {
                 pending: 1,
                 waiters: {
-                  'ember-test-waiters:promise-waiter': [
+                  '@ember/test-waiters:promise-waiter': [
                     {
                       label: undefined,
                       stack: 'STACK',

@@ -1,22 +1,12 @@
-export {
-  WaiterName,
-  Token,
-  Primitive,
-  Waiter,
-  TestWaiter,
-  TestWaiterDebugInfo,
-  PendingWaiterState,
-} from './types';
+import { deprecate } from '@ember/debug';
 
-export {
-  register,
-  unregister,
-  getWaiters,
-  _reset,
-  getPendingWaiterState,
-  hasPendingWaiters,
-} from './waiter-manager';
+deprecate(
+  'Importing from ember-test-waiters is deprecated. Please import from @ember/test-waiters',
+  true,
+  {
+    id: 'ember-test-waiters-legacy-module-name',
+    until: '3.0.0',
+  }
+);
 
-export { default as buildWaiter, _resetWaiterNames } from './build-waiter';
-export { default as waitForPromise } from './wait-for-promise';
-export { default as waitFor } from './wait-for';
+export * from '@ember/test-waiters';

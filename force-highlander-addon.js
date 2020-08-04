@@ -16,7 +16,10 @@ function findLatestVersion(addons) {
 
 function forceHighlander(project) {
   let checker = VersionChecker.forProject(project);
-  let testWaiterAddons = checker.filterAddonsByName('ember-test-waiters');
+  let testWaiterAddons = [
+    ...checker.filterAddonsByName('ember-test-waiters'),
+    ...checker.filterAddonsByName('@ember/test-waiters'),
+  ];
   let latestVersion = findLatestVersion(testWaiterAddons);
   let noop = () => {};
 

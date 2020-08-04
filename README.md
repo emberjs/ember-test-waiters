@@ -49,7 +49,7 @@ This addon implements the design specified in [RFC 581](https://github.com/ember
 ## Installation
 
 ```
-ember install ember-test-waiters
+ember install @ember/test-waiters
 ```
 
 ## Quickstart
@@ -123,7 +123,7 @@ Similar to the `waitForPromise` function, the `waitFor` function can be use to w
 ```js
 // wrapping async functions
 import Component from '@glimmer/component';
-import { waitFor } from 'ember-test-waiters';
+import { waitFor } from '@ember/test-waiters';
 
 export default Component.extend({
   doAsyncStuff: waitFor(async function doAsyncStuff() {
@@ -141,7 +141,7 @@ export default Component.extend({
 ```js
 // decorator form
 import Component from '@glimmer/component';
-import { waitFor } from 'ember-test-waiters';
+import { waitFor } from '@ember/test-waiters';
 
 export default class MoreFriendz extends Component {
   @waitFor
