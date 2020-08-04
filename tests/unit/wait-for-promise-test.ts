@@ -1,5 +1,5 @@
 import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
-import { _reset, getPendingWaiterState, waitForPromise } from 'ember-test-waiters';
+import { _reset, getPendingWaiterState, waitForPromise } from '@ember/test-waiters';
 import { module, test } from 'qunit';
 
 import { DEBUG } from '@glimmer/env';
@@ -30,7 +30,7 @@ if (DEBUG) {
         assert.deepEqual(getPendingWaiterState(), {
           pending: 1,
           waiters: {
-            'ember-test-waiters:promise-waiter': [
+            '@ember/test-waiters:promise-waiter': [
               {
                 label: undefined,
                 stack: 'STACK',
@@ -87,7 +87,7 @@ if (DEBUG) {
         assert.deepEqual(getPendingWaiterState(), {
           pending: 1,
           waiters: {
-            'ember-test-waiters:promise-waiter': [
+            '@ember/test-waiters:promise-waiter': [
               {
                 label: undefined,
                 stack: 'STACK',

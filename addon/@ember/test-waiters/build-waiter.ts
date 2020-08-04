@@ -1,9 +1,9 @@
 import { Primitive, TestWaiter, TestWaiterDebugInfo, WaiterName } from './';
 
 import { DEBUG } from '@glimmer/env';
+import { warn } from '@ember/debug';
 import Token from './token';
 import { register } from './waiter-manager';
-import { warn } from '@ember/debug';
 
 const WAITER_NAME_PATTERN = /^[^:]*:?.*/;
 let WAITER_NAMES = DEBUG ? new Set() : undefined;
@@ -144,7 +144,7 @@ class NoopTestWaiter implements TestWaiter {
 export default function buildWaiter(name: string): TestWaiter {
   if (DEBUG) {
     warn(`The waiter name '${name}' is already in use`, !WAITER_NAMES!.has(name), {
-      id: 'ember-test-waiters.duplicate-waiter-name',
+      id: '@ember/test-waiters.duplicate-waiter-name',
     });
     WAITER_NAMES!.add(name);
   }
@@ -160,7 +160,7 @@ export default function buildWaiter(name: string): TestWaiter {
 
       You passed: ${name}`,
     WAITER_NAME_PATTERN.test(name),
-    { id: 'ember-test-waiters.invalid-waiter-name' }
+    { id: '@ember/test-waiters.invalid-waiter-name' }
   );
 
   return new TestWaiterImpl(name);

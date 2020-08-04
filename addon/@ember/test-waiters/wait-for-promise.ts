@@ -3,7 +3,7 @@ import buildWaiter from './build-waiter';
 
 import { PromiseType, Thenable } from './types';
 
-const PROMISE_WAITER = buildWaiter('ember-test-waiters:promise-waiter');
+const PROMISE_WAITER = buildWaiter('@ember/test-waiters:promise-waiter');
 
 /**
  * A convenient utility function to simplify waiting for a promise.
