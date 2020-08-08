@@ -1,3 +1,4 @@
+<!-- omit in toc -->
 # @ember/test-waiters
 
 ![CI Build](https://github.com/emberjs/ember-test-waiters/workflows/CI%20Build/badge.svg)
@@ -19,6 +20,7 @@ minimize negative performance impact.
 
 This addon implements the design specified in [RFC 581](https://github.com/emberjs/rfcs/blob/master/text/0581-new-test-waiters.md).
 
+<!-- omit in toc -->
 ## Table of Contents
 
 - [Compatibility](#compatibility)
@@ -27,6 +29,7 @@ This addon implements the design specified in [RFC 581](https://github.com/ember
   - [buildWaiter function](#buildwaiter-function)
     - [Waiter naming conventions](#waiter-naming-conventions)
   - [waitForPromise function](#waitforpromise-function)
+  - [waitFor function](#waitfor-function)
   - [Waiting on all waiters](#waiting-on-all-waiters)
 - [Best Practices](#best-practices)
   - [Use buildWaiter in module scope](#use-buildwaiter-in-module-scope)
@@ -34,10 +37,10 @@ This addon implements the design specified in [RFC 581](https://github.com/ember
 - [General Design](#general-design)
   - [Comparison of old waiters system to new](#comparison-of-old-waiters-system-to-new)
   - [New Test Waiters Design](#new-test-waiters-design)
-  - [`Waiter`](#waiter)
-  - [`TestWaiter`](#testwaiter)
-  - [Using the `TestWaiter` class](#using-the-testwaiter-class)
-  - [`waitForPromise`](#waitforpromise)
+    - [`Waiter`](#waiter)
+    - [`TestWaiter`](#testwaiter)
+    - [Using the Test Waiter](#using-the-test-waiter)
+    - [`waitForPromise`](#waitforpromise)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -215,7 +218,7 @@ To address this, a new addon was written to experiment on a new test waiter syst
 
 This allows developers to utilize `@ember/test-waiters` to annotate their asynchronous operations that are not tracked by an `await settled()` check, and for those annotations to provide useful debugging information in the event their async extended past the expected duration of the test.
 
-## Comparison of old waiters system to new
+### Comparison of old waiters system to new
 
 In the old test waiters system, you would do the following:
 
@@ -258,11 +261,11 @@ export default class Friendz extends Component {
 
 In the above example, a new test waiter is built that is identified via a `name` string passed into the `buildWaiter` function. This allows the waiter to be identifiable, and that name is ultimately used with test isolation validation to help developers narrow down problems in their tests.
 
-## New Test Waiters Design
+### New Test Waiters Design
 
 The new test waiters addon is built using low-level primitives that are complimented with some convenience utilities.
 
-### [`Waiter`](addon/types/index.ts#L24)
+#### [`Waiter`](addon/types/index.ts#L24)
 
 At its core, the addon uses an `Waiter` interface defined as follows:
 
@@ -284,7 +287,7 @@ export interface Waiter {
 
 This allows for maximum flexibility when creating your own waiter implementations.
 
-### [`TestWaiter`](addon/types/index.ts#L57)
+#### [`TestWaiter`](addon/types/index.ts#L57)
 
 The `Waiter` interface is built upon to create a more specific interface for a test waiter, `TestWaiter`:
 
@@ -314,7 +317,7 @@ function buildWaiter(name: string): TestWaiter;
 
 In anything but a production build, this function will return a `TestWaiter` instance. When in production mode, we make this instance _inert_ and essentially no cost to invoke. Since test waiters are intended to be called from application or addon code, but are only required to be _active_ when in tests, this process of making the instance _inert_ is important. Even though code is still invoked, this has a negligible impact on performance.
 
-### Using the Test Waiter
+#### Using the Test Waiter
 
 After building a test waiter, most users interact with a limited set of methods within this class, namely `beingAsync` and `endAsync`.
 
@@ -350,7 +353,7 @@ export default class Friendz extends Component {
 }
 ```
 
-### `waitForPromise`
+#### `waitForPromise`
 
 The `waitForPromise` utility provides a convenience wrapper around the `TestWaiter` class for use with promises. It ensures the `endAsync` call is invoked in the `finally` of the configured promise.
 
