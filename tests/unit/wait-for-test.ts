@@ -2,9 +2,13 @@ import MockStableError, { overrideError, resetError } from './utils/mock-stable-
 import { _reset, getPendingWaiterState, waitFor } from '@ember/test-waiters';
 import { module, test } from 'qunit';
 
-import EmberObject from '@ember/object';
+import EmberObject, { get } from '@ember/object';
 import { DEBUG } from '@glimmer/env';
 import RSVP from 'rsvp';
+
+import { task as taskFn, TaskGenerator } from 'ember-concurrency';
+import { task as taskDec } from 'ember-concurrency-decorators';
+import { perform } from 'ember-concurrency-ts';
 
 import { PromiseType, Thenable } from '@ember/test-waiters/types';
 
@@ -35,42 +39,116 @@ if (DEBUG) {
       { name: 'RSVP.Promise', Promise: RSVP.Promise },
     ];
 
-    promiseImplementations.forEach(({ name, Promise }: PromiseDef) => {
-      module(name, function() {
-        class EmberObjectThing extends EmberObject.extend({
-          doAsyncStuff: waitFor(async function doAsyncStuff(...args: any) {
-            await new Promise(resolve => {
-              setTimeout(resolve, 10);
-            });
-            return Array.from(args).reverse();
-          }),
+    const promiseTestModules = promiseImplementations.map(({ name, Promise }) => {
+      class EmberObjectThing extends EmberObject.extend({
+        doAsyncStuff: waitFor(async function doAsyncStuff(...args: any) {
+          await new Promise(resolve => {
+            setTimeout(resolve, 10);
+          });
+          return Array.from(args).reverse();
+        }),
 
-          asyncThrow: waitFor(async function asyncThrow() {
-            await new Promise(resolve => {
-              setTimeout(resolve, 10);
-            });
-            throw new Error('doh!');
-          }),
-        }) {}
+        asyncThrow: waitFor(async function asyncThrow() {
+          await new Promise(resolve => {
+            setTimeout(resolve, 10);
+          });
+          throw new Error('doh!');
+        }),
+      }) {}
 
-        class NativeThing {
-          @waitFor
-          async doAsyncStuff(...args: any) {
-            await new Promise(resolve => {
-              setTimeout(resolve, 10);
-            });
-            return Array.from(args).reverse();
-          }
-
-          @waitFor
-          async asyncThrow() {
-            await new Promise(resolve => {
-              setTimeout(resolve, 10);
-            });
-            throw new Error('doh!');
-          }
+      class NativeThing {
+        @waitFor
+        async doAsyncStuff(...args: any) {
+          await new Promise(resolve => {
+            setTimeout(resolve, 10);
+          });
+          return Array.from(args).reverse();
         }
 
+        @waitFor
+        async asyncThrow() {
+          await new Promise(resolve => {
+            setTimeout(resolve, 10);
+          });
+          throw new Error('doh!');
+        }
+      }
+      return {
+        name,
+        waiterName: '@ember/test-waiters:promise-waiter',
+        EmberObjectThing,
+        NativeThing,
+      };
+    });
+
+    const generatorTestModules = [
+      (function() {
+        const EmberObjectThing = EmberObject.extend({
+          doStuffTask: taskFn(
+            waitFor(function* doTaskStuff(...args: any) {
+              yield new Promise(resolve => {
+                setTimeout(resolve, 10);
+              });
+              return Array.from(args).reverse();
+            })
+          ),
+          doAsyncStuff(...args: any) {
+            // @ts-ignore
+            return get(this, 'doStuffTask').perform(...args);
+          },
+
+          throwingTask: taskFn(
+            waitFor(function* taskThrow() {
+              yield new Promise(resolve => {
+                setTimeout(resolve, 10);
+              });
+              throw new Error('doh!');
+            })
+          ),
+          asyncThrow() {
+            // @ts-ignore
+            return get(this, 'throwingTask').perform();
+          },
+        });
+
+        class NativeThing {
+          @taskDec
+          @waitFor
+          *doStuffTask(...args: any): TaskGenerator<any[]> {
+            yield new Promise(resolve => {
+              setTimeout(resolve, 10);
+            });
+            return Array.from(args).reverse();
+          }
+          doAsyncStuff(...args: any) {
+            return perform(get(this, 'doStuffTask'), ...args);
+          }
+
+          @taskDec
+          @waitFor
+          *throwingTask() {
+            yield new Promise(resolve => {
+              setTimeout(resolve, 10);
+            });
+            throw new Error('doh!');
+          }
+          asyncThrow(...args: any) {
+            return perform(get(this, 'throwingTask'), ...args);
+          }
+        }
+        return {
+          name: 'Generator',
+          waiterName: '@ember/test-waiters:generator-waiter',
+          EmberObjectThing,
+          NativeThing,
+        };
+      })(),
+    ];
+
+    const testModules = [...promiseTestModules, ...generatorTestModules];
+
+    testModules.forEach(({ name, waiterName, EmberObjectThing, NativeThing }) => {
+      module(name, function() {
         const invocationType = [
           {
             name: 'class function',
@@ -102,7 +180,7 @@ if (DEBUG) {
               assert.deepEqual(getPendingWaiterState(), {
                 pending: 1,
                 waiters: {
-                  '@ember/test-waiters:promise-waiter': [
+                  [waiterName]: [
                     {
                       label: undefined,
                       stack: 'STACK',

@@ -121,7 +121,7 @@ export default class MoreFriendz extends Component {
 
 ### waitFor function
 
-Similar to the `waitForPromise` function, the `waitFor` function can be use to wait for async calls. It can be used with async functions, and in decorator form to wrap an async function so calls to it are registered with the test waiter system.
+Similar to the `waitForPromise` function, the `waitFor` function can be use to wait for async behavior. It can be used with async functions, and in decorator form to wrap an async function so calls to it are registered with the test waiter system. It can also be used with generator functions such as those used in [ember-concurrency](http://ember-concurrency.com/).
 
 ```js
 // wrapping async functions
@@ -142,7 +142,7 @@ export default Component.extend({
 ```
 
 ```js
-// decorator form
+// decorator form with async functions
 import Component from '@glimmer/component';
 import { waitFor } from '@ember/test-waiters';
 
@@ -156,6 +156,34 @@ export default class MoreFriendz extends Component {
     return this.doAsyncStuff().then(() => {
       doOtherThings();
     });
+  }
+}
+```
+
+```js
+// wrapping ember-concurrency tasks
+import Component from '@ember/component';
+import { task } from 'ember-concurrency';
+import { waitFor } from 'ember-test-waiters';
+
+export default Component.extend({
+  doTaskStuff: task(waitFor(function* doTaskStuff() {
+    yield somethingAsync();
+  }
+});
+```
+
+```js
+// decorator form with ember-concurrency tasks
+import Component from '@ember/component';
+import { task } from 'ember-concurrency-decorators';
+import { waitFor } from 'ember-test-waiters';
+
+export default class Friendz extends Component {
+  @task
+  @waitFor
+  *doTaskStuff() {
+    yield somethingAsync();
   }
 }
 ```
