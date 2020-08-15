@@ -139,7 +139,12 @@ function isThenable(
 function isGenerator(
   maybeGenerator: any | CoroutineGenerator<unknown>
 ): maybeGenerator is CoroutineGenerator<unknown> {
-  return typeof maybeGenerator[Symbol.iterator] === 'function';
+  // Because we don't have Symbol.iterator in IE11
+  return (
+    typeof maybeGenerator.next === 'function' &&
+    typeof maybeGenerator.return === 'function' &&
+    typeof maybeGenerator.throw === 'function'
+  );
 }
 
 const GENERATOR_WAITER = buildWaiter('@ember/test-waiters:generator-waiter');
@@ -150,18 +155,34 @@ function waitForGenerator<T>(
 ): CoroutineGenerator<T> {
   GENERATOR_WAITER.beginAsync(generator, label);
 
+  let isWaiting = true;
+  function stopWaiting() {
+    if (isWaiting) {
+      GENERATOR_WAITER.endAsync(generator);
+      isWaiting = false;
+    }
+  }
+
   return {
-    next() {
+    next(...args) {
       try {
-        let val = generator.next();
+        let val = generator.next(...args);
         if (val.done) {
-          GENERATOR_WAITER.endAsync(generator);
+          stopWaiting();
         }
         return val;
       } catch (e) {
-        GENERATOR_WAITER.endAsync(generator);
+        stopWaiting();
         throw e;
       }
+    },
+    return(...args) {
+      stopWaiting();
+      return generator.return(...args);
+    },
+    throw(...args) {
+      stopWaiting();
+      return generator.throw(...args);
     },
   } as CoroutineGenerator<T>;
 }

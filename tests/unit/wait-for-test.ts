@@ -6,7 +6,7 @@ import EmberObject, { get } from '@ember/object';
 import { DEBUG } from '@glimmer/env';
 import RSVP from 'rsvp';
 
-import { task as taskFn, TaskGenerator } from 'ember-concurrency';
+import { task as taskFn, TaskGenerator, didCancel } from 'ember-concurrency';
 import { task as taskDec } from 'ember-concurrency-decorators';
 import { perform } from 'ember-concurrency-ts';
 
@@ -212,6 +212,77 @@ if (DEBUG) {
             });
           });
         });
+      });
+    });
+
+    module('waitFor ember-concurrency interop', function() {
+      class Deferred {
+        promise: Promise<any>;
+        resolve: Function = () => null;
+
+        constructor() {
+          this.promise = new Promise(res => (this.resolve = res));
+        }
+      }
+
+      class NativeThing {
+        iterations: Array<Number> = [];
+        continue: Function = () => null;
+
+        @taskDec
+        @waitFor
+        *doStuffTask(): TaskGenerator<string> {
+          for (let i = 0; i < 3; i += 1) {
+            let deferred = new Deferred();
+            this.continue = deferred.resolve;
+            yield deferred.promise;
+            this.iterations.push(i);
+          }
+          return 'done';
+        }
+      }
+
+      test('tasks with multiple yields work', async function(assert) {
+        let thing = new NativeThing();
+
+        let promise = perform(get(thing, 'doStuffTask'));
+        assert.deepEqual(getPendingWaiterState().pending, 1);
+
+        thing.continue();
+        await Promise.resolve();
+        assert.deepEqual(thing.iterations, [0]);
+        assert.deepEqual(getPendingWaiterState().pending, 1);
+
+        thing.continue();
+        await Promise.resolve();
+        assert.deepEqual(thing.iterations, [0, 1]);
+        assert.deepEqual(getPendingWaiterState().pending, 1);
+
+        thing.continue();
+        await promise;
+        assert.deepEqual(thing.iterations, [0, 1, 2]);
+        assert.deepEqual(getPendingWaiterState().pending, 0);
+      });
+
+      test('task cancellation works', async function(assert) {
+        let thing = new NativeThing();
+
+        let instance = perform(get(thing, 'doStuffTask'));
+        assert.deepEqual(getPendingWaiterState().pending, 1);
+
+        thing.continue();
+        await Promise.resolve();
+        assert.deepEqual(thing.iterations, [0]);
+        assert.deepEqual(getPendingWaiterState().pending, 1);
+
+        instance.cancel();
+        try {
+          await instance;
+          assert.ok(false);
+        } catch (e) {
+          assert.ok(didCancel(e));
+          assert.deepEqual(getPendingWaiterState().pending, 0);
+        }
       });
     });
   });
