@@ -12,7 +12,7 @@
     "doc": "doc",
     "test": "tests"
   },
-  "main": "addon/ember-test-waiters/index.ts",
+  "main": "addon/@ember/test-waiters/index.ts",
   "types": "index.d.ts",
   "scripts": {
     "build": "ember build",
