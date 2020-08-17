@@ -7,7 +7,10 @@
   ],
   "repository": "https://github.com/emberjs/ember-test-waiters",
   "license": "MIT",
-  "author": "",
+  "contributors": [
+    "Steve Calvert <steve.calvert@gmail.com>",
+    "Robert Jackson <me@rwjblue.com>"
+  ],
   "directories": {
     "doc": "doc",
     "test": "tests"
