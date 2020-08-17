@@ -1,13 +1,16 @@
 {
   "name": "@ember/test-waiters",
   "version": "2.1.3",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Allow tests to be aware of addon / application asynchrony.",
   "keywords": [
     "ember-addon"
   ],
   "repository": "https://github.com/emberjs/ember-test-waiters",
   "license": "MIT",
-  "author": "",
+  "contributors": [
+    "Steve Calvert <steve.calvert@gmail.com>",
+    "Robert Jackson <me@rwjblue.com>"
+  ],
   "directories": {
     "doc": "doc",
     "test": "tests"
