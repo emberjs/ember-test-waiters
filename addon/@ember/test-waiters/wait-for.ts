@@ -3,10 +3,13 @@ import waitForPromise from './wait-for-promise';
 import buildWaiter from './build-waiter';
 import { PromiseType } from './types';
 
-type CoroutineGenerator<T> = Generator<any, T, any>;
 type AsyncFunction<A extends Array<any>, PromiseReturn> = (...args: A) => Promise<PromiseReturn>;
-type TaskFunction<A extends any[], T> = (...args: A) => CoroutineGenerator<T>;
-type FunctionArguments = [AsyncFunction<any[], any> | TaskFunction<any[], any>, string?];
+type AsyncFunctionArguments = [AsyncFunction<any[], any>, string?];
+
+type CoroutineGenerator<T> = Generator<any, T, any>;
+type CoroutineFunction<A extends Array<any>, T> = (...args: A) => CoroutineGenerator<T>;
+type CoroutineFunctionArguments = [CoroutineFunction<any[], any>, string?];
+
 type DecoratorArguments = [object, string, PropertyDescriptor, string?];
 
 /**
@@ -74,9 +77,9 @@ type DecoratorArguments = [object, string, PropertyDescriptor, string?];
  */
 export default function waitFor(fn: AsyncFunction<any[], any>, label?: string): Function;
 export default function waitFor(
-  fn: TaskFunction<any[], any>,
+  fn: CoroutineFunction<any[], any>,
   label?: string
-): TaskFunction<any[], any>;
+): CoroutineFunction<any[], any>;
 export default function waitFor(
   target: object,
   _key: string,
@@ -84,12 +87,12 @@ export default function waitFor(
   label?: string
 ): PropertyDescriptor;
 export default function waitFor(
-  ...args: FunctionArguments | DecoratorArguments
-): PropertyDescriptor | Function | TaskFunction<any[], any> {
+  ...args: AsyncFunctionArguments | CoroutineFunctionArguments | DecoratorArguments
+): PropertyDescriptor | Function | CoroutineFunction<any[], any> {
   let isFunction = args.length < 3;
 
   if (isFunction) {
-    let [fn, label] = args as FunctionArguments;
+    let [fn, label] = args as AsyncFunctionArguments | CoroutineFunctionArguments;
 
     return wrapFunction(fn, label);
   } else {
