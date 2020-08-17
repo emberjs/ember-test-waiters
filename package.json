@@ -8,12 +8,12 @@
   "repository": "https://github.com/emberjs/ember-test-waiters",
   "license": "MIT",
   "author": "",
+  "main": "addon/@ember/test-waiters/index.ts",
+  "types": "index.d.ts",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "main": "addon/@ember/test-waiters/index.ts",
-  "types": "index.d.ts",
   "scripts": {
     "build": "ember build",
     "lint:js": "eslint --ext ts,js .",
@@ -68,7 +68,7 @@
     "prettier": "^1.19.1",
     "qunit": "^2.10.0",
     "release-it": "^13.6.6",
-    "release-it-lerna-changelog": "^1.0.3",
+    "release-it-lerna-changelog": "^2.3.0",
     "typescript": "~3.9.2"
   },
   "engines": {
@@ -84,15 +84,16 @@
   "release-it": {
     "plugins": {
       "release-it-lerna-changelog": {
-        "infile": "CHANGELOG.md"
+        "infile": "CHANGELOG.md",
+        "launchEditor": true
       }
     },
     "git": {
-      "tagName": "v${version}",
-      "changelog": "git log --pretty=format:\"* %s (%h)\" --no-merges --perl-regexp --author=\"^((?!dependabot-preview).*)$\" ${latestTag}...HEAD"
+      "tagName": "v${version}"
     },
     "github": {
-      "release": true
+      "release": true,
+      "tokenRef": "GITHUB_AUTH"
     }
   }
 }
