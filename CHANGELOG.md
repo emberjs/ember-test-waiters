@@ -1,3 +1,24 @@
+## v2.2.0 (2020-08-17)
+
+#### :boom: Breaking Change
+* [#176](https://github.com/emberjs/ember-test-waiters/pull/176) Drop Node 13 support. ([@rwjblue](https://github.com/rwjblue))
+
+#### :rocket: Enhancement
+* [#150](https://github.com/emberjs/ember-test-waiters/pull/150) Converting published package name to @ember/test-waiters ([@scalvert](https://github.com/scalvert))
+* [#131](https://github.com/emberjs/ember-test-waiters/pull/131) Add waitFor function to enable waiting for async functions ([@bendemboski](https://github.com/bendemboski))
+
+#### :house: Internal
+* [#178](https://github.com/emberjs/ember-test-waiters/pull/178) Update automated release setup. ([@rwjblue](https://github.com/rwjblue))
+* [#177](https://github.com/emberjs/ember-test-waiters/pull/177) Update package.json addon contributors & description. ([@rwjblue](https://github.com/rwjblue))
+* [#171](https://github.com/emberjs/ember-test-waiters/pull/171) Add Ember 3.16 and 3.20 to CI ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 4
+- Ben Demboski ([@bendemboski](https://github.com/bendemboski))
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- Steve Calvert ([@scalvert](https://github.com/scalvert))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
+
 ## v2.1.3 (2020-07-28)
 
 #### :bug: Bug Fix
