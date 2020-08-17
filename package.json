@@ -78,6 +78,7 @@
     "node": "10.* || 12.* || >= 14.*"
   },
   "publishConfig": {
+    "access": "public",
     "registry": "https://registry.npmjs.org"
   },
   "ember-addon": {
