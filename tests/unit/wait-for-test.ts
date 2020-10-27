@@ -9,6 +9,8 @@ import RSVP from 'rsvp';
 import { task as taskFn, TaskGenerator, didCancel } from 'ember-concurrency';
 import { task as taskDec } from 'ember-concurrency-decorators';
 import { perform } from 'ember-concurrency-ts';
+// @ts-ignore
+import co from 'co';
 
 import { PromiseType, Thenable } from '@ember/test-waiters/types';
 
@@ -309,6 +311,65 @@ if (DEBUG) {
             assert.deepEqual(getPendingWaiterState().pending, 0);
           }
         });
+      });
+    });
+
+    module('waitFor co interop', function() {
+      function coDec(
+        _target: object,
+        _key: string,
+        descriptor: PropertyDescriptor
+      ): PropertyDescriptor {
+        descriptor.value = co.wrap(descriptor.value);
+        return descriptor;
+      }
+
+      class Deferred {
+        promise: Promise<any>;
+        resolve: Function = () => null;
+
+        constructor() {
+          this.promise = new Promise(res => (this.resolve = res));
+        }
+      }
+
+      class NativeThing {
+        iterations: Array<Number> = [];
+        continue: Function = () => null;
+
+        @coDec
+        @waitFor
+        *doStuffCo(): TaskGenerator<string> {
+          for (let i = 0; i < 3; i += 1) {
+            let deferred = new Deferred();
+            this.continue = deferred.resolve;
+            yield deferred.promise;
+            this.iterations.push(i);
+          }
+          return 'done';
+        }
+      }
+
+      test('it works', async function(assert) {
+        let thing = new NativeThing();
+
+        let promise = thing.doStuffCo();
+        assert.deepEqual(getPendingWaiterState().pending, 1);
+
+        thing.continue();
+        await Promise.resolve();
+        assert.deepEqual(thing.iterations, [0]);
+        assert.deepEqual(getPendingWaiterState().pending, 1);
+
+        thing.continue();
+        await Promise.resolve();
+        assert.deepEqual(thing.iterations, [0, 1]);
+        assert.deepEqual(getPendingWaiterState().pending, 1);
+
+        thing.continue();
+        await promise;
+        assert.deepEqual(thing.iterations, [0, 1, 2]);
+        assert.deepEqual(getPendingWaiterState().pending, 0);
       });
     });
   });
