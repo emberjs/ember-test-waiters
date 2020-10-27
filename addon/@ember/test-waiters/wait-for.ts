@@ -168,15 +168,24 @@ function waitForGenerator<T>(
 
   return {
     next(...args) {
+      let hasErrored = true;
       try {
         let val = generator.next(...args);
+        hasErrored = false;
+
         if (val.done) {
           stopWaiting();
         }
         return val;
-      } catch (e) {
-        stopWaiting();
-        throw e;
+      } finally {
+        // If generator.next() throws, we need to stop waiting. But if we catch
+        // and re-throw exceptions, it could move the location from which the
+        // uncaught exception is thrown, interfering with the developer
+        // debugging experience if they have break-on-exceptions enabled. So we
+        // use a boolean flag and a finally block to emulate a catch block.
+        if (hasErrored) {
+          stopWaiting();
+        }
       }
     },
     return(...args) {
