@@ -188,6 +188,8 @@ export default class Friendz extends Component {
 }
 ```
 
+`waitFor` acts as a wrapper for the generator function, producing another generator function that is registered with the test waiter system, suitable for wrapping in an `ember-concurrency` task. So `@waitFor`/`waitFor()` needs to be applied directly to the generator function, and `@task`/`task()` applied to the result.
+
 ### Waiting on all waiters
 
 The `@ember/test-waiters` addon provides a `waiter-manager` to register, unregister, iterate and invoke waiters to determine if we should wait for conditions to be met or continue test execution. This functionality is encapsulated in the `hasPendingWaiters` function, which evaluates each registered waiter to determine its current state.
