@@ -240,6 +240,19 @@ if (DEBUG) {
           }
           return 'done';
         }
+
+        @taskDec
+        *parentTask(): TaskGenerator<string> {
+          // @ts-ignore
+          return yield get(this, 'doStuffTask').perform();
+        }
+
+        @taskDec
+        @waitFor
+        *wrappedParentTask(): TaskGenerator<string> {
+          // @ts-ignore
+          return yield get(this, 'doStuffTask').perform();
+        }
       }
 
       test('tasks with multiple yields work', async function(assert) {
@@ -264,25 +277,38 @@ if (DEBUG) {
         assert.deepEqual(getPendingWaiterState().pending, 0);
       });
 
-      test('task cancellation works', async function(assert) {
-        let thing = new NativeThing();
+      interface CancellationDef {
+        desc: string;
+        taskName: 'doStuffTask' | 'parentTask' | 'wrappedParentTask';
+      }
 
-        let instance = perform(get(thing, 'doStuffTask'));
-        assert.deepEqual(getPendingWaiterState().pending, 1);
+      const cancellationCases: CancellationDef[] = [
+        { desc: 'direct', taskName: 'doStuffTask' },
+        { desc: 'parent', taskName: 'parentTask' },
+        { desc: 'wrapped parent', taskName: 'wrappedParentTask' },
+      ];
 
-        thing.continue();
-        await Promise.resolve();
-        assert.deepEqual(thing.iterations, [0]);
-        assert.deepEqual(getPendingWaiterState().pending, 1);
+      cancellationCases.forEach(({ desc, taskName }) => {
+        test(`${desc} task cancellation works`, async function(assert) {
+          let thing = new NativeThing();
 
-        instance.cancel();
-        try {
-          await instance;
-          assert.ok(false);
-        } catch (e) {
-          assert.ok(didCancel(e));
-          assert.deepEqual(getPendingWaiterState().pending, 0);
-        }
+          let instance = perform(get(thing, taskName));
+          assert.deepEqual(getPendingWaiterState().pending, 1);
+
+          thing.continue();
+          await Promise.resolve();
+          assert.deepEqual(thing.iterations, [0]);
+          assert.deepEqual(getPendingWaiterState().pending, 1);
+
+          instance.cancel();
+          try {
+            await instance;
+            assert.ok(false);
+          } catch (e) {
+            assert.ok(didCancel(e));
+            assert.deepEqual(getPendingWaiterState().pending, 0);
+          }
+        });
       });
     });
   });
