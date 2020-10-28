@@ -1,3 +1,17 @@
+## v2.3.0 (2020-10-28)
+
+#### :rocket: Enhancement
+* [#173](https://github.com/emberjs/ember-test-waiters/pull/173) feat(wait-for) support coroutines/generators ([@bendemboski](https://github.com/bendemboski))
+
+#### :house: Internal
+* [#195](https://github.com/emberjs/ember-test-waiters/pull/195) Fix CI build ([@bendemboski](https://github.com/bendemboski))
+
+#### Committers: 3
+- Ben Demboski ([@bendemboski](https://github.com/bendemboski))
+- Thomas Wang ([@xg-wang](https://github.com/xg-wang))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
+
 ## v2.2.0 (2020-08-17)
 
 #### :boom: Breaking Change
