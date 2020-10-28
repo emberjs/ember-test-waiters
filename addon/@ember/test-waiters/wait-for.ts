@@ -1,18 +1,28 @@
 import { DEBUG } from '@glimmer/env';
 import waitForPromise from './wait-for-promise';
+import buildWaiter from './build-waiter';
 import { PromiseType } from './types';
 
 type AsyncFunction<A extends Array<any>, PromiseReturn> = (...args: A) => Promise<PromiseReturn>;
 type AsyncFunctionArguments = [AsyncFunction<any[], any>, string?];
+
+type CoroutineGenerator<T> = Generator<any, T, any>;
+type CoroutineFunction<A extends Array<any>, T> = (...args: A) => CoroutineGenerator<T>;
+type CoroutineFunctionArguments = [CoroutineFunction<any[], any>, string?];
+
 type DecoratorArguments = [object, string, PropertyDescriptor, string?];
 
 /**
  * A convenient utility function to simplify waiting for async. Can be used
- * in both decorator and function form.
+ * in both decorator and function form. When applied to an async function, it
+ * will cause tests to wait until the returned promise has resolves. When
+ * applied to a generator function, it will cause tests to wait until the
+ * returned iterator has run to completion, which is useful for wrapping
+ * ember-concurrency task functions.
  *
  *
  * @public
- * @param promise {Function} An async function
+ * @param promise {Function} An async function or a generator function
  * @param label {string} An optional string to identify the promise
  *
  * @example
@@ -38,8 +48,38 @@ type DecoratorArguments = [object, string, PropertyDescriptor, string?];
  *   }
  * }
  *
+ * @example
+ *
+ * import Component from '@ember/component';
+ * import { task } from 'ember-concurrency';
+ * import { waitFor } from 'ember-test-waiters';
+ *
+ * export default Component.extend({
+ *   doTaskStuff: task(waitFor(function* doTaskStuff() {
+ *     yield somethingAsync();
+ *   }
+ * });
+ *
+ * @example
+ *
+ * import Component from '@ember/component';
+ * import { task } from 'ember-concurrency-decorators';
+ * import { waitFor } from 'ember-test-waiters';
+ *
+ * export default class Friendz extends Component {
+ *   @task
+ *   @waitFor
+ *   *doTaskStuff() {
+ *     yield somethingAsync();
+ *   }
+ * }
+ *
  */
 export default function waitFor(fn: AsyncFunction<any[], any>, label?: string): Function;
+export default function waitFor(
+  fn: CoroutineFunction<any[], any>,
+  label?: string
+): CoroutineFunction<any[], any>;
 export default function waitFor(
   target: object,
   _key: string,
@@ -47,12 +87,12 @@ export default function waitFor(
   label?: string
 ): PropertyDescriptor;
 export default function waitFor(
-  ...args: AsyncFunctionArguments | DecoratorArguments
-): PropertyDescriptor | Function {
-  let isAsyncFunction = args.length < 3;
+  ...args: AsyncFunctionArguments | CoroutineFunctionArguments | DecoratorArguments
+): PropertyDescriptor | Function | CoroutineFunction<any[], any> {
+  let isFunction = args.length < 3;
 
-  if (isAsyncFunction) {
-    let [fn, label] = args as AsyncFunctionArguments;
+  if (isFunction) {
+    let [fn, label] = args as AsyncFunctionArguments | CoroutineFunctionArguments;
 
     return wrapFunction(fn, label);
   } else {
@@ -80,6 +120,8 @@ function wrapFunction(fn: Function, label?: string) {
 
     if (isThenable(result)) {
       return waitForPromise(result, label);
+    } else if (isGenerator(result)) {
+      return waitForGenerator(result, label);
     } else {
       return result;
     }
@@ -95,4 +137,64 @@ function isThenable(
     ((maybePromise !== null && type === 'object') || type === 'function') &&
     typeof maybePromise.then === 'function'
   );
+}
+
+function isGenerator(
+  maybeGenerator: any | CoroutineGenerator<unknown>
+): maybeGenerator is CoroutineGenerator<unknown> {
+  // Because we don't have Symbol.iterator in IE11
+  return (
+    typeof maybeGenerator.next === 'function' &&
+    typeof maybeGenerator.return === 'function' &&
+    typeof maybeGenerator.throw === 'function'
+  );
+}
+
+const GENERATOR_WAITER = buildWaiter('@ember/test-waiters:generator-waiter');
+
+function waitForGenerator<T>(
+  generator: CoroutineGenerator<T>,
+  label?: string
+): CoroutineGenerator<T> {
+  GENERATOR_WAITER.beginAsync(generator, label);
+
+  let isWaiting = true;
+  function stopWaiting() {
+    if (isWaiting) {
+      GENERATOR_WAITER.endAsync(generator);
+      isWaiting = false;
+    }
+  }
+
+  return {
+    next(...args) {
+      let hasErrored = true;
+      try {
+        let val = generator.next(...args);
+        hasErrored = false;
+
+        if (val.done) {
+          stopWaiting();
+        }
+        return val;
+      } finally {
+        // If generator.next() throws, we need to stop waiting. But if we catch
+        // and re-throw exceptions, it could move the location from which the
+        // uncaught exception is thrown, interfering with the developer
+        // debugging experience if they have break-on-exceptions enabled. So we
+        // use a boolean flag and a finally block to emulate a catch block.
+        if (hasErrored) {
+          stopWaiting();
+        }
+      }
+    },
+    return(...args) {
+      stopWaiting();
+      return generator.return(...args);
+    },
+    throw(...args) {
+      stopWaiting();
+      return generator.throw(...args);
+    },
+  } as CoroutineGenerator<T>;
 }

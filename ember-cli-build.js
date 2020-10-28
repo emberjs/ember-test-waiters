@@ -3,7 +3,11 @@
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
-  let app = new EmberAddon(defaults, {});
+  let app = new EmberAddon(defaults, {
+    autoImport: {
+      exclude: ['qunit'],
+    },
+  });
 
   app.import('node_modules/qunit/qunit/qunit.js', {
     type: 'test',
