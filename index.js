@@ -1,13 +1,15 @@
 'use strict';
 
-const forceHighlander = require('./force-highlander-addon').forceHighlander;
+const { cacheKeyForStableTree: cacheKeyForTree } = require('calculate-cache-key-for-tree');
+const { forceHighlander } = require('./force-highlander-addon');
 
 module.exports = {
   name: require('./package').name,
 
+  cacheKeyForTree,
+
   included() {
     this._super.included.apply(this, arguments);
-
     forceHighlander(this.project);
   },
 

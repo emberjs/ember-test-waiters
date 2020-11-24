@@ -28,6 +28,7 @@ const STABLE_FUNCTION_REF = () => {};
                     addons: [],
                   },
                 ],
+                cacheKeyForTree: STABLE_FUNCTION_REF,
                 treeFor: STABLE_FUNCTION_REF,
                 included: STABLE_FUNCTION_REF,
               },
@@ -49,10 +50,12 @@ const STABLE_FUNCTION_REF = () => {};
                     addons: [],
                   },
                 ],
+                cacheKeyForTree: STABLE_FUNCTION_REF,
                 treeFor: STABLE_FUNCTION_REF,
                 included: STABLE_FUNCTION_REF,
               },
             ],
+            cacheKeyForTree: STABLE_FUNCTION_REF,
             treeFor: STABLE_FUNCTION_REF,
             included: STABLE_FUNCTION_REF,
           },
@@ -70,6 +73,7 @@ const STABLE_FUNCTION_REF = () => {};
                     addons: [],
                   },
                 ],
+                cacheKeyForTree: STABLE_FUNCTION_REF,
                 treeFor: STABLE_FUNCTION_REF,
                 included: STABLE_FUNCTION_REF,
               },
@@ -89,6 +93,7 @@ const STABLE_FUNCTION_REF = () => {};
                     addons: [],
                   },
                 ],
+                cacheKeyForTree: STABLE_FUNCTION_REF,
                 treeFor: STABLE_FUNCTION_REF,
                 included: STABLE_FUNCTION_REF,
               },
@@ -109,14 +114,55 @@ const STABLE_FUNCTION_REF = () => {};
       assert.equal(latestVersion.pkg.version, '3.0.1');
     });
 
-    test('forceHighlander nullifies non-latest version addon methods', function(assert) {
+    test('forceHighlander nullifies non-latest addon `included` methods', function(assert) {
       let testWaiterAddons = highlander.forceHighlander(this.project);
 
       assert.equal(testWaiterAddons.length, 3);
+
       testWaiterAddons.forEach(addon => {
-        assert.notEqual(addon.treeFor, STABLE_FUNCTION_REF);
         assert.notEqual(addon.included, STABLE_FUNCTION_REF);
       });
+    });
+
+    test('forceHighlander monkey patches non-latest w/ latest `treeFor`, `cacheKeyForTree`', function(assert) {
+      let checker = VersionChecker.forProject(this.project);
+      let addons = [
+        ...checker.filterAddonsByName('ember-test-waiters'),
+        ...checker.filterAddonsByName('@ember/test-waiters'),
+      ];
+      let latestVersion = highlander.findLatestVersion(addons);
+
+      latestVersion.treeFor = () => {
+        assert.step('latest `treeFor` called');
+      };
+
+      latestVersion.cacheKeyForTree = () => {
+        assert.step('latest `cacheKeyForTree` called');
+      };
+
+      let nonLatestTestWaiterAddons = highlander.forceHighlander(this.project);
+
+      assert.equal(nonLatestTestWaiterAddons.length, 3);
+
+      nonLatestTestWaiterAddons.forEach(addon => {
+        assert.notEqual(addon.treeFor, STABLE_FUNCTION_REF);
+        assert.notEqual(addon.cacheKeyForTree, STABLE_FUNCTION_REF);
+
+        addon.treeFor();
+        addon.cacheKeyForTree();
+      });
+
+      assert.verifySteps(
+        [
+          'latest `treeFor` called',
+          'latest `cacheKeyForTree` called',
+          'latest `treeFor` called',
+          'latest `cacheKeyForTree` called',
+          'latest `treeFor` called',
+          'latest `cacheKeyForTree` called',
+        ],
+        'the latest version treeFor, cacheKeyForTree is called for all non-latest addons'
+      );
     });
   });
 });
