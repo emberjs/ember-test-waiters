@@ -114,6 +114,22 @@ const STABLE_FUNCTION_REF = () => {};
       assert.equal(latestVersion.pkg.version, '3.0.1');
     });
 
+    test('findLatestVersion can find beta versions', function(assert) {
+      let addons = [
+        {
+          name: 'foo',
+          pkg: { version: '1.0.0' },
+        },
+        {
+          name: 'foo',
+          pkg: { version: '1.1.0-beta.1' },
+        },
+      ];
+      let latestVersion = highlander.findLatestVersion(addons);
+
+      assert.equal(latestVersion.pkg.version, '1.1.0-beta.1');
+    });
+
     test('forceHighlander nullifies non-latest addon `included` methods', function(assert) {
       let testWaiterAddons = highlander.forceHighlander(this.project);
 
