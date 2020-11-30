@@ -29,7 +29,14 @@ function forceHighlander(project) {
         return;
       }
 
-      addon.treeFor = noop;
+      addon.cacheKeyForTree = (...args) => {
+        return latestVersion.cacheKeyForTree(...args);
+      };
+
+      addon.treeFor = (...args) => {
+        return latestVersion.treeFor(...args);
+      };
+
       addon.included = noop;
 
       return addon;
