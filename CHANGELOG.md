@@ -1,3 +1,17 @@
+## v2.3.1 (2020-11-30)
+
+#### :bug: Bug Fix
+* [#202](https://github.com/emberjs/ember-test-waiters/pull/202) Update highlander logic to be compatible with `ember-engines` ([@brendenpalmer](https://github.com/brendenpalmer))
+
+#### :house: Internal
+* [#204](https://github.com/emberjs/ember-test-waiters/pull/204) Ensure prereleases are used when present. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 3
+- Brenden Palmer ([@brendenpalmer](https://github.com/brendenpalmer))
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
+
 ## v2.3.0 (2020-10-28)
 
 #### :rocket: Enhancement
