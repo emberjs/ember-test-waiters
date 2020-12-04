@@ -44,7 +44,13 @@ export function unregister(waiter: Waiter): void {
  * @returns {Waiter[]}
  */
 export function getWaiters(): Waiter[] {
-  return [...WAITERS.values()];
+  let result: Waiter[] = [];
+
+  WAITERS.forEach(value => {
+    result.push(value);
+  });
+
+  return result;
 }
 
 /**
