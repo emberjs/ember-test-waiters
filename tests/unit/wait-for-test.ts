@@ -47,7 +47,8 @@ if (DEBUG) {
           await new Promise(resolve => {
             setTimeout(resolve, 10);
           });
-          return Array.from(args).reverse();
+
+          return args.reverse();
         }),
 
         asyncThrow: waitFor(async function asyncThrow() {
@@ -64,7 +65,7 @@ if (DEBUG) {
           await new Promise(resolve => {
             setTimeout(resolve, 10);
           });
-          return Array.from(args).reverse();
+          return args.reverse();
         }
 
         @waitFor
@@ -91,7 +92,7 @@ if (DEBUG) {
               yield new Promise(resolve => {
                 setTimeout(resolve, 10);
               });
-              return Array.from(args).reverse();
+              return args.reverse();
             })
           ),
           doAsyncStuff(...args: any) {
@@ -120,7 +121,7 @@ if (DEBUG) {
             yield new Promise(resolve => {
               setTimeout(resolve, 10);
             });
-            return Array.from(args).reverse();
+            return args.reverse();
           }
           doAsyncStuff(...args: any) {
             return perform(get(this, 'doStuffTask'), ...args);

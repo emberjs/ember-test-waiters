@@ -64,16 +64,11 @@ module('build-waiter', function(hooks) {
   test('test waiters automatically register when beginAsync is invoked when no token provided', function(assert) {
     let waiter = buildWaiter('my-addon:my-waiter');
 
-    let token = waiter.beginAsync();
+    waiter.beginAsync();
 
     let registeredWaiters = getWaiters();
 
     assert.equal(registeredWaiters[0], waiter, 'The waiter is registered');
-    assert.deepEqual(
-      (registeredWaiters[0] as any).items.keys().next().value,
-      token,
-      'Waiter item is in items'
-    );
   });
 
   test('test waiters automatically register when beginAsync is invoked using a custom token', function(assert) {
@@ -85,11 +80,6 @@ module('build-waiter', function(hooks) {
     let registeredWaiters = getWaiters();
 
     assert.equal(registeredWaiters[0], waiter, 'The waiter is registered');
-    assert.deepEqual(
-      (registeredWaiters[0] as any).items.keys().next().value,
-      {},
-      'Waiter item is in items'
-    );
   });
 
   test('test waiters removes item from items map when endAsync is invoked', function(assert) {
