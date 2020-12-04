@@ -7,6 +7,10 @@ import { DEBUG } from '@glimmer/env';
 import RSVP from 'rsvp';
 
 import { task as taskFn, TaskGenerator, didCancel } from 'ember-concurrency';
+// type resolution is not working correctly due to usage of forked
+// (non-published) ember-concurrency-decorators remove this ts-ignore when
+// migrating back to mainline off the fork
+// @ts-ignore
 import { task as taskDec } from 'ember-concurrency-decorators';
 import { perform } from 'ember-concurrency-ts';
 // @ts-ignore
@@ -47,7 +51,8 @@ if (DEBUG) {
           await new Promise(resolve => {
             setTimeout(resolve, 10);
           });
-          return Array.from(args).reverse();
+
+          return args.reverse();
         }),
 
         asyncThrow: waitFor(async function asyncThrow() {
@@ -64,7 +69,7 @@ if (DEBUG) {
           await new Promise(resolve => {
             setTimeout(resolve, 10);
           });
-          return Array.from(args).reverse();
+          return args.reverse();
         }
 
         @waitFor
@@ -91,7 +96,7 @@ if (DEBUG) {
               yield new Promise(resolve => {
                 setTimeout(resolve, 10);
               });
-              return Array.from(args).reverse();
+              return args.reverse();
             })
           ),
           doAsyncStuff(...args: any) {
@@ -120,7 +125,7 @@ if (DEBUG) {
             yield new Promise(resolve => {
               setTimeout(resolve, 10);
             });
-            return Array.from(args).reverse();
+            return args.reverse();
           }
           doAsyncStuff(...args: any) {
             return perform(get(this, 'doStuffTask'), ...args);

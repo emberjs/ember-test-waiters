@@ -5975,10 +5975,9 @@ ember-compatibility-helpers@^1.2.0:
     ember-cli-version-checker "^2.1.1"
     semver "^5.4.1"
 
-ember-concurrency-decorators@^2.0.1:
+"ember-concurrency-decorators@github:rwjblue/ember-concurrency-decorators#fix-ie11":
   version "2.0.1"
-  resolved "https://registry.yarnpkg.com/ember-concurrency-decorators/-/ember-concurrency-decorators-2.0.1.tgz#f5465785e6cf44684fb158ae6ab3aa1b131fae43"
-  integrity sha512-KJ8mCZxmvgalawh/zytURsc5ParNr9avPeCDR/mE7VQxWvITHtyAuYS2s1PPFQAQggTXTZYcGnfgzjn/cDHNMQ==
+  resolved "https://codeload.github.com/rwjblue/ember-concurrency-decorators/tar.gz/5bdbf76b71f609358d08252f18e1195f3ecf8c3d"
   dependencies:
     "@ember-decorators/utils" "^6.1.0"
     ember-cli-babel "^7.19.0"
@@ -6305,7 +6304,7 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
-es6-promise@^4.0.3:
+es6-promise@^4.0.3, es6-promise@^4.2.8:
   version "4.2.8"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.8.tgz#4eb21594c972bc40553d276e510539143db53e0a"
   integrity sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==
