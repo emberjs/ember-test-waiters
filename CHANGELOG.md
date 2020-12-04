@@ -1,3 +1,13 @@
+## v2.3.2 (2020-12-04)
+
+#### :bug: Bug Fix
+* [#213](https://github.com/emberjs/ember-test-waiters/pull/213) Fix IE11 compatiblity ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 2
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
+
 ## v2.3.1 (2020-11-30)
 
 #### :bug: Bug Fix
