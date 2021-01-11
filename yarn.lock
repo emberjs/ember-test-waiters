@@ -5975,9 +5975,10 @@ ember-compatibility-helpers@^1.2.0:
     ember-cli-version-checker "^2.1.1"
     semver "^5.4.1"
 
-"ember-concurrency-decorators@github:rwjblue/ember-concurrency-decorators#fix-ie11":
-  version "2.0.1"
-  resolved "https://codeload.github.com/rwjblue/ember-concurrency-decorators/tar.gz/5bdbf76b71f609358d08252f18e1195f3ecf8c3d"
+ember-concurrency-decorators@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/ember-concurrency-decorators/-/ember-concurrency-decorators-2.0.3.tgz#2816c9a0283b90ba5340fc5b4e0b92ea91f7d6e3"
+  integrity sha512-r6O34YKI/slyYapVsuOPnmaKC4AsmBSwvgcadbdy+jHNj+mnryXPkm+3hhhRnFdlsKUKdEuXvl43lhjhYRLhhA==
   dependencies:
     "@ember-decorators/utils" "^6.1.0"
     ember-cli-babel "^7.19.0"
