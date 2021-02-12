@@ -1,6 +1,9 @@
 const QUnit = require('qunit');
+const path = require('path');
+const Addon = require('ember-cli/lib/models/addon');
 const VersionChecker = require('ember-cli-version-checker');
 const highlander = require('../force-highlander-addon');
+const addonIndex = require('../index');
 
 const test = QUnit.test;
 const STABLE_FUNCTION_REF = () => {};
@@ -140,7 +143,7 @@ const STABLE_FUNCTION_REF = () => {};
       });
     });
 
-    test('forceHighlander monkey patches non-latest w/ latest `treeFor`, `cacheKeyForTree`', function(assert) {
+    test('forceHighlander monkey patches non-latest w/ latest `treeFor`', function(assert) {
       let checker = VersionChecker.forProject(this.project);
       let addons = [
         ...checker.filterAddonsByName('ember-test-waiters'),
@@ -150,10 +153,6 @@ const STABLE_FUNCTION_REF = () => {};
 
       latestVersion.treeFor = () => {
         assert.step('latest `treeFor` called');
-      };
-
-      latestVersion.cacheKeyForTree = () => {
-        assert.step('latest `cacheKeyForTree` called');
       };
 
       let nonLatestTestWaiterAddons = highlander.forceHighlander(this.project);
@@ -169,16 +168,45 @@ const STABLE_FUNCTION_REF = () => {};
       });
 
       assert.verifySteps(
-        [
-          'latest `treeFor` called',
-          'latest `cacheKeyForTree` called',
-          'latest `treeFor` called',
-          'latest `cacheKeyForTree` called',
-          'latest `treeFor` called',
-          'latest `cacheKeyForTree` called',
-        ],
+        ['latest `treeFor` called', 'latest `treeFor` called', 'latest `treeFor` called'],
         'the latest version treeFor, cacheKeyForTree is called for all non-latest addons'
       );
+    });
+
+    test('forceHighlander returns stable cache keys for each addon (`@ember/test-waiters` and `ember-test-waiters`)', function(assert) {
+      const AddonCtor = Addon.extend({
+        ...addonIndex,
+        root: path.resolve(__dirname, '..'),
+        // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
+        pkg: { ...require('../package.json'), version: '5.0.5' },
+      });
+
+      const expectedLatest = new AddonCtor(this.project, this.project);
+      this.project.addons.push(expectedLatest);
+
+      let checker = VersionChecker.forProject(this.project);
+      let addons = [
+        ...checker.filterAddonsByName('ember-test-waiters'),
+        ...checker.filterAddonsByName('@ember/test-waiters'),
+      ];
+
+      let latestVersion = highlander.findLatestVersion(addons);
+
+      assert.strictEqual(latestVersion, expectedLatest);
+      assert.ok(latestVersion.cacheKeyForTree().endsWith('@ember/test-waiters'));
+
+      let nonLatestTestWaiterAddons = highlander.forceHighlander(this.project);
+
+      assert.equal(nonLatestTestWaiterAddons.length, 4);
+
+      nonLatestTestWaiterAddons.forEach(addon => {
+        assert.ok(addon.cacheKeyForTree().endsWith(moduleName));
+
+        assert.strictEqual(
+          latestVersion.cacheKeyForTree().replace('@ember/test-waiters', moduleName),
+          addon.cacheKeyForTree()
+        );
+      });
     });
   });
 });

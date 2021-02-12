@@ -1,6 +1,7 @@
 'use strict';
 const semver = require('semver');
 const VersionChecker = require('ember-cli-version-checker');
+const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 
 function findLatestVersion(addons) {
   let latestVersion = addons[0];
@@ -29,8 +30,15 @@ function forceHighlander(project) {
         return;
       }
 
-      addon.cacheKeyForTree = (...args) => {
-        return latestVersion.cacheKeyForTree(...args);
+      addon.cacheKeyForTree = treeType => {
+        // because this is overriding _both_ `@ember/test-waiters` and `ember-test-waiters`
+        // we need to append the addon's name here; the end result is that we get a different
+        // stable cache key, one for `@ember/test-waiters` and another for `ember-test-waiters`
+        // the reason for this is that Embroider doesn't currently take into account the addon's
+        // name when dealing with cache keys internally & as a result, it gets confused that
+        // (seemingly) two different addons have the same cache key. this will be fixed in Embroider,
+        // but in the short-term we're implementing this here to account for this issue
+        return `${calculateCacheKeyForTree(treeType, latestVersion)}-${addon.name}`;
       };
 
       addon.treeFor = (...args) => {
