@@ -1,3 +1,17 @@
+## v2.4.0 (2021-02-12)
+
+#### :rocket: Enhancement
+* [#231](https://github.com/emberjs/ember-test-waiters/pull/231) Update `cacheKeyForTree` override to account for both addon names ([@brendenpalmer](https://github.com/brendenpalmer))
+
+#### :house: Internal
+* [#221](https://github.com/emberjs/ember-test-waiters/pull/221) Update to released version of ember-concurrency-decorators. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 3
+- Brenden Palmer ([@brendenpalmer](https://github.com/brendenpalmer))
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
+
 ## v2.3.2 (2020-12-04)
 
 #### :bug: Bug Fix
