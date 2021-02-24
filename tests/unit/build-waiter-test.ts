@@ -276,4 +276,16 @@ module('build-waiter', function(hooks) {
 
     assert.equal((waiter as any).items.size, 0);
   });
+
+  test('completed operations tracking does not leak non-primitive tokens', function(assert) {
+    let waiter = buildWaiter('@ember/test-waiters:my-waiter');
+
+    const tokens = [undefined, {}, function() {}, Promise.resolve()];
+
+    for (let token of tokens) {
+      waiter.endAsync(waiter.beginAsync(token));
+    }
+
+    assert.equal((waiter as any).completedOperationsForPrimitives.size, 0);
+  });
 });
