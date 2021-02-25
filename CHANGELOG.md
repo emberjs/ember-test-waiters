@@ -1,3 +1,12 @@
+## v2.4.1 (2021-02-25)
+
+#### :bug: Bug Fix
+* [#232](https://github.com/emberjs/ember-test-waiters/pull/232) Fix leak of tokens during development builds ([@bendemboski](https://github.com/bendemboski))
+
+#### Committers: 1
+- Ben Demboski ([@bendemboski](https://github.com/bendemboski))
+
+
 ## v2.4.0 (2021-02-12)
 
 #### :rocket: Enhancement
