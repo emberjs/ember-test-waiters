@@ -89,9 +89,11 @@ class TestWaiterImpl<T extends object | Primitive = Token> implements TestWaiter
   private _getCompletedOperations(token: T) {
     let type = typeof token;
 
-    return token !== null || (type !== 'function' && type !== 'object')
-      ? this.completedOperationsForPrimitives
-      : this.completedOperationsForTokens;
+    let isFunction = type === 'function';
+    let isObject = token !== null && type === 'object';
+    let isPrimitive = !isFunction && !isObject;
+
+    return isPrimitive ? this.completedOperationsForPrimitives : this.completedOperationsForTokens;
   }
 }
 
