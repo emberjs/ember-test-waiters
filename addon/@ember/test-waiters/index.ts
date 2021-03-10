@@ -1,4 +1,4 @@
-export {
+export type {
   WaiterName,
   Token,
   Primitive,
