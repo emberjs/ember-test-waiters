@@ -37,7 +37,7 @@ module.exports = {
       We're intentionally not calling super here in order to correctly output
       multiple modules (@ember/test-helpers and ember-test-helpers).
     */
-    let babel = this.addons.find(a => a.name === 'ember-cli-babel');
+    let babel = this.addons.find((a) => a.name === 'ember-cli-babel');
 
     return babel.transpileTree(tree);
   },

@@ -17,8 +17,8 @@ import { DEBUG } from '@glimmer/env';
 import { registerWarnHandler } from '@ember/debug';
 
 if (DEBUG) {
-  module('waiter-manager | DEBUG: true', function(hooks) {
-    hooks.afterEach(function() {
+  module('waiter-manager | DEBUG: true', function (hooks) {
+    hooks.afterEach(function () {
       _reset();
       _resetWaiterNames();
       resetError();
@@ -26,41 +26,41 @@ if (DEBUG) {
       registerWarnHandler(() => {});
     });
 
-    test('register will correctly add a waiter', function(assert) {
+    test('register will correctly add a waiter', function (assert) {
       let waiter = buildWaiter('@ember/test-waiters:first');
 
       register(waiter);
 
-      let waiters = getWaiters().map(w => w.name);
+      let waiters = getWaiters().map((w) => w.name);
       assert.deepEqual(waiters, ['@ember/test-waiters:first']);
     });
 
-    test('register will only add one waiter with the same name', function(assert) {
+    test('register will only add one waiter with the same name', function (assert) {
       let waiter = buildWaiter('@ember/test-waiters:first');
       let secondWaiterButStillCalledFirst = buildWaiter('@ember/test-waiters:first');
 
       register(waiter);
       register(secondWaiterButStillCalledFirst);
 
-      let waiters = getWaiters().map(w => w.name);
+      let waiters = getWaiters().map((w) => w.name);
       assert.deepEqual(waiters, ['@ember/test-waiters:first']);
     });
 
-    test('unregister will correctly remove a waiter', function(assert) {
+    test('unregister will correctly remove a waiter', function (assert) {
       let waiter = buildWaiter('@ember/test-waiters:first');
 
       register(waiter);
 
-      let waiters = getWaiters().map(w => w.name);
+      let waiters = getWaiters().map((w) => w.name);
       assert.deepEqual(waiters, ['@ember/test-waiters:first'], 'precond');
 
       unregister(waiter);
 
-      waiters = getWaiters().map(w => w.name);
+      waiters = getWaiters().map((w) => w.name);
       assert.deepEqual(waiters, [], 'precond');
     });
 
-    test('getWaiters returns all registered waiters', function(assert) {
+    test('getWaiters returns all registered waiters', function (assert) {
       let waiter = buildWaiter('@ember/test-waiters:first');
 
       assert.equal(getWaiters(), 0, 'No waiters are registered');
@@ -74,7 +74,7 @@ if (DEBUG) {
       assert.equal(getWaiters(), 0, 'No waiters are registered');
     });
 
-    test('getPendingWaiterState returns information on pending waiters', function(assert) {
+    test('getPendingWaiterState returns information on pending waiters', function (assert) {
       let first = buildWaiter('@ember/test-waiters:first');
       let second = buildWaiter('@ember/test-waiters:second');
       let firstItem = {};
@@ -127,7 +127,7 @@ if (DEBUG) {
       assert.deepEqual(getPendingWaiterState().waiters, {}, 'No waiters are pending');
     });
 
-    test('getPendingWaiterState contains label info when label provided', function(assert) {
+    test('getPendingWaiterState contains label info when label provided', function (assert) {
       let first = buildWaiter('@ember/test-waiters:first');
       let second = buildWaiter('@ember/test-waiters:second');
       let firstItem = {};
@@ -157,7 +157,7 @@ if (DEBUG) {
       });
     });
 
-    test('hasPendingWaiters can check if waiting is required', function(assert) {
+    test('hasPendingWaiters can check if waiting is required', function (assert) {
       let first = buildWaiter('@ember/test-waiters:first');
       let second = buildWaiter('@ember/test-waiters:second');
       let firstItem = {};
@@ -178,7 +178,7 @@ if (DEBUG) {
       assert.strictEqual(hasPendingWaiters(), false, 'Second waiter is not pending');
     });
 
-    test('custom waiters can be registered', function(assert) {
+    test('custom waiters can be registered', function (assert) {
       let customWaiterCounter = 0;
       let customWaiter;
 

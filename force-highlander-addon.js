@@ -6,7 +6,7 @@ const calculateCacheKeyForTree = require('calculate-cache-key-for-tree');
 function findLatestVersion(addons) {
   let latestVersion = addons[0];
 
-  addons.forEach(addon => {
+  addons.forEach((addon) => {
     if (semver.gt(addon.pkg.version, latestVersion.pkg.version)) {
       latestVersion = addon;
     }
@@ -25,12 +25,12 @@ function forceHighlander(project) {
   let noop = () => {};
 
   return testWaiterAddons
-    .map(addon => {
+    .map((addon) => {
       if (addon === latestVersion) {
         return;
       }
 
-      addon.cacheKeyForTree = treeType => {
+      addon.cacheKeyForTree = (treeType) => {
         // because this is overriding _both_ `@ember/test-waiters` and `ember-test-waiters`
         // we need to append the addon's name here; the end result is that we get a different
         // stable cache key, one for `@ember/test-waiters` and another for `ember-test-waiters`

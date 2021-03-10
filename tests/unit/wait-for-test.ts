@@ -34,8 +34,8 @@ interface ModeDef {
 }
 
 if (DEBUG) {
-  module('wait-for', function(hooks) {
-    hooks.afterEach(function() {
+  module('wait-for', function (hooks) {
+    hooks.afterEach(function () {
       _reset();
       resetError();
     });
@@ -48,7 +48,7 @@ if (DEBUG) {
     const promiseTestModules = promiseImplementations.map(({ name, Promise }) => {
       class EmberObjectThing extends EmberObject.extend({
         doAsyncStuff: waitFor(async function doAsyncStuff(...args: any) {
-          await new Promise(resolve => {
+          await new Promise((resolve) => {
             setTimeout(resolve, 10);
           });
 
@@ -56,7 +56,7 @@ if (DEBUG) {
         }),
 
         asyncThrow: waitFor(async function asyncThrow() {
-          await new Promise(resolve => {
+          await new Promise((resolve) => {
             setTimeout(resolve, 10);
           });
           throw new Error('doh!');
@@ -66,7 +66,7 @@ if (DEBUG) {
       class NativeThing {
         @waitFor
         async doAsyncStuff(...args: any) {
-          await new Promise(resolve => {
+          await new Promise((resolve) => {
             setTimeout(resolve, 10);
           });
           return args.reverse();
@@ -74,7 +74,7 @@ if (DEBUG) {
 
         @waitFor
         async asyncThrow() {
-          await new Promise(resolve => {
+          await new Promise((resolve) => {
             setTimeout(resolve, 10);
           });
           throw new Error('doh!');
@@ -89,11 +89,11 @@ if (DEBUG) {
     });
 
     const generatorTestModules = [
-      (function() {
+      (function () {
         const EmberObjectThing = EmberObject.extend({
           doStuffTask: taskFn(
             waitFor(function* doTaskStuff(...args: any) {
-              yield new Promise(resolve => {
+              yield new Promise((resolve) => {
                 setTimeout(resolve, 10);
               });
               return args.reverse();
@@ -106,7 +106,7 @@ if (DEBUG) {
 
           throwingTask: taskFn(
             waitFor(function* taskThrow() {
-              yield new Promise(resolve => {
+              yield new Promise((resolve) => {
                 setTimeout(resolve, 10);
               });
               throw new Error('doh!');
@@ -122,7 +122,7 @@ if (DEBUG) {
           @taskDec
           @waitFor
           *doStuffTask(...args: any): TaskGenerator<any[]> {
-            yield new Promise(resolve => {
+            yield new Promise((resolve) => {
               setTimeout(resolve, 10);
             });
             return args.reverse();
@@ -134,7 +134,7 @@ if (DEBUG) {
           @taskDec
           @waitFor
           *throwingTask() {
-            yield new Promise(resolve => {
+            yield new Promise((resolve) => {
               setTimeout(resolve, 10);
             });
             throw new Error('doh!');
@@ -155,7 +155,7 @@ if (DEBUG) {
     const testModules = [...promiseTestModules, ...generatorTestModules];
 
     testModules.forEach(({ name, waiterName, EmberObjectThing, NativeThing }) => {
-      module(name, function() {
+      module(name, function () {
         const invocationType = [
           {
             name: 'class function',
@@ -178,8 +178,8 @@ if (DEBUG) {
         ];
 
         invocationType.forEach(({ name, createPromise, createThrowingPromise }: ModeDef) => {
-          module(name, function() {
-            test('waitFor wraps and registers a waiter', async function(assert) {
+          module(name, function () {
+            test('waitFor wraps and registers a waiter', async function (assert) {
               overrideError(MockStableError);
 
               let promise = createPromise();
@@ -201,14 +201,14 @@ if (DEBUG) {
               });
             });
 
-            test('waitFor handles arguments and return value', async function(assert) {
+            test('waitFor handles arguments and return value', async function (assert) {
               overrideError(MockStableError);
 
               let ret = await createPromise(1, 'foo');
               assert.deepEqual(ret, ['foo', 1]);
             });
 
-            test('waitFor transitions waiter to not pending even if promise throws when thenable wrapped', async function(assert) {
+            test('waitFor transitions waiter to not pending even if promise throws when thenable wrapped', async function (assert) {
               let promise = createThrowingPromise();
 
               try {
@@ -222,13 +222,13 @@ if (DEBUG) {
       });
     });
 
-    module('waitFor ember-concurrency interop', function() {
+    module('waitFor ember-concurrency interop', function () {
       class Deferred {
         promise: Promise<any>;
         resolve: Function = () => null;
 
         constructor() {
-          this.promise = new Promise(res => (this.resolve = res));
+          this.promise = new Promise((res) => (this.resolve = res));
         }
       }
 
@@ -262,7 +262,7 @@ if (DEBUG) {
         }
       }
 
-      test('tasks with multiple yields work', async function(assert) {
+      test('tasks with multiple yields work', async function (assert) {
         let thing = new NativeThing();
 
         let promise = perform(get(thing, 'doStuffTask'));
@@ -296,7 +296,7 @@ if (DEBUG) {
       ];
 
       cancellationCases.forEach(({ desc, taskName }) => {
-        test(`${desc} task cancellation works`, async function(assert) {
+        test(`${desc} task cancellation works`, async function (assert) {
           let thing = new NativeThing();
 
           let instance = perform(get(thing, taskName));
@@ -319,7 +319,7 @@ if (DEBUG) {
       });
     });
 
-    module('waitFor co interop', function() {
+    module('waitFor co interop', function () {
       function coDec(
         _target: object,
         _key: string,
@@ -334,7 +334,7 @@ if (DEBUG) {
         resolve: Function = () => null;
 
         constructor() {
-          this.promise = new Promise(res => (this.resolve = res));
+          this.promise = new Promise((res) => (this.resolve = res));
         }
       }
 
@@ -355,7 +355,7 @@ if (DEBUG) {
         }
       }
 
-      test('it works', async function(assert) {
+      test('it works', async function (assert) {
         let thing = new NativeThing();
 
         let promise = thing.doStuffCo();
