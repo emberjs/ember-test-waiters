@@ -68,7 +68,7 @@ class TestWaiterImpl<T extends object | Primitive = Token> implements TestWaiter
   debugInfo(): TestWaiterDebugInfo[] {
     let result: TestWaiterDebugInfo[] = [];
 
-    this.items.forEach(value => {
+    this.items.forEach((value) => {
       result.push(value);
     });
 

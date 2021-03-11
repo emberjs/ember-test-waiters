@@ -6,20 +6,20 @@ import { DEBUG } from '@glimmer/env';
 import RSVP from 'rsvp';
 
 if (DEBUG) {
-  module('wait-for-promise', function(hooks) {
-    hooks.afterEach(function() {
+  module('wait-for-promise', function (hooks) {
+    hooks.afterEach(function () {
       _reset();
       resetError();
     });
 
-    module(`Implementation: Native Promise`, function() {
-      hooks.afterEach(function() {
+    module(`Implementation: Native Promise`, function () {
+      hooks.afterEach(function () {
         _reset();
         resetError();
       });
 
-      test('waitForPromise wraps and registers a waiter', async function(assert) {
-        let promise = new Promise(resolve => {
+      test('waitForPromise wraps and registers a waiter', async function (assert) {
+        let promise = new Promise((resolve) => {
           resolve();
         });
 
@@ -44,7 +44,7 @@ if (DEBUG) {
         });
       });
 
-      test('waitForPromise transitions waiter to not pending even if promise throws', async function(assert) {
+      test('waitForPromise transitions waiter to not pending even if promise throws', async function (assert) {
         let promise = Promise.resolve().then(() => {
           throw new Error('Promise threw');
         });
@@ -56,7 +56,7 @@ if (DEBUG) {
         }
       });
 
-      test('waitForPromise transitions waiter to not pending even if promise throws when thenable wrapped', async function(assert) {
+      test('waitForPromise transitions waiter to not pending even if promise throws when thenable wrapped', async function (assert) {
         let promise = Promise.resolve().then(() => {
           throw new Error('Promise threw');
         });
@@ -69,14 +69,14 @@ if (DEBUG) {
       });
     });
 
-    module(`Implementation: RSVP.Promise`, function() {
-      hooks.afterEach(function() {
+    module(`Implementation: RSVP.Promise`, function () {
+      hooks.afterEach(function () {
         _reset();
         resetError();
       });
 
-      test('waitForPromise wraps and registers a waiter', async function(assert) {
-        let promise = new RSVP.Promise(resolve => {
+      test('waitForPromise wraps and registers a waiter', async function (assert) {
+        let promise = new RSVP.Promise((resolve) => {
           resolve();
         });
 
@@ -101,7 +101,7 @@ if (DEBUG) {
         });
       });
 
-      test('waitForPromise transitions waiter to not pending even if promise throws', async function(assert) {
+      test('waitForPromise transitions waiter to not pending even if promise throws', async function (assert) {
         let promise = RSVP.Promise.resolve().then(() => {
           throw new Error('Promise threw');
         });
@@ -113,7 +113,7 @@ if (DEBUG) {
         }
       });
 
-      test('waitForPromise transitions waiter to not pending even if promise throws when thenable wrapped', async function(assert) {
+      test('waitForPromise transitions waiter to not pending even if promise throws when thenable wrapped', async function (assert) {
         let promise = RSVP.Promise.resolve().then(() => {
           throw new Error('Promise threw');
         });

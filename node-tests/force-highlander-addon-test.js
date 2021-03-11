@@ -8,9 +8,9 @@ const addonIndex = require('../index');
 const test = QUnit.test;
 const STABLE_FUNCTION_REF = () => {};
 
-['ember-test-waiters', '@ember/test-waiters'].forEach(moduleName => {
-  QUnit.module(`force-highlander-addon for ${moduleName}`, function(hooks) {
-    hooks.beforeEach(function() {
+['ember-test-waiters', '@ember/test-waiters'].forEach((moduleName) => {
+  QUnit.module(`force-highlander-addon for ${moduleName}`, function (hooks) {
+    hooks.beforeEach(function () {
       this.project = {
         name: 'ember-top-level-package',
         pkg: { version: '1.0.0' },
@@ -106,7 +106,7 @@ const STABLE_FUNCTION_REF = () => {};
       };
     });
 
-    test('findLatestVersion can find the latest version from the set', function(assert) {
+    test('findLatestVersion can find the latest version from the set', function (assert) {
       let checker = VersionChecker.forProject(this.project);
       let addons = [
         ...checker.filterAddonsByName('ember-test-waiters'),
@@ -117,7 +117,7 @@ const STABLE_FUNCTION_REF = () => {};
       assert.equal(latestVersion.pkg.version, '3.0.1');
     });
 
-    test('findLatestVersion can find beta versions', function(assert) {
+    test('findLatestVersion can find beta versions', function (assert) {
       let addons = [
         {
           name: 'foo',
@@ -133,17 +133,17 @@ const STABLE_FUNCTION_REF = () => {};
       assert.equal(latestVersion.pkg.version, '1.1.0-beta.1');
     });
 
-    test('forceHighlander nullifies non-latest addon `included` methods', function(assert) {
+    test('forceHighlander nullifies non-latest addon `included` methods', function (assert) {
       let testWaiterAddons = highlander.forceHighlander(this.project);
 
       assert.equal(testWaiterAddons.length, 3);
 
-      testWaiterAddons.forEach(addon => {
+      testWaiterAddons.forEach((addon) => {
         assert.notEqual(addon.included, STABLE_FUNCTION_REF);
       });
     });
 
-    test('forceHighlander monkey patches non-latest w/ latest `treeFor`', function(assert) {
+    test('forceHighlander monkey patches non-latest w/ latest `treeFor`', function (assert) {
       let checker = VersionChecker.forProject(this.project);
       let addons = [
         ...checker.filterAddonsByName('ember-test-waiters'),
@@ -159,7 +159,7 @@ const STABLE_FUNCTION_REF = () => {};
 
       assert.equal(nonLatestTestWaiterAddons.length, 3);
 
-      nonLatestTestWaiterAddons.forEach(addon => {
+      nonLatestTestWaiterAddons.forEach((addon) => {
         assert.notEqual(addon.treeFor, STABLE_FUNCTION_REF);
         assert.notEqual(addon.cacheKeyForTree, STABLE_FUNCTION_REF);
 
@@ -173,7 +173,7 @@ const STABLE_FUNCTION_REF = () => {};
       );
     });
 
-    test('forceHighlander returns stable cache keys for each addon (`@ember/test-waiters` and `ember-test-waiters`)', function(assert) {
+    test('forceHighlander returns stable cache keys for each addon (`@ember/test-waiters` and `ember-test-waiters`)', function (assert) {
       const AddonCtor = Addon.extend({
         ...addonIndex,
         root: path.resolve(__dirname, '..'),
@@ -199,7 +199,7 @@ const STABLE_FUNCTION_REF = () => {};
 
       assert.equal(nonLatestTestWaiterAddons.length, 4);
 
-      nonLatestTestWaiterAddons.forEach(addon => {
+      nonLatestTestWaiterAddons.forEach((addon) => {
         assert.ok(addon.cacheKeyForTree().endsWith(moduleName));
 
         assert.strictEqual(

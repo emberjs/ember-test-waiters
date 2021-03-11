@@ -115,7 +115,7 @@ function wrapFunction(fn: Function, label?: string) {
     return fn;
   }
 
-  return function(this: any, ...args: any[]) {
+  return function (this: any, ...args: any[]) {
     let result = fn.call(this, ...args);
 
     if (isThenable(result)) {

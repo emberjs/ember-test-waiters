@@ -46,7 +46,7 @@ export function unregister(waiter: Waiter): void {
 export function getWaiters(): Waiter[] {
   let result: Waiter[] = [];
 
-  WAITERS.forEach(value => {
+  WAITERS.forEach((value) => {
     result.push(value);
   });
 
@@ -80,7 +80,7 @@ export function getPendingWaiterState(): PendingWaiterState {
     waiters: {},
   };
 
-  WAITERS.forEach(waiter => {
+  WAITERS.forEach((waiter) => {
     if (!waiter.waitUntil()) {
       result.pending++;
 
