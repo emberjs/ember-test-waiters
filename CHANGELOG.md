@@ -1,3 +1,12 @@
+## v2.4.2 (2021-03-11)
+
+#### :bug: Bug Fix
+* [#239](https://github.com/emberjs/ember-test-waiters/pull/239) Use `export type` to avoid broken imports when types are transpiled away ([@ef4](https://github.com/ef4))
+
+#### Committers: 2
+- Edward Faulkner ([@ef4](https://github.com/ef4))
+
+
 ## v2.4.1 (2021-02-25)
 
 #### :bug: Bug Fix
