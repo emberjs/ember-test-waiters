@@ -1,3 +1,13 @@
+## v2.4.3 (2021-03-20)
+
+#### :bug: Bug Fix
+* [#242](https://github.com/emberjs/ember-test-waiters/pull/242) Update to ember-cli-babel@7.26.2 to fix window.Ember deprecations ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 2
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
+
 ## v2.4.2 (2021-03-11)
 
 #### :bug: Bug Fix
