@@ -39,7 +39,7 @@
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
     "@glimmer/env": "^0.1.7",
-    "@types/ember": "^3.16.3",
+    "@types/ember": "^3.16.5",
     "@types/ember-test-helpers": "^1.0.9",
     "@types/ember-testing-helpers": "^0.0.4",
     "@types/ember__test-helpers": "^0.7.9",
