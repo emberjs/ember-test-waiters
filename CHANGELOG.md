@@ -1,3 +1,13 @@
+## v2.4.4 (2021-05-14)
+
+#### :bug: Bug Fix
+* [#254](https://github.com/emberjs/ember-test-waiters/pull/254) Flip the logic for deprecation of old package name ([@scalvert](https://github.com/scalvert))
+
+#### Committers: 2
+- Steve Calvert ([@scalvert](https://github.com/scalvert))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
+
 ## v2.4.3 (2021-03-20)
 
 #### :bug: Bug Fix
