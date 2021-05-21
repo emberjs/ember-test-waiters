@@ -349,7 +349,7 @@ In anything but a production build, this function will return a `TestWaiter` ins
 
 #### Using the Test Waiter
 
-After building a test waiter, most users interact with a limited set of methods within this class, namely `beingAsync` and `endAsync`.
+After building a test waiter, most users interact with a limited set of methods within this class, namely `beginAsync` and `endAsync`.
 
 The API used to signal whether an asynchronous operation has begun and ultimately ended is through the **_paired_** calls of `beginAsync` and `endAsync`: begin to denote the start of the asynchronous operation, and end to denote the end. Unique instances of async operations are identified using a `token` returned from `beginAsync`, which is subsequently provided to the `endAsync` call.
 
