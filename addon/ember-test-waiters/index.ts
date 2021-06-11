@@ -6,6 +6,8 @@ deprecate(
   {
     id: 'ember-test-waiters-legacy-module-name',
     until: '3.0.0',
+    for: 'ember-test-waiters',
+    since: '2.2.0',
   }
 );
 
