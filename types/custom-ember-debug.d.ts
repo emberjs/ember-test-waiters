@@ -1,5 +1,7 @@
 import '@ember/debug';
 
+export type DeprecationStages = 'available' | 'enabled';
+
 declare module '@ember/debug' {
   export function deprecate(
     message: string,
@@ -23,7 +25,7 @@ declare module '@ember/debug' {
       /**
        * Describes when the deprecation became available and enabled
        */
-      since: string;
+      since: Partial<Record<DeprecationStages, string>>;
       /**
        * An optional url to the transition guide on the emberjs.com website.
        */
