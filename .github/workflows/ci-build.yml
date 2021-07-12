@@ -23,6 +23,8 @@ jobs:
         run: yarn install
       - name: lint
         run: yarn lint:js
+      - name: validate
+        run: yarn tsc --noEmit
       - name: test
         run: yarn test
       - name: test node
