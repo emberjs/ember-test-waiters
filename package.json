@@ -1,6 +1,6 @@
 {
   "name": "@ember/test-waiters",
-  "version": "2.4.4",
+  "version": "2.4.5",
   "description": "Allow tests to be aware of addon / application asynchrony.",
   "keywords": [
     "ember-addon"

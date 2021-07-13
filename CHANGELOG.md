@@ -1,3 +1,20 @@
+## v2.4.5 (2021-07-13)
+
+#### :bug: Bug Fix
+* [#280](https://github.com/emberjs/ember-test-waiters/pull/280) Fixes TS issue with mismatched type for deprecate ([@scalvert](https://github.com/scalvert))
+* [#272](https://github.com/emberjs/ember-test-waiters/pull/272) Fix warnings when the legacy module deprecation is triggered ([@sandydoo](https://github.com/sandydoo))
+
+#### :house: Internal
+* [#285](https://github.com/emberjs/ember-test-waiters/pull/285) Running npx browserslist@latest --update-db ([@scalvert](https://github.com/scalvert))
+* [#279](https://github.com/emberjs/ember-test-waiters/pull/279) Adds type checking to CI ([@scalvert](https://github.com/scalvert))
+* [#270](https://github.com/emberjs/ember-test-waiters/pull/270) Adding octane edition to package.json ([@scalvert](https://github.com/scalvert))
+
+#### Committers: 3
+- Luke Melia ([@lukemelia](https://github.com/lukemelia))
+- Sander Melnikov ([@sandydoo](https://github.com/sandydoo))
+- Steve Calvert ([@scalvert](https://github.com/scalvert))
+
+
 ## v2.4.4 (2021-05-14)
 
 #### :bug: Bug Fix
