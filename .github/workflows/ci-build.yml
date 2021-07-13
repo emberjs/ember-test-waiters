@@ -21,14 +21,8 @@ jobs:
           node-version: 10.x
       - name: install dependencies
         run: yarn install
-      - name: lint
-        run: yarn lint:js
-      - name: validate
-        run: yarn tsc --noEmit
       - name: test
         run: yarn test
-      - name: test node
-        run: yarn test:node
 
   try-scenarios:
     name: ${{ matrix.ember-try-scenario }}
