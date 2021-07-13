@@ -52,7 +52,7 @@
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "co": "^4.6.0",
-    "ember-auto-import": "^1.11.3",
+    "ember-auto-import": "^2.0.2",
     "ember-cli": "~3.24.0",
     "ember-cli-dependency-checker": "^3.2.0",
     "ember-cli-htmlbars": "^5.7.1",
