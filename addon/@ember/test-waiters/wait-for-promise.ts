@@ -35,7 +35,7 @@ export default function waitForPromise<T, KindOfPromise extends PromiseType<T>>(
   if (DEBUG) {
     PROMISE_WAITER.beginAsync(promise, label);
 
-    result = ((promise as unknown) as Thenable<T, KindOfPromise>).then(
+    result = (promise as unknown as Thenable<T, KindOfPromise>).then(
       (value: T) => {
         PROMISE_WAITER.endAsync(promise);
         return value;

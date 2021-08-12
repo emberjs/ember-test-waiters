@@ -196,7 +196,7 @@ if (DEBUG) {
                 },
               });
 
-              await ((promise as unknown) as Thenable<void, PromiseType<void>>).then(() => {
+              await (promise as unknown as Thenable<void, PromiseType<void>>).then(() => {
                 assert.deepEqual(getPendingWaiterState(), { pending: 0, waiters: {} });
               });
             });

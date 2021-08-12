@@ -5,27 +5,41 @@ on:
     branches:
       - master
       - 'v*'
-  pull_request: {}
+  pull_request:
   schedule:
     - cron: '0 3 * * *' # daily, at 3am
 
 jobs:
   test:
+    timeout-minutes: 10
     name: Tests
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: volta-cli/action@v1
         with:
           node-version: 10.x
-      - name: install dependencies
-        run: yarn install
-      - name: test
-        run: yarn test
+      - run: yarn install --frozen-lockfile
+      - run: yarn lint
+      - run: yarn test
+
+  floating-dependencies:
+    timeout-minutes: 10
+    name: "Floating Dependencies"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: volta-cli/action@v1
+        with:
+          node-version: 12.x
+      - run: yarn install --no-lockfile
+      - run: yarn test
 
   try-scenarios:
-    name: ${{ matrix.ember-try-scenario }}
+    timeout-minutes: 10
+    name: "Try: ${{ matrix.ember-try-scenario }}"
 
     runs-on: ubuntu-latest
 
@@ -35,8 +49,6 @@ jobs:
       fail-fast: false
       matrix:
         ember-try-scenario:
-          - ember-lts-2.18
-          - ember-lts-3.4
           - ember-lts-3.8
           - ember-lts-3.12
           - ember-lts-3.16
@@ -44,17 +56,15 @@ jobs:
           - ember-release
           - ember-beta
           - ember-canary
-          - ember-default
+          - ember-classic
           - ember-default-with-jquery
 
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: volta-cli/action@v1
         with:
           node-version: 12.x
       - name: install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
       - name: test
-        env:
-          EMBER_TRY_SCENARIO: ${{ matrix.ember-try-scenario }}
-        run: node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO
+        run: node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
