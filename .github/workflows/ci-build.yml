@@ -32,7 +32,7 @@ jobs:
     needs: test
 
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         ember-try-scenario:
           - ember-lts-2.18
