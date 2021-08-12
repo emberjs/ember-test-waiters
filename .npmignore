@@ -19,7 +19,7 @@
 /.prettierrc.js
 /.template-lintrc.js
 /.watchmanconfig
-/config/ember-try.js
+/config/
 /CHANGELOG.md
 /CONTRIBUTING.md
 /ember-cli-build.js
