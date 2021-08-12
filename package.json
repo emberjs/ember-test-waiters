@@ -1,6 +1,6 @@
 {
   "name": "@ember/test-waiters",
-  "version": "2.4.4",
+  "version": "2.4.5",
   "description": "Allow tests to be aware of addon / application asynchrony.",
   "keywords": [
     "ember-addon"
@@ -19,13 +19,17 @@
   },
   "scripts": {
     "build": "ember build",
+    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
+    "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
     "lint:js": "eslint --ext ts,js .",
+    "lint:js:fix": "eslint --ext ts,js . --fix",
     "lint:ts": "tsc -p tsconfig.json --noEmit",
-    "prepublishOnly": "ember ts:precompile",
-    "postpublish": "ember ts:clean",
+    "prepack": "ember ts:precompile",
+    "postpack": "ember ts:clean",
     "start": "ember serve",
-    "test": "ember test",
-    "test:all": "ember try:each",
+    "test": "npm-run-all lint \"test:!(ember-compatibility|prod)\"",
+    "test:ember": "ember test",
+    "test:ember-compatibility": "ember try:each",
     "test:node": "qunit node-tests",
     "test:prod": "ember test --environment=production"
   },
@@ -34,7 +38,7 @@
     "ember-cli-babel": "^7.26.6",
     "ember-cli-typescript": "^4.1.0",
     "ember-cli-version-checker": "^5.1.2",
-    "semver": "^7.3.2"
+    "semver": "^7.3.5"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
@@ -42,14 +46,14 @@
     "@types/ember": "^3.16.5",
     "@types/ember-test-helpers": "^1.0.9",
     "@types/ember-testing-helpers": "^0.0.4",
-    "@types/ember__test-helpers": "^0.7.9",
+    "@types/ember__test-helpers": "^2.0.1",
     "@types/qunit": "^2.11.2",
     "@types/rsvp": "^4.0.3",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "co": "^4.6.0",
     "ember-auto-import": "^1.11.3",
-    "ember-cli": "~3.24.0",
+    "ember-cli": "~3.27.0",
     "ember-cli-dependency-checker": "^3.2.0",
     "ember-cli-htmlbars": "^5.7.1",
     "ember-cli-inject-live-reload": "^2.0.2",
@@ -57,9 +61,9 @@
     "ember-cli-test-loader": "^3.0.0",
     "ember-cli-typescript-blueprints": "^3.0.0",
     "ember-cli-uglify": "^3.0.0",
-    "ember-concurrency": "^1.3.0",
+    "ember-concurrency": "^2.1.2",
     "ember-concurrency-decorators": "^2.0.3",
-    "ember-concurrency-ts": "^0.2.0",
+    "ember-concurrency-ts": "^0.3.1",
     "ember-decorators-polyfill": "^1.1.5",
     "ember-disable-prototype-extensions": "^1.1.3",
     "ember-export-application-global": "^2.0.1",
@@ -74,8 +78,9 @@
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-ember": "^7.8.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-prettier": "^3.4.0",
     "loader.js": "^4.7.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2",
     "qunit": "^2.16.0",
     "release-it": "^14.4.1",
@@ -110,5 +115,9 @@
       "release": true,
       "tokenRef": "GITHUB_AUTH"
     }
+  },
+  "volta": {
+    "node": "12.22.4",
+    "yarn": "1.22.4"
   }
 }
