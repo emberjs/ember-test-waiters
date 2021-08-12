@@ -20,11 +20,15 @@
 /.template-lintrc.js
 /.watchmanconfig
 /config/ember-try.js
+/CHANGELOG.md
 /CONTRIBUTING.md
 /ember-cli-build.js
+/node-tests/
+/RELEASE.md
 /testem.js
 /tests/
-/node-tests/
+/tsconfig.json
+/vendor/
 /yarn-error.log
 /yarn.lock
 .gitkeep
