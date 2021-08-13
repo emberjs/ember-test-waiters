@@ -11,7 +11,6 @@ on:
 
 jobs:
   test:
-    timeout-minutes: 10
     name: Tests
     runs-on: ubuntu-latest
 
