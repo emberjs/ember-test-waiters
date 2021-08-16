@@ -234,18 +234,54 @@ if (DEBUG) {
 
       class NativeThing {
         iterations: Array<Number> = [];
-        continue: Function = () => null;
+        _continue?: Function;
 
         @taskDec
         @waitFor
         *doStuffTask(): TaskGenerator<string> {
           for (let i = 0; i < 3; i += 1) {
-            let deferred = new Deferred();
-            this.continue = deferred.resolve;
-            yield deferred.promise;
+            let continuation = new Deferred();
+            if (this._continue !== undefined) {
+              throw new Error('pending continue, cannot proceed');
+            }
+            let completion = new Deferred();
+            let complete = false;
+
+            this._continue = () => {
+              if (complete === true) {
+                throw new Error('Cannot call continue twice on a single iteration');
+              } else {
+                complete = true;
+              }
+
+              continuation.resolve();
+              return completion.promise;
+            };
+
+            try {
+              yield continuation.promise;
+            } finally {
+              this._continue = undefined;
+              completion.resolve();
+            }
             this.iterations.push(i);
           }
           return 'done';
+        }
+
+        get continue() {
+          if (this._continue === undefined) {
+            throw new Error('Cannot call continue twice on a single iteration');
+          } else {
+            try {
+              return this._continue;
+            } finally {
+              // detect invalid usage. Specifically, our test (as written
+              // currently) would be in-error if any given continue() is invoked more
+              // then once
+              this._continue = undefined;
+            }
+          }
         }
 
         @taskDec
@@ -264,22 +300,21 @@ if (DEBUG) {
 
       test('tasks with multiple yields work', async function (assert) {
         let thing = new NativeThing();
+        let task = perform(get(thing, 'doStuffTask'));
 
-        let promise = perform(get(thing, 'doStuffTask'));
         assert.deepEqual(getPendingWaiterState().pending, 1);
 
-        thing.continue();
-        await Promise.resolve();
+        await thing.continue();
         assert.deepEqual(thing.iterations, [0]);
         assert.deepEqual(getPendingWaiterState().pending, 1);
 
-        thing.continue();
-        await Promise.resolve();
+        await thing.continue();
         assert.deepEqual(thing.iterations, [0, 1]);
         assert.deepEqual(getPendingWaiterState().pending, 1);
 
-        thing.continue();
-        await promise;
+        await thing.continue();
+        await task;
+
         assert.deepEqual(thing.iterations, [0, 1, 2]);
         assert.deepEqual(getPendingWaiterState().pending, 0);
       });
@@ -302,8 +337,7 @@ if (DEBUG) {
           let instance = perform(get(thing, taskName));
           assert.deepEqual(getPendingWaiterState().pending, 1);
 
-          thing.continue();
-          await Promise.resolve();
+          await thing.continue();
           assert.deepEqual(thing.iterations, [0]);
           assert.deepEqual(getPendingWaiterState().pending, 1);
 
@@ -340,39 +374,73 @@ if (DEBUG) {
 
       class NativeThing {
         iterations: Array<Number> = [];
-        continue: Function = () => null;
+        _continue?: Function;
 
         @coDec
         @waitFor
         *doStuffCo(): TaskGenerator<string> {
           for (let i = 0; i < 3; i += 1) {
-            let deferred = new Deferred();
-            this.continue = deferred.resolve;
-            yield deferred.promise;
+            let continuation = new Deferred();
+            if (this._continue !== undefined) {
+              throw new Error('pending continue, cannot proceed');
+            }
+            let completion = new Deferred();
+            let continued = false;
+
+            this._continue = () => {
+              if (continued === true) {
+                throw new Error('Cannot call continue twice on a single iteration');
+              } else {
+                continued = true;
+              }
+
+              continuation.resolve();
+              return completion.promise;
+            };
+
+            try {
+              yield continuation.promise;
+            } finally {
+              completion.resolve();
+              this._continue = undefined;
+            }
             this.iterations.push(i);
           }
           return 'done';
+        }
+
+        get continue() {
+          if (this._continue === undefined) {
+            throw new Error('Cannot call continue twice on a single iteration');
+          } else {
+            try {
+              return this._continue;
+            } finally {
+              // detect invalid usage. Specifically, our test (as written
+              // currently) would be in-error if any given continue() is invoked more
+              // then once
+              this._continue = undefined;
+            }
+          }
         }
       }
 
       test('it works', async function (assert) {
         let thing = new NativeThing();
 
-        let promise = thing.doStuffCo();
+        thing.doStuffCo();
         assert.deepEqual(getPendingWaiterState().pending, 1);
 
-        thing.continue();
-        await Promise.resolve();
+        await thing.continue();
         assert.deepEqual(thing.iterations, [0]);
         assert.deepEqual(getPendingWaiterState().pending, 1);
 
-        thing.continue();
-        await Promise.resolve();
+        await thing.continue();
         assert.deepEqual(thing.iterations, [0, 1]);
         assert.deepEqual(getPendingWaiterState().pending, 1);
 
-        thing.continue();
-        await promise;
+        await thing.continue();
+
         assert.deepEqual(thing.iterations, [0, 1, 2]);
         assert.deepEqual(getPendingWaiterState().pending, 0);
       });
