@@ -742,18 +742,10 @@
     "@babel/helper-plugin-utils" "^7.10.4"
     "@babel/plugin-syntax-logical-assignment-operators" "^7.10.4"
 
-"@babel/plugin-proposal-nullish-coalescing-operator@^7.12.1":
+"@babel/plugin-proposal-nullish-coalescing-operator@^7.12.1", "@babel/plugin-proposal-nullish-coalescing-operator@^7.4.4":
   version "7.12.1"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-nullish-coalescing-operator/-/plugin-proposal-nullish-coalescing-operator-7.12.1.tgz#3ed4fff31c015e7f3f1467f190dbe545cd7b046c"
   integrity sha512-nZY0ESiaQDI1y96+jk6VxMOaL4LPo/QDHBqL+SF3/vl6dHkTwHlOI8L4ZwuRBHgakRBw5zsVylel7QPbbGuYgg==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.10.4"
-    "@babel/plugin-syntax-nullish-coalescing-operator" "^7.8.0"
-
-"@babel/plugin-proposal-nullish-coalescing-operator@^7.4.4":
-  version "7.10.4"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-nullish-coalescing-operator/-/plugin-proposal-nullish-coalescing-operator-7.10.4.tgz#02a7e961fc32e6d5b2db0649e01bf80ddee7e04a"
-  integrity sha512-wq5n1M3ZUlHl9sqT2ok1T2/MTt6AXE0e1Lz4WzWBr95LsAZ5qDXe4KnFuauYyEyLiohvXFMdbsOTMyLZs91Zlw==
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
     "@babel/plugin-syntax-nullish-coalescing-operator" "^7.8.0"
@@ -783,21 +775,13 @@
     "@babel/helper-plugin-utils" "^7.10.4"
     "@babel/plugin-syntax-optional-catch-binding" "^7.8.0"
 
-"@babel/plugin-proposal-optional-chaining@^7.12.7":
+"@babel/plugin-proposal-optional-chaining@^7.12.7", "@babel/plugin-proposal-optional-chaining@^7.6.0":
   version "7.12.7"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-optional-chaining/-/plugin-proposal-optional-chaining-7.12.7.tgz#e02f0ea1b5dc59d401ec16fb824679f683d3303c"
   integrity sha512-4ovylXZ0PWmwoOvhU2vhnzVNnm88/Sm9nx7V8BPgMvAzn5zDou3/Awy0EjglyubVHasJj+XCEkr/r1X3P5elCA==
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
     "@babel/helper-skip-transparent-expression-wrappers" "^7.12.1"
-    "@babel/plugin-syntax-optional-chaining" "^7.8.0"
-
-"@babel/plugin-proposal-optional-chaining@^7.6.0":
-  version "7.8.3"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-optional-chaining/-/plugin-proposal-optional-chaining-7.8.3.tgz#ae10b3214cb25f7adb1f3bc87ba42ca10b7e2543"
-  integrity sha512-QIoIR9abkVn+seDE3OjA08jWcs3eZ9+wJCKSRgo3WdEU2csFYgdScb+8qHB3+WXsGJD55u+5hWCISI7ejXS+kg==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.8.3"
     "@babel/plugin-syntax-optional-chaining" "^7.8.0"
 
 "@babel/plugin-proposal-private-methods@^7.12.1":
@@ -2597,12 +2581,12 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
     "@types/color-name" "^1.1.1"
     color-convert "^2.0.1"
 
-ansi-to-html@^0.6.6:
-  version "0.6.14"
-  resolved "https://registry.yarnpkg.com/ansi-to-html/-/ansi-to-html-0.6.14.tgz#65fe6d08bba5dd9db33f44a20aec331e0010dad8"
-  integrity sha512-7ZslfB1+EnFSDO5Ju+ue5Y6It19DRnZXWv8jrGHgIlPna5Mh4jz7BV5jCbQneXNFurQcKoolaaAjHtgSBfOIuA==
+ansi-to-html@^0.6.15, ansi-to-html@^0.6.6:
+  version "0.6.15"
+  resolved "https://registry.yarnpkg.com/ansi-to-html/-/ansi-to-html-0.6.15.tgz#ac6ad4798a00f6aa045535d7f6a9cb9294eebea7"
+  integrity sha512-28ijx2aHJGdzbs+O5SNQF65r6rrKYnkuwTYm8lZlChuoJ9P1vVzIpWO20sQTqTPDXYp6NFwk326vApTtLVFXpQ==
   dependencies:
-    entities "^1.1.2"
+    entities "^2.0.0"
 
 ansicolors@~0.2.1:
   version "0.2.1"
@@ -5875,12 +5859,12 @@ ember-cli-typescript@^3.1.4:
     stagehand "^1.0.0"
     walk-sync "^2.0.0"
 
-ember-cli-typescript@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-typescript/-/ember-cli-typescript-4.1.0.tgz#2ff17be2e6d26b58c88b1764cb73887e7176618b"
-  integrity sha512-zSuKG8IQuYE3vS+c7V0mHJqwrN/4Wo9Wr50+0NUjnZH3P99ChynczQHu/P7WSifkO6pF6jaxwzf09XzWvG8sVw==
+ember-cli-typescript@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-typescript/-/ember-cli-typescript-4.2.1.tgz#54d08fc90318cc986f3ea562f93ce58a6cc4c24d"
+  integrity sha512-0iKTZ+/wH6UB/VTWKvGuXlmwiE8HSIGcxHamwNhEC5x1mN3z8RfvsFZdQWYUzIWFN2Tek0gmepGRPTwWdBYl/A==
   dependencies:
-    ansi-to-html "^0.6.6"
+    ansi-to-html "^0.6.15"
     broccoli-stew "^3.0.0"
     debug "^4.0.0"
     execa "^4.0.0"
@@ -6335,7 +6319,12 @@ ensure-posix-path@^1.0.0, ensure-posix-path@^1.0.1, ensure-posix-path@^1.0.2, en
   resolved "https://registry.yarnpkg.com/ensure-posix-path/-/ensure-posix-path-1.1.1.tgz#3c62bdb19fa4681544289edb2b382adc029179ce"
   integrity sha512-VWU0/zXzVbeJNXvME/5EmLuEj2TauvoaTz6aFYK1Z92JCBlDlZ3Gu0tuGR42kpW1754ywTs+QB0g5TP0oj9Zaw==
 
-entities@^1.1.2, entities@~1.1.1:
+entities@^2.0.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/entities/-/entities-2.2.0.tgz#098dc90ebb83d8dffa089d55256b351d34c4da55"
+  integrity sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==
+
+entities@~1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.2.tgz#bdfa735299664dfafd34529ed4f8522a275fea56"
   integrity sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==
@@ -7308,16 +7297,6 @@ fs-extra@^8.0.0, fs-extra@^8.0.1, fs-extra@^8.1.0:
     universalify "^0.1.0"
 
 fs-extra@^9.0.1, fs-extra@^9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d"
-  integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
-  dependencies:
-    at-least-node "^1.0.0"
-    graceful-fs "^4.2.0"
-    jsonfile "^6.0.1"
-    universalify "^2.0.0"
-
-fs-extra@^9.1.0:
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d"
   integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
