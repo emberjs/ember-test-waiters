@@ -24,7 +24,7 @@
     "lint:js": "eslint --ext ts,js .",
     "lint:js:fix": "eslint --ext ts,js . --fix",
     "lint:ts": "tsc -p tsconfig.json --noEmit",
-    "prepack": "npm-run-all prepublishOnly:*",
+    "prepack": "npm-run-all prepack:*",
     "prepack:d.ts": "ember ts:precompile",
     "prepack:addon": "babel --extensions '.ts' --presets @babel/preset-typescript addon --out-dir addon --ignore '**/*.d.ts'",
     "postpack": "ember ts:clean",
