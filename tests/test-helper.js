@@ -1,3 +1,5 @@
+/* globals Testem */
+
 import QUnit from 'qunit';
 import AbstractTestLoader from 'ember-cli-test-loader/test-support/index';
 import { polyfill } from 'es6-promise';
@@ -34,3 +36,8 @@ QUnit.testDone(function () {
   let testElementReset = testElementContainer.outerHTML;
   testElementContainer.innerHTML = testElementReset;
 });
+
+QUnit.start();
+if (typeof Testem !== 'undefined') {
+  Testem.hookIntoTestFramework();
+}
