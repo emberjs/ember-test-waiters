@@ -143,19 +143,7 @@ module.exports = async function () {
         },
       },
       embroider.safe,
-      // disable embroider optimized test scenarios, as the dynamism these
-      // tests use is not compatible with embroider we are still exploring
-      // appropriate paths forward.
-      //
-      // Steps to re-enable:
-      //
-      // 1. have a strategy to make this work
-      // 2. uncomment the next line
-      // embroider.optimized,
-      //
-      // 3. add "embroider-optimized" to .github/workflows/ci-build.yml's
-      //    ember-try-scenario list.
-      //
+      embroider.optimized,
     ],
   };
 };
