@@ -2,6 +2,45 @@
 
 const getChannelURL = require('ember-source-channel-url');
 
+const EMBROIDER_VERSION = '^0.43.4';
+const embroider = {
+  safe: {
+    name: 'embroider-safe',
+    npm: {
+      devDependencies: {
+        '@embroider/core': EMBROIDER_VERSION,
+        '@embroider/webpack': EMBROIDER_VERSION,
+        '@embroider/compat': EMBROIDER_VERSION,
+        '@embroider/test-setup': EMBROIDER_VERSION,
+
+        // Webpack is a peer dependency of `@embroider/webpack`
+        webpack: '^5.0.0',
+      },
+    },
+    env: {
+      EMBROIDER_TEST_SETUP_OPTIONS: 'safe',
+    },
+  },
+
+  optimized: {
+    name: 'embroider-optimized',
+    npm: {
+      devDependencies: {
+        '@embroider/core': EMBROIDER_VERSION,
+        '@embroider/webpack': EMBROIDER_VERSION,
+        '@embroider/compat': EMBROIDER_VERSION,
+        '@embroider/test-setup': EMBROIDER_VERSION,
+
+        // Webpack is a peer dependency of `@embroider/webpack`
+        webpack: '^5.0.0',
+      },
+    },
+    env: {
+      EMBROIDER_TEST_SETUP_OPTIONS: 'optimized',
+    },
+  },
+};
+
 module.exports = async function () {
   return {
     useYarn: true,
@@ -103,6 +142,8 @@ module.exports = async function () {
           devDependencies: {},
         },
       },
+      embroider.safe,
+      embroider.optimized,
     ],
   };
 };
