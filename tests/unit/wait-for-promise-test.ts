@@ -19,9 +19,7 @@ if (DEBUG) {
       });
 
       test('waitForPromise wraps and registers a waiter', async function (assert) {
-        let promise = new Promise((resolve) => {
-          resolve();
-        });
+        let promise = Promise.resolve();
 
         overrideError(MockStableError);
 

@@ -6,7 +6,12 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['ember', 'prettier', '@typescript-eslint'],
-  extends: ['eslint:recommended', 'plugin:ember/recommended', 'prettier'],
+  extends: [
+    'eslint:recommended',
+    'plugin:ember/recommended',
+    'prettier',
+    'plugin:@typescript-eslint/eslint-recommended',
+  ],
   env: {
     browser: true,
     node: false,
@@ -15,6 +20,7 @@ module.exports = {
     'prettier/prettier': 'error',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'error',
+    'prefer-const': 'off',
   },
   overrides: [
     // node files
