@@ -2,12 +2,11 @@
 
 import QUnit from 'qunit';
 import AbstractTestLoader from 'ember-cli-test-loader/test-support/index';
-import { polyfill } from 'es6-promise';
-
+import PromisePolyfill from 'promise-polyfill';
 // When running under IE11, our tests are transpiled to use `Promise` (due to
 // asyncToGenerator helper in Babel)
 if (typeof Promise === 'undefined') {
-  polyfill();
+  self.Promise = PromisePolyfill;
 }
 
 let moduleLoadFailures = [];
