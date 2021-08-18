@@ -1,9 +1,11 @@
 # compiled output
 /dist/
 /tmp/
-
-# dependencies
-/bower_components/
+/.github/
+/config/
+*.tgz
+/node-tests/
+/tests/
 
 # misc
 /.editorconfig
@@ -12,25 +14,19 @@
 /.eslintcache
 /.eslintignore
 /.eslintrc.js
-/.git/
-/.github
 /.gitignore
 /.prettierignore
 /.prettierrc.js
 /.template-lintrc.js
 /.watchmanconfig
-/config/
+# /config/
+/RELEASE.md
 /CHANGELOG.md
 /CONTRIBUTING.md
 /ember-cli-build.js
-/node-tests/
-/RELEASE.md
 /testem.js
-/tests/
 /tsconfig.json
-/vendor/
 /yarn-error.log
-/yarn.lock
 .gitkeep
 
 # ember-try
@@ -38,5 +34,8 @@
 /package.json.ember-try
 
 # TS
-**/*.ts
-!**/*.d.ts
+# note, these need to be at the start of this file, or npm pack gets confused
+/**/*.ts
+!*.d.ts
+/tests/**/*.d.ts
+
