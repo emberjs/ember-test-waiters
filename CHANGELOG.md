@@ -1,3 +1,24 @@
+Version 9 of Highlight.js has reached EOL and is no longer supported.
+Please upgrade or ask whatever dependency you are using to upgrade.
+https://github.com/highlightjs/highlight.js/issues/2877
+
+## v3.0.0 (2021-08-18)
+
+#### :house: Internal
+* [#312](https://github.com/emberjs/ember-test-waiters/pull/312) ensure `npm pack` is tidy ([@stefanpenner](https://github.com/stefanpenner))
+* [#308](https://github.com/emberjs/ember-test-waiters/pull/308) embroider ember-try scenarios ([@stefanpenner](https://github.com/stefanpenner))
+* [#293](https://github.com/emberjs/ember-test-waiters/pull/293) Updates publish step to publish JavaScript + *.d.ts vs. .ts files. ([@stefanpenner](https://github.com/stefanpenner))
+* [#306](https://github.com/emberjs/ember-test-waiters/pull/306) Fix Failing Tests resulting from ember-concurrency v2 bump ([@stefanpenner](https://github.com/stefanpenner))
+* [#297](https://github.com/emberjs/ember-test-waiters/pull/297) Fix canary ([@stefanpenner](https://github.com/stefanpenner))
+* [#292](https://github.com/emberjs/ember-test-waiters/pull/292) Updating .npmignore to remove unneeded files from publish ([@scalvert](https://github.com/scalvert))
+* [#295](https://github.com/emberjs/ember-test-waiters/pull/295) Migrate to using pre/postpack ([@scalvert](https://github.com/scalvert))
+* [#294](https://github.com/emberjs/ember-test-waiters/pull/294) no longer fail fast on try-scenarios ([@stefanpenner](https://github.com/stefanpenner))
+
+#### Committers: 2
+- Stefan Penner ([@stefanpenner](https://github.com/stefanpenner))
+- Steve Calvert ([@scalvert](https://github.com/scalvert))
+
+
 ## v2.4.5 (2021-07-13)
 
 #### :bug: Bug Fix
