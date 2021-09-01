@@ -52,7 +52,7 @@
     "@types/ember__test-helpers": "^2.0.1",
     "@types/qunit": "^2.11.2",
     "@types/rsvp": "^4.0.3",
-    "@typescript-eslint/eslint-plugin": "^4.29.2",
+    "@typescript-eslint/eslint-plugin": "^4.30.0",
     "@typescript-eslint/parser": "^4.29.2",
     "broccoli-babel-preset-typescript": "^1.0.1",
     "co": "^4.6.0",
