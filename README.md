@@ -164,7 +164,7 @@ export default class MoreFriendz extends Component {
 // wrapping ember-concurrency tasks
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
-import { waitFor } from 'ember-test-waiters';
+import { waitFor } from '@ember/test-waiters';
 
 export default Component.extend({
   doTaskStuff: task(waitFor(function* doTaskStuff() {
@@ -177,7 +177,7 @@ export default Component.extend({
 // decorator form with ember-concurrency tasks
 import Component from '@ember/component';
 import { task } from 'ember-concurrency-decorators';
-import { waitFor } from 'ember-test-waiters';
+import { waitFor } from '@ember/test-waiters';
 
 export default class Friendz extends Component {
   @task
