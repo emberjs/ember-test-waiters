@@ -11,7 +11,7 @@
     "Steve Calvert <steve.calvert@gmail.com>",
     "Robert Jackson <me@rwjblue.com>"
   ],
-  "main": "addon/@ember/test-waiters/index.ts",
+  "main": "addon/@ember/test-waiters/index.js",
   "types": "index.d.ts",
   "directories": {
     "doc": "doc",
