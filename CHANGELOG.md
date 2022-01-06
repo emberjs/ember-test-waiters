@@ -1,3 +1,19 @@
+## v3.0.1 (2022-01-06)
+
+#### :bug: Bug Fix
+* [#350](https://github.com/emberjs/ember-test-waiters/pull/350) Fixes main entry point in package.json to point to built .js file ([@scalvert](https://github.com/scalvert))
+
+#### :house: Internal
+* [#355](https://github.com/emberjs/ember-test-waiters/pull/355) Running `npx browserlist@latest --update-db` ([@scalvert](https://github.com/scalvert))
+* [#340](https://github.com/emberjs/ember-test-waiters/pull/340) Updates ember-try scenarios to work with ember-auto-import@2 ([@scalvert](https://github.com/scalvert))
+* [#313](https://github.com/emberjs/ember-test-waiters/pull/313) add ember-lts-3.24 scenario ([@stefanpenner](https://github.com/stefanpenner))
+
+#### Committers: 3
+- Andrey Mikhaylov (lolmaus) ([@lolmaus](https://github.com/lolmaus))
+- Stefan Penner ([@stefanpenner](https://github.com/stefanpenner))
+- Steve Calvert ([@scalvert](https://github.com/scalvert))
+
+
 ## v3.0.0 (2021-08-18)
 
 #### :house: Internal
