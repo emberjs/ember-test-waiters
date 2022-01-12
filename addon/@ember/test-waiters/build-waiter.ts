@@ -159,17 +159,17 @@ export default function buildWaiter(name: string): TestWaiter {
 
   if (!DEBUG) {
     return new NoopTestWaiter(name);
+  } else {
+    warn(
+      `You must provide a name that contains a descriptive prefix separated by a colon.
+  
+        Example: ember-fictitious-addon:some-file
+  
+        You passed: ${name}`,
+      WAITER_NAME_PATTERN.test(name),
+      { id: '@ember/test-waiters.invalid-waiter-name' }
+    );
+
+    return new TestWaiterImpl(name);
   }
-
-  warn(
-    `You must provide a name that contains a descriptive prefix separated by a colon.
-
-      Example: ember-fictitious-addon:some-file
-
-      You passed: ${name}`,
-    WAITER_NAME_PATTERN.test(name),
-    { id: '@ember/test-waiters.invalid-waiter-name' }
-  );
-
-  return new TestWaiterImpl(name);
 }
