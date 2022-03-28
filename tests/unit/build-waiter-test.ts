@@ -38,7 +38,7 @@ module('build-waiter', function (hooks) {
     registerWarnHandler((message, options) => {
       console.log('message', message);
       assert.equal(message, "The waiter name '@ember/test-waiters:first' is already in use");
-      assert.equal(options.id, '@ember/test-waiters.duplicate-waiter-name');
+      assert.equal(options && options.id, '@ember/test-waiters.duplicate-waiter-name');
     });
 
     buildWaiter('@ember/test-waiters:first');
