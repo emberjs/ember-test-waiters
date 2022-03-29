@@ -52,7 +52,12 @@ class TestWaiterImpl<T extends object | Primitive = Token> implements TestWaiter
 
   endAsync(token: T): void {
     if (!this.items.has(token) && !this._getCompletedOperations(token).has(token)) {
-      throw new Error(`endAsync called with no preceding beginAsync call.`);
+      throw new Error(
+        `testWaiter.endAsync called with no preceding testWaiter.beginAsync call.
+        Test waiter calls should always be paired. This can occur when a test waiter's paired calls are invoked in a non-deterministic order.
+
+        See https://github.com/emberjs/ember-test-waiters#keep-beginasyncendasync-in-same-block-scope for more information.`
+      );
     }
 
     this.items.delete(token);
@@ -162,9 +167,9 @@ export default function buildWaiter(name: string): TestWaiter {
   } else {
     warn(
       `You must provide a name that contains a descriptive prefix separated by a colon.
-  
+
         Example: ember-fictitious-addon:some-file
-  
+
         You passed: ${name}`,
       WAITER_NAME_PATTERN.test(name),
       { id: '@ember/test-waiters.invalid-waiter-name' }
