@@ -3,7 +3,40 @@ import { PendingWaiterState, Waiter, WaiterName } from './types';
 import Ember from 'ember';
 import { registerWaiter } from '@ember/test';
 
-const WAITERS: Map<WaiterName, Waiter> = new Map<WaiterName, Waiter>();
+type Indexable = Record<any, unknown>;
+
+// this ensures that if @ember/test-waiters exists in multiple places in the
+// build output we will still use a single map of waiters (there really should
+// only be one of them, or else `settled` will not work at all)
+const WAITERS: Map<WaiterName, Waiter> = (function () {
+  const HAS_SYMBOL = typeof Symbol !== 'undefined';
+
+  let symbolName = 'LIFELINE_QUEUED_POLL_TASKS';
+  let symbol = HAS_SYMBOL ? (Symbol.for(symbolName) as any) : symbolName;
+
+  let global = getGlobal();
+
+  let waiters = global[symbol];
+  if (waiters === undefined) {
+    waiters = global[symbol] = new Map<WaiterName, Waiter>();
+  }
+
+  return waiters as Map<WaiterName, Waiter>;
+})();
+
+function indexable<T extends object>(input: T): T & Indexable {
+  return input as T & Indexable;
+}
+
+function getGlobal(): Indexable {
+  // eslint-disable-next-line node/no-unsupported-features/es-builtins
+  if (typeof globalThis !== 'undefined') return indexable(globalThis);
+  if (typeof self !== 'undefined') return indexable(self);
+  if (typeof window !== 'undefined') return indexable(window);
+  if (typeof global !== 'undefined') return indexable(global);
+
+  throw new Error('unable to locate global object');
+}
 
 /**
  * Backwards compatibility with legacy waiters system.
