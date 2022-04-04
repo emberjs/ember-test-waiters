@@ -20,9 +20,9 @@ jobs:
       - uses: volta-cli/action@v1
         with:
           node-version: 10.x
-      - run: yarn install --frozen-lockfile
-      - run: yarn lint
-      - run: yarn test
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test
 
   floating-dependencies:
     timeout-minutes: 10
@@ -34,8 +34,8 @@ jobs:
       - uses: volta-cli/action@v1
         with:
           node-version: 12.x
-      - run: yarn install --no-lockfile
-      - run: yarn test
+      - run: npm ci
+      - run: npm test
 
   try-scenarios:
     timeout-minutes: 10
@@ -68,6 +68,6 @@ jobs:
         with:
           node-version: 12.x
       - name: install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
       - name: test
         run: node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
