@@ -87,16 +87,16 @@ import { buildWaiter } from '@ember/test-waiters';
 let waiter = buildWaiter('ember-friendz:friend-waiter');
 
 export default class Friendz extends Component {
-  funcWithAsync() {
+  async funcWithAsync() {
     let token = waiter.beginAsync();
 
-    return makeFriendz()
-      .then(() => {
-        //... some work
-      })
-      .finally(() => {
-        waiter.endAsync(token);
-      });
+    try {
+      await makeFriendz();
+
+      //... some other work
+    } finally {
+      waiter.endAsync(token);
+    }
   }
 }
 ```
@@ -111,10 +111,10 @@ import Component from '@glimmer/component';
 import { waitForPromise } from '@ember/test-waiters';
 
 export default class MoreFriendz extends Component {
-  funcWithAsync() {
-    return waitForPromise(makeFriendz).then(() => {
-      return goForDrinks();
-    });
+  async funcWithAsync() {
+    await waitForPromise(makeFriendz());
+
+    return goForDrinks();
   }
 }
 ```
@@ -133,10 +133,10 @@ export default Component.extend({
     await someAsyncWork();
   }),
 
-  funcWithAsync() {
-    return this.doAsyncStuff().then(() => {
-      doOtherThings();
-    });
+  async funcWithAsync() {
+    await this.doAsyncStuff();
+
+    return doOtherThings();
   },
 });
 ```
@@ -152,10 +152,10 @@ export default class MoreFriendz extends Component {
     await someAsyncWork();
   }
 
-  funcWithAsync() {
-    return this.doAsyncStuff().then(() => {
-      doOtherThings();
-    });
+  async funcWithAsync() {
+    await this.doAsyncStuff();
+
+    return doOtherThings();
   }
 }
 ```
@@ -275,16 +275,16 @@ import { buildWaiter } from '@ember/test-waiters';
 let waiter = buildWaiter('friend-waiter');
 
 export default class Friendz extends Component {
-  funcWithAsync() {
+  async funcWithAsync() {
     let token = waiter.beginAsync();
 
-    someAsyncWork()
-      .then(() => {
-        //... some work
-      })
-      .finally(() => {
-        waiter.endAsync(token);
-      });
+    try {
+      await makeFriendz();
+
+      //... some other work
+    } finally {
+      waiter.endAsync(token);
+    }
   }
 }
 ```
@@ -364,21 +364,20 @@ import { buildWaiter } from '@ember/test-waiters';
 let waiter = buildWaiter('friend-waiter');
 
 export default class Friendz extends Component {
-  funcWithAsync() {
+  async funcWithAsync() {
     // Alerts the test waiter system that an async operation has started,
     // storing the resulting unique token to be used to notify the test
     // waiter system that the operation has ended.
     let token = waiter.beginAsync();
 
-    someAsyncWork()
-      .then(() => {
-        //... some work
-      })
-      .finally(() => {
-        // Notifies the test waiter system that
-        // this unique async operation has ended.
-        waiter.endAsync(token);
-      });
+    try {
+      await someAsyncWork();
+      //... some work
+    } finally {
+      // Notifies the test waiter system that
+      // this unique async operation has ended.
+      waiter.endAsync(token);
+    }
   }
 }
 ```
@@ -392,10 +391,11 @@ import Component from '@glimmer/component';
 import { waitForPromise } from '@ember/test-waiters';
 
 export default class MoreFriendz extends Component {
-  funcWithAsync() {
-    waitForPromise(someAsyncWork).then(() => {
-      doOtherThings();
-    });
+  async funcWithAsync() {
+
+    await waitForPromise(someAsyncWork);
+
+    return doOtherThings();
   }
 }
 ```
