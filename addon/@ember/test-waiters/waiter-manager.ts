@@ -11,7 +11,7 @@ type Indexable = Record<any, unknown>;
 const WAITERS: Map<WaiterName, Waiter> = (function () {
   const HAS_SYMBOL = typeof Symbol !== 'undefined';
 
-  let symbolName = 'LIFELINE_QUEUED_POLL_TASKS';
+  let symbolName = 'TEST_WAITERS';
   let symbol = HAS_SYMBOL ? (Symbol.for(symbolName) as any) : symbolName;
 
   let global = getGlobal();
