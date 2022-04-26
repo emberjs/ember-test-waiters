@@ -1,3 +1,27 @@
+
+## v3.0.2 (2022-04-26)
+
+#### :rocket: Enhancement
+* [#377](https://github.com/emberjs/ember-test-waiters/pull/377) Adding more descriptive error message for unpaired endAsync calls ([@scalvert](https://github.com/scalvert))
+
+#### :bug: Bug Fix
+* [#388](https://github.com/emberjs/ember-test-waiters/pull/388) Ensure waiters are discovered even if multiple versions exist ([@rwjblue](https://github.com/rwjblue))
+* [#376](https://github.com/emberjs/ember-test-waiters/pull/376) Fixes build issue with floating dependencies in CI ([@scalvert](https://github.com/scalvert))
+* [#358](https://github.com/emberjs/ember-test-waiters/pull/358) Moving ember-cli-typescript to dependencies ([@scalvert](https://github.com/scalvert))
+* [#357](https://github.com/emberjs/ember-test-waiters/pull/357) Avoid unreachable code after return warning ([@sandstrom](https://github.com/sandstrom))
+
+#### :memo: Documentation
+* [#387](https://github.com/emberjs/ember-test-waiters/pull/387) Migrate examples in the README.md to use async/await ([@rwjblue](https://github.com/rwjblue))
+
+#### :house: Internal
+* [#381](https://github.com/emberjs/ember-test-waiters/pull/381) Migrate from Yarn@1 to NPM ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 3
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- Steve Calvert ([@scalvert](https://github.com/scalvert))
+- [@sandstrom](https://github.com/sandstrom)
+
+
 ## v3.0.1 (2022-01-06)
 
 #### :bug: Bug Fix
