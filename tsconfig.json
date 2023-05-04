@@ -23,8 +23,8 @@
     "paths": {
       "dummy/tests/*": ["tests/*"],
       "dummy/*": ["tests/dummy/app/*", "app/*"],
-      "@ember/test-waiters": ["addon/@ember/test-waiters"],
-      "@ember/test-waiters/*": ["addon/@ember/test-waiters/*"],
+      "@ember/test-waiters": ["addon"],
+      "@ember/test-waiters/*": ["addon/*"],
       "*": ["types/*"]
     }
   },
