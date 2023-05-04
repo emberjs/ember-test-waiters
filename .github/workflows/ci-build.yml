@@ -18,8 +18,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: volta-cli/action@v1
-        with:
-          node-version: 10.x
       - run: npm install
       - run: npm run lint
       - run: npm run test
@@ -32,8 +30,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: volta-cli/action@v1
-        with:
-          node-version: 12.x
       - run: npm install
       - run: npm test
 
@@ -65,8 +61,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: volta-cli/action@v1
-        with:
-          node-version: 12.x
       - name: install dependencies
         run: npm install
       - name: test
