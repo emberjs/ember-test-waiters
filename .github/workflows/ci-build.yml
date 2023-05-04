@@ -20,7 +20,7 @@ jobs:
       - uses: volta-cli/action@v1
         with:
           node-version: 10.x
-      - run: npm ci
+      - run: npm install
       - run: npm run lint
       - run: npm run test
 
@@ -34,7 +34,7 @@ jobs:
       - uses: volta-cli/action@v1
         with:
           node-version: 12.x
-      - run: npm ci
+      - run: npm install
       - run: npm test
 
   try-scenarios:
@@ -68,6 +68,6 @@ jobs:
         with:
           node-version: 12.x
       - name: install dependencies
-        run: npm ci
+        run: npm install
       - name: test
         run: node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
