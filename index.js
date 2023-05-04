@@ -39,15 +39,6 @@ module.exports = {
     */
     let babel = this.addons.find((a) => a.name === 'ember-cli-babel');
 
-    let input;
-
-    // ember-cli-typescript should ultimately handle this for us.
-    if (this.isDevelopingAddon()) {
-      const { BroccoliBabelPresetTypeScript } = require('broccoli-babel-preset-typescript'); // eslint-disable-line node/no-unpublished-require
-      input = new BroccoliBabelPresetTypeScript([tree]);
-    } else {
-      input = tree;
-    }
-    return babel.transpileTree(input);
+    return babel.transpileTree(tree);
   },
 };

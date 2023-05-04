@@ -38,6 +38,7 @@
   "dependencies": {
     "calculate-cache-key-for-tree": "^2.0.0",
     "ember-cli-babel": "^7.26.6",
+    "ember-cli-typescript": "^4.2.1",
     "ember-cli-version-checker": "^5.1.2",
     "semver": "^7.3.5"
   },
@@ -55,7 +56,6 @@
     "@types/rsvp": "^4.0.4",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.30.0",
-    "broccoli-babel-preset-typescript": "^1.0.1",
     "co": "^4.6.0",
     "ember-auto-import": "^1.11.3",
     "ember-cli": "~3.27.0",
@@ -63,8 +63,6 @@
     "ember-cli-htmlbars": "^5.7.1",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-test-loader": "^3.0.0",
-    "ember-cli-typescript": "^4.2.1",
-    "ember-cli-typescript-blueprints": "^3.0.0",
     "ember-cli-uglify": "^3.0.0",
     "ember-concurrency": "^2.1.2",
     "ember-concurrency-decorators": "^2.0.3",
