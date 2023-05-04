@@ -16,11 +16,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: volta-cli/action@v4
-      - run: npm install
-      - run: npm run lint
-      - run: npm run test
+      - uses: actions/checkout@v4
+      - uses: wyvox/action-setup-pnpm@v3
+      - run: pnpm lint
+      - run: pnpm test:ember
+        working-directory: addon
 
   floating-dependencies:
     timeout-minutes: 10
@@ -28,10 +28,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: volta-cli/action@v4
-      - run: npm install
-      - run: npm test
+      - uses: actions/checkout@v4
+      - uses: wyvox/action-setup-pnpm@v3
+      - run: pnpm test:ember
+        working-directory: addon
 
   try-scenarios:
     timeout-minutes: 10
@@ -59,9 +59,8 @@ jobs:
           - embroider-optimized
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: volta-cli/action@v4
-      - name: install dependencies
-        run: npm install
+      - uses: actions/checkout@v4
+      - uses: wyvox/action-setup-pnpm@v3
       - name: test
         run: node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
+        working-directory: addon
