@@ -16,11 +16,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: volta-cli/action@v1
-        with:
-          node-version: 10.x
-      - run: npm ci
+      - uses: actions/checkout@v3
+      - uses: volta-cli/action@v4
+      - run: npm install
       - run: npm run lint
       - run: npm run test
 
@@ -30,11 +28,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: volta-cli/action@v1
-        with:
-          node-version: 12.x
-      - run: npm ci
+      - uses: actions/checkout@v3
+      - uses: volta-cli/action@v4
+      - run: npm install
       - run: npm test
 
   try-scenarios:
@@ -63,11 +59,9 @@ jobs:
           - embroider-optimized
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: volta-cli/action@v1
-        with:
-          node-version: 12.x
+      - uses: actions/checkout@v3
+      - uses: volta-cli/action@v4
       - name: install dependencies
-        run: npm ci
+        run: npm install
       - name: test
         run: node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
