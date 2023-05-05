@@ -32,7 +32,6 @@
     "test": "npm-run-all lint \"test:!(ember-compatibility|prod)\"",
     "test:ember": "ember test",
     "test:ember-compatibility": "ember try:each",
-    "test:node": "qunit node-tests",
     "test:prod": "ember test --environment=production"
   },
   "dependencies": {
