@@ -34,8 +34,8 @@
     "test:prod": "ember test --environment=production"
   },
   "dependencies": {
+    "@glimmer/env": "^0.1.7",
     "ember-auto-import": "^2.6.3",
-    "calculate-cache-key-for-tree": "^2.0.0",
     "ember-cli-babel": "^7.26.6",
     "ember-cli-typescript": "^5.0.0",
     "ember-cli-version-checker": "^5.1.2",
@@ -46,7 +46,6 @@
     "@babel/preset-typescript": "^7.15.0",
     "@ember/optional-features": "^2.0.0",
     "@ember/string": "^3.0.1",
-    "@glimmer/env": "^0.1.7",
     "@types/ember": "^3.16.5",
     "@types/ember__test-helpers": "^2.6.1",
     "@types/ember-test-helpers": "^1.0.10",
