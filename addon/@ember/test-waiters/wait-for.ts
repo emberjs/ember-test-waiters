@@ -75,11 +75,14 @@ type DecoratorArguments = [object, string, PropertyDescriptor, string?];
  * }
  *
  */
-export default function waitFor(fn: AsyncFunction<any[], any>, label?: string): Function;
-export default function waitFor(
-  fn: CoroutineFunction<any[], any>,
+export default function waitFor<A extends Array<any>, PromiseReturn>(
+  fn: AsyncFunction<A, PromiseReturn>,
   label?: string
-): CoroutineFunction<any[], any>;
+): AsyncFunction<A, PromiseReturn>;
+export default function waitFor<A extends Array<any>, T>(
+  fn: CoroutineFunction<A, T>,
+  label?: string
+): CoroutineFunction<A, T>;
 export default function waitFor(
   target: object,
   _key: string,

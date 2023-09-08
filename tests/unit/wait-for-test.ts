@@ -445,5 +445,32 @@ if (DEBUG) {
         assert.deepEqual(getPendingWaiterState().pending, 0);
       });
     });
+
+    test('types', async function (assert) {
+      assert.expect(0);
+
+      async function asyncFn(a: string, b: string) {
+        return `${a}${b}`;
+      }
+      function* genFn(a: string, b: string) {
+        yield `${a}${b}`;
+        return `${a}${b}`;
+      }
+
+      function asyncNoop(fn: typeof asyncFn) {
+        return fn;
+      }
+      function genNoop(fn: typeof genFn) {
+        return fn;
+      }
+
+      asyncNoop(waitFor(asyncFn));
+      genNoop(waitFor(genFn));
+
+      // @ts-expect-error wrong argument types
+      waitFor(asyncFn)(1, 2);
+      // @ts-expect-error wrong argument types
+      waitFor(genFn)(1, 2);
+    });
   });
 }
