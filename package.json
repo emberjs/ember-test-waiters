@@ -14,6 +14,6 @@
     "pnpm": "8.7.6"
   },
   "devDependencies": {
-    "concurrently": "^8.0.1"
+    "concurrently": "^8.2.1"
   }
 }
