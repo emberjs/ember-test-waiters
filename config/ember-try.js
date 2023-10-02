@@ -112,8 +112,6 @@ module.exports = async function () {
             webpack: '^5.0.0',
           },
           devDependencies: {
-            '@types/ember__owner': '^4.0.3',
-            'ember-resolver': '^10.0.0',
             'ember-source': await getChannelURL('beta'),
           },
         },
@@ -126,8 +124,6 @@ module.exports = async function () {
             webpack: '^5.0.0',
           },
           devDependencies: {
-            '@types/ember__owner': '^4.0.3',
-            'ember-resolver': '^10.0.0',
             'ember-source': await getChannelURL('canary'),
           },
         },
