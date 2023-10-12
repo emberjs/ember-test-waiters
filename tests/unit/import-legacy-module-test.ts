@@ -1,4 +1,4 @@
-import { _reset, buildWaiter } from 'ember-test-waiters';
+import { _reset, buildWaiter } from '@ember/test-waiters';
 import { module, test } from 'qunit';
 
 import { resetError } from './utils/mock-stable-error';
