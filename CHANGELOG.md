@@ -1,4 +1,17 @@
 
+## v3.1.0 (2023-10-25)
+
+#### :rocket: Enhancement
+* [#459](https://github.com/emberjs/ember-test-waiters/pull/459) Improve waitFor() types ([@bendemboski](https://github.com/bendemboski))
+
+#### :house: Internal
+* [#456](https://github.com/emberjs/ember-test-waiters/pull/456) Remove IE11 from targets as the browser is not supported anymore -- this is only for `@ember/test-waiters`' own CI ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 2
+- Ben Demboski ([@bendemboski](https://github.com/bendemboski))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
+
 ## v3.0.2 (2022-04-26)
 
 #### :rocket: Enhancement
