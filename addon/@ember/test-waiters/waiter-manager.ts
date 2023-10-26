@@ -1,3 +1,4 @@
+import { assert } from '@ember/debug';
 import { PendingWaiterState, Waiter, WaiterName } from './types';
 
 import Ember from 'ember';
@@ -5,20 +6,33 @@ import { registerWaiter } from '@ember/test';
 
 type Indexable = Record<any, unknown>;
 
+assert(
+  `Expected the 'Symbol' global to be available in this environment. Environments without support for 'Symbol' are not supported by '@ember/test-waiters'. See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol`,
+  typeof Symbol !== 'undefined'
+);
+
+// All copies of `@ember/test-waiters must have this same key/symbol.
+// Once this `@ember/test-waiters` is released, folks will want to use 'overrides'
+// to pin it across their whole dep graph.
+//
+// In the v1 addon version of this library, the build time highlander code will ensure
+// that there is only one copy,
+// And with the v2 addon version of this library, that is where pinning is important,
+// because either:
+// - highlander code will run, and boot out the v2 addon copy
+// - v2 addon has precedence, and the min-version of test-waiters throughout the
+//   dep graph should not preceed the version which this symbol was introduced.
+const PRIVATE_GLOBAL_DATA_KEY = Symbol.for(`@ember/test-waiters' WAITERS`);
+
 // this ensures that if @ember/test-waiters exists in multiple places in the
 // build output we will still use a single map of waiters (there really should
 // only be one of them, or else `settled` will not work at all)
 const WAITERS: Map<WaiterName, Waiter> = (function () {
-  const HAS_SYMBOL = typeof Symbol !== 'undefined';
+  let global = getPrivateData();
+  let waiters = global.WAITERS;
 
-  let symbolName = 'TEST_WAITERS';
-  let symbol = HAS_SYMBOL ? (Symbol.for(symbolName) as any) : symbolName;
-
-  let global = getGlobal();
-
-  let waiters = global[symbol];
   if (waiters === undefined) {
-    waiters = global[symbol] = new Map<WaiterName, Waiter>();
+    waiters = global.WAITERS = new Map<WaiterName, Waiter>();
   }
 
   return waiters as Map<WaiterName, Waiter>;
@@ -26,6 +40,13 @@ const WAITERS: Map<WaiterName, Waiter> = (function () {
 
 function indexable<T extends object>(input: T): T & Indexable {
   return input as T & Indexable;
+}
+
+export function getPrivateData(): Indexable {
+  let global = getGlobal();
+  global[PRIVATE_GLOBAL_DATA_KEY] ||= {};
+
+  return global[PRIVATE_GLOBAL_DATA_KEY] as Indexable;
 }
 
 function getGlobal(): Indexable {
