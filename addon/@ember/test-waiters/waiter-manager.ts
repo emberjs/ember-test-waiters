@@ -4,8 +4,6 @@ import { PendingWaiterState, Waiter, WaiterName } from './types';
 import Ember from 'ember';
 import { registerWaiter } from '@ember/test';
 
-type Indexable = Record<any, unknown>;
-
 assert(
   `Expected the 'Symbol' global to be available in this environment. Environments without support for 'Symbol' are not supported by '@ember/test-waiters'. See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol`,
   typeof Symbol !== 'undefined'
@@ -38,23 +36,37 @@ const WAITERS: Map<WaiterName, Waiter> = (function () {
   return waiters as Map<WaiterName, Waiter>;
 })();
 
-function indexable<T extends object>(input: T): T & Indexable {
-  return input as T & Indexable;
-}
-
-export function getPrivateData(): Indexable {
+export function getPrivateData(): WaitersData {
   let global = getGlobal();
-  global[PRIVATE_GLOBAL_DATA_KEY] ||= {};
+  global[PRIVATE_GLOBAL_DATA_KEY] ||= {} as WaitersData;
 
-  return global[PRIVATE_GLOBAL_DATA_KEY] as Indexable;
+  return global[PRIVATE_GLOBAL_DATA_KEY] as WaitersData;
 }
 
-function getGlobal(): Indexable {
+type GlobalContext = Record<typeof PRIVATE_GLOBAL_DATA_KEY, WaitersData>;
+// interface GlobalContext {
+//   [typeof PRIVATE_GLOBAL_DATA_KEY]: WaitersData;
+// }
+
+interface WaitersData {
+  WAITER_NAMES?: Set<string> | undefined;
+  WAITERS?: Map<WaiterName, Waiter> | undefined;
+}
+
+// SAFETY: TS does not allow unique symbol to be an index type / key.
+//         TS typically assumes that keys on {} can only be strings.
+//         So we have to lie to TS that this behavior is allowed.
+//
+//         e.g.:
+//           a = {}
+//           a[Symbol.for('foo')] = 22
+//           Object.getOwnPropertySymbols(a)[0] === Symbol.for('foo');
+function getGlobal(): GlobalContext {
   // eslint-disable-next-line node/no-unsupported-features/es-builtins
-  if (typeof globalThis !== 'undefined') return indexable(globalThis);
-  if (typeof self !== 'undefined') return indexable(self);
-  if (typeof window !== 'undefined') return indexable(window);
-  if (typeof global !== 'undefined') return indexable(global);
+  if (typeof globalThis !== 'undefined') return globalThis as unknown as GlobalContext;
+  if (typeof self !== 'undefined') return self as unknown as GlobalContext;
+  if (typeof window !== 'undefined') return window as unknown as GlobalContext;
+  if (typeof global !== 'undefined') return global as unknown as GlobalContext;
 
   throw new Error('unable to locate global object');
 }
