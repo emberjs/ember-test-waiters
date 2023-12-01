@@ -44,9 +44,6 @@ export function getPrivateData(): WaitersData {
 }
 
 type GlobalContext = Record<typeof PRIVATE_GLOBAL_DATA_KEY, WaitersData>;
-// interface GlobalContext {
-//   [typeof PRIVATE_GLOBAL_DATA_KEY]: WaitersData;
-// }
 
 interface WaitersData {
   WAITER_NAMES?: Set<string> | undefined;
