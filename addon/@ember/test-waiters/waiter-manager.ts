@@ -1,69 +1,73 @@
-import { assert } from '@ember/debug';
 import { PendingWaiterState, Waiter, WaiterName } from './types';
 
 import Ember from 'ember';
 import { registerWaiter } from '@ember/test';
 
-assert(
-  `Expected the 'Symbol' global to be available in this environment. Environments without support for 'Symbol' are not supported by '@ember/test-waiters'. See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol`,
-  typeof Symbol !== 'undefined'
-);
+type Indexable = Record<any, unknown>;
 
-// All copies of `@ember/test-waiters must have this same key/symbol.
-// Once this `@ember/test-waiters` is released, folks will want to use 'overrides'
-// to pin it across their whole dep graph.
-//
-// In the v1 addon version of this library, the build time highlander code will ensure
-// that there is only one copy,
-// And with the v2 addon version of this library, that is where pinning is important,
-// because either:
-// - highlander code will run, and boot out the v2 addon copy
-// - v2 addon has precedence, and the min-version of test-waiters throughout the
-//   dep graph should not preceed the version which this symbol was introduced.
-const PRIVATE_GLOBAL_DATA_KEY = Symbol.for(`TEST_WAITERS`);
+/*
+ * This file manages data on `globalThis`
+ *
+ * globalThis: {
+ *   used for the actual test waiters
+ *   [Symbol<'TEST_WAITERS'>]?: Map<WaiterName, Waiter> | undefined;
+ *
+ *   used for keep track of all the names of the test waiters
+ *   that have been logged as having collisions.
+ *   waiters need to have unique names, but waiters can be in
+ *   hot-ish paths, so we only want to log them once.
+ *   [Symbol<'TEST_WAITER_NAMES'>]?: Set<string> | undefined;
+ * }
+ */
 
 // this ensures that if @ember/test-waiters exists in multiple places in the
 // build output we will still use a single map of waiters (there really should
 // only be one of them, or else `settled` will not work at all)
 const WAITERS: Map<WaiterName, Waiter> = (function () {
-  let global = getPrivateData();
-  let waiters = global.WAITERS;
+  const HAS_SYMBOL = typeof Symbol !== 'undefined';
 
+  let symbolName = 'TEST_WAITERS';
+  let symbol = HAS_SYMBOL ? (Symbol.for(symbolName) as any) : symbolName;
+
+  let global = getGlobal();
+
+  let waiters = global[symbol];
   if (waiters === undefined) {
-    waiters = global.WAITERS = new Map<WaiterName, Waiter>();
+    waiters = global[symbol] = new Map<WaiterName, Waiter>();
   }
 
   return waiters as Map<WaiterName, Waiter>;
 })();
 
-export function getPrivateData(): WaitersData {
+export const WAITER_NAMES: Set<string> = (function () {
+  const HAS_SYMBOL = typeof Symbol !== 'undefined';
+  let symbolName = 'TEST_WAITER_NAMES';
+  let symbol = HAS_SYMBOL ? (Symbol.for(symbolName) as any) : symbolName;
   let global = getGlobal();
-  global[PRIVATE_GLOBAL_DATA_KEY] ||= {} as WaitersData;
 
-  return global[PRIVATE_GLOBAL_DATA_KEY] as WaitersData;
+  let waiterNames = global[symbol];
+
+  if (waiterNames === undefined) {
+    waiterNames = global[symbol] = new Set<string>();
+  }
+
+  return waiterNames as Set<string>;
+})();
+
+export function _resetWaiterNames() {
+  WAITER_NAMES.clear();
 }
 
-type GlobalContext = Record<typeof PRIVATE_GLOBAL_DATA_KEY, WaitersData>;
-
-interface WaitersData {
-  WAITER_NAMES?: Set<string> | undefined;
-  WAITERS?: Map<WaiterName, Waiter> | undefined;
+function indexable<T extends object>(input: T): T & Indexable {
+  return input as T & Indexable;
 }
 
-// SAFETY: TS does not allow unique symbol to be an index type / key.
-//         TS typically assumes that keys on {} can only be strings.
-//         So we have to lie to TS that this behavior is allowed.
-//
-//         e.g.:
-//           a = {}
-//           a[Symbol.for('foo')] = 22
-//           Object.getOwnPropertySymbols(a)[0] === Symbol.for('foo');
-function getGlobal(): GlobalContext {
+function getGlobal(): Indexable {
   // eslint-disable-next-line node/no-unsupported-features/es-builtins
-  if (typeof globalThis !== 'undefined') return globalThis as unknown as GlobalContext;
-  if (typeof self !== 'undefined') return self as unknown as GlobalContext;
-  if (typeof window !== 'undefined') return window as unknown as GlobalContext;
-  if (typeof global !== 'undefined') return global as unknown as GlobalContext;
+  if (typeof globalThis !== 'undefined') return indexable(globalThis);
+  if (typeof self !== 'undefined') return indexable(self);
+  if (typeof window !== 'undefined') return indexable(window);
+  if (typeof global !== 'undefined') return indexable(global);
 
   throw new Error('unable to locate global object');
 }

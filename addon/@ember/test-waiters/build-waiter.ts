@@ -3,34 +3,9 @@ import { Primitive, TestWaiter, TestWaiterDebugInfo, WaiterName } from './';
 import { DEBUG } from '@glimmer/env';
 import { warn } from '@ember/debug';
 import Token from './token';
-import { register, getPrivateData } from './waiter-manager';
+import { register, WAITER_NAMES } from './waiter-manager';
 
 const WAITER_NAME_PATTERN = /^[^:]*:?.*/;
-
-// NOTE: historically, we've only been able to allow one copy of test-waiters in a whole projcet.
-//       this was forced via build-time code in the v1-addon's index.js.
-//       This added maintenance complexity and prevented the conversion to a v2 addon.
-//
-//       With this runtime injection of global state, we can have both the pre-v2 addon
-//       and the v2 addon share the same waiter state.
-//       Also, in `@ember/test-waiters@v3`, we can force the existing build-time code to
-//       take precedecence with the latestVersion of test-waiters v3 (existing behavior),
-//       so there is no risk of old copies of test-waiters not using this runtime highlander code,
-//       because those older copies would not be present in the final build of an app.
-//
-// SAFETY: Types are statically defined,
-//         and we're creating dynamic data on the global scope.
-//         we don't want consumers to know about this data, so we don't
-//         want to extend the type ever. Casting to any is a fine tradeoff.
-getPrivateData().WAITER_NAMES ||= DEBUG ? new Set() : undefined;
-
-function getWaiters(): Set<string> {
-  return getPrivateData().WAITER_NAMES as Set<string>;
-}
-
-export function _resetWaiterNames() {
-  getPrivateData().WAITER_NAMES = new Set();
-}
 
 function getNextToken(): Token {
   return new Token();
@@ -176,10 +151,10 @@ class NoopTestWaiter implements TestWaiter {
  */
 export default function buildWaiter(name: string): TestWaiter {
   if (DEBUG) {
-    warn(`The waiter name '${name}' is already in use`, !getWaiters()!.has(name), {
+    warn(`The waiter name '${name}' is already in use`, !WAITER_NAMES!.has(name), {
       id: '@ember/test-waiters.duplicate-waiter-name',
     });
-    getWaiters()!.add(name);
+    WAITER_NAMES!.add(name);
   }
 
   if (!DEBUG) {
