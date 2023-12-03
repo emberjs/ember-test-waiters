@@ -20,7 +20,7 @@ assert(
 // - highlander code will run, and boot out the v2 addon copy
 // - v2 addon has precedence, and the min-version of test-waiters throughout the
 //   dep graph should not preceed the version which this symbol was introduced.
-const PRIVATE_GLOBAL_DATA_KEY = Symbol.for(`@ember/test-waiters' WAITERS`);
+const PRIVATE_GLOBAL_DATA_KEY = Symbol.for(`TEST_WAITERS`);
 
 // this ensures that if @ember/test-waiters exists in multiple places in the
 // build output we will still use a single map of waiters (there really should
