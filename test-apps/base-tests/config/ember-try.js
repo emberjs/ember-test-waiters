@@ -9,9 +9,6 @@ function embroider(label, deps) {
       npm: {
         devDependencies: {
           ...deps,
-
-          // Webpack is a peer dependency of `@embroider/webpack`
-          webpack: '^5.0.0',
         },
       },
       env: {
@@ -23,9 +20,6 @@ function embroider(label, deps) {
       npm: {
         devDependencies: {
           ...deps,
-
-          // Webpack is a peer dependency of `@embroider/webpack`
-          webpack: '^5.0.0',
         },
       },
       env: {
@@ -34,14 +28,6 @@ function embroider(label, deps) {
     },
   ];
 }
-
-const EMBROIDER_VERSION = '^0.43.4';
-const oldEmbroider = embroider('0.x', {
-  '@embroider/core': EMBROIDER_VERSION,
-  '@embroider/webpack': EMBROIDER_VERSION,
-  '@embroider/compat': EMBROIDER_VERSION,
-  '@embroider/test-setup': EMBROIDER_VERSION,
-});
 
 const v3Embroider = embroider('3.x', {
   '@embroider/core': `^3.4.2`,
@@ -54,34 +40,6 @@ module.exports = async function () {
   return {
     usePnpm: true,
     scenarios: [
-      {
-        name: 'ember-lts-3.8',
-        npm: {
-          devDependencies: {
-            '@ember/test-helpers': '^2.0.0',
-            'ember-source': '~3.8.0',
-            'ember-resolver': '^5.0.1',
-            'ember-cli': '^4.10.0',
-          },
-          ember: {
-            edition: 'classic',
-          },
-        },
-      },
-      {
-        name: 'ember-lts-3.12',
-        npm: {
-          devDependencies: {
-            '@ember/test-helpers': '^2.0.0',
-            'ember-source': '~3.12.0',
-            'ember-resolver': '^5.0.1',
-            'ember-cli': '^4.10.0',
-          },
-          ember: {
-            edition: 'classic',
-          },
-        },
-      },
       {
         name: 'ember-lts-3.16',
         npm: {
@@ -153,42 +111,6 @@ module.exports = async function () {
           },
         },
       },
-      {
-        name: 'ember-default-with-jquery',
-        env: {
-          EMBER_OPTIONAL_FEATURES: JSON.stringify({
-            'jquery-integration': true,
-          }),
-        },
-        npm: {
-          devDependencies: {
-            '@ember/jquery': '^0.6.0',
-            'ember-fetch': null,
-          },
-        },
-      },
-      {
-        name: 'ember-classic',
-        env: {
-          EMBER_OPTIONAL_FEATURES: JSON.stringify({
-            'application-template-wrapper': true,
-            'default-async-observers': false,
-            'template-only-glimmer-components': false,
-          }),
-        },
-        npm: {
-          ember: {
-            edition: 'classic',
-          },
-        },
-      },
-      {
-        name: 'ember-default',
-        npm: {
-          devDependencies: {},
-        },
-      },
-      ...oldEmbroider,
       ...v3Embroider,
     ],
   };
