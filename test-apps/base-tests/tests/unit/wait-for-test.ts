@@ -1,4 +1,7 @@
-import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
+import MockStableError, {
+  overrideError,
+  resetError,
+} from './utils/mock-stable-error';
 import { _reset, getPendingWaiterState, waitFor } from '@ember/test-waiters';
 import { module, test } from 'qunit';
 
@@ -45,48 +48,50 @@ if (DEBUG) {
       { name: 'RSVP.Promise', Promise: RSVP.Promise },
     ];
 
-    const promiseTestModules = promiseImplementations.map(({ name, Promise }) => {
-      class EmberObjectThing extends EmberObject.extend({
-        doAsyncStuff: waitFor(async function doAsyncStuff(...args: any) {
-          await new Promise((resolve) => {
-            setTimeout(resolve, 10);
-          });
+    const promiseTestModules = promiseImplementations.map(
+      ({ name, Promise }) => {
+        class EmberObjectThing extends EmberObject.extend({
+          doAsyncStuff: waitFor(async function doAsyncStuff(...args: any) {
+            await new Promise((resolve) => {
+              setTimeout(resolve, 10);
+            });
 
-          return args.reverse();
-        }),
+            return args.reverse();
+          }),
 
-        asyncThrow: waitFor(async function asyncThrow() {
-          await new Promise((resolve) => {
-            setTimeout(resolve, 10);
-          });
-          throw new Error('doh!');
-        }),
-      }) {}
+          asyncThrow: waitFor(async function asyncThrow() {
+            await new Promise((resolve) => {
+              setTimeout(resolve, 10);
+            });
+            throw new Error('doh!');
+          }),
+        }) {}
 
-      class NativeThing {
-        @waitFor
-        async doAsyncStuff(...args: any) {
-          await new Promise((resolve) => {
-            setTimeout(resolve, 10);
-          });
-          return args.reverse();
+        class NativeThing {
+          @waitFor
+          async doAsyncStuff(...args: any) {
+            await new Promise((resolve) => {
+              setTimeout(resolve, 10);
+            });
+            return args.reverse();
+          }
+
+          @waitFor
+          async asyncThrow() {
+            await new Promise((resolve) => {
+              setTimeout(resolve, 10);
+            });
+            throw new Error('doh!');
+          }
         }
-
-        @waitFor
-        async asyncThrow() {
-          await new Promise((resolve) => {
-            setTimeout(resolve, 10);
-          });
-          throw new Error('doh!');
-        }
-      }
-      return {
-        name,
-        waiterName: '@ember/test-waiters:promise-waiter',
-        EmberObjectThing,
-        NativeThing,
-      };
-    });
+        return {
+          name,
+          waiterName: '@ember/test-waiters:promise-waiter',
+          EmberObjectThing,
+          NativeThing,
+        };
+      },
+    );
 
     const generatorTestModules = [
       (function () {
@@ -97,11 +102,11 @@ if (DEBUG) {
                 setTimeout(resolve, 10);
               });
               return args.reverse();
-            })
+            }),
           ),
           doAsyncStuff(...args: any) {
             // @ts-ignore
-            return get(this, 'doStuffTask').perform(...args);
+            return this.doStuffTask.perform(...args);
           },
 
           throwingTask: taskFn(
@@ -110,11 +115,11 @@ if (DEBUG) {
                 setTimeout(resolve, 10);
               });
               throw new Error('doh!');
-            })
+            }),
           ),
           asyncThrow() {
             // @ts-ignore
-            return get(this, 'throwingTask').perform();
+            return this.throwingTask.perform();
           },
         });
 
@@ -128,7 +133,7 @@ if (DEBUG) {
             return args.reverse();
           }
           doAsyncStuff(...args: any) {
-            return perform(get(this, 'doStuffTask'), ...args);
+            return perform(this.doStuffTask, ...args);
           }
 
           @taskDec
@@ -140,7 +145,7 @@ if (DEBUG) {
             throw new Error('doh!');
           }
           asyncThrow(...args: any) {
-            return perform(get(this, 'throwingTask'), ...args);
+            return perform(this.throwingTask, ...args);
           }
         }
         return {
@@ -154,73 +159,85 @@ if (DEBUG) {
 
     const testModules = [...promiseTestModules, ...generatorTestModules];
 
-    testModules.forEach(({ name, waiterName, EmberObjectThing, NativeThing }) => {
-      module(name, function () {
-        const invocationType = [
-          {
-            name: 'class function',
-            createPromise(...args: any[]) {
-              return EmberObjectThing.create().doAsyncStuff(...args);
+    testModules.forEach(
+      ({ name, waiterName, EmberObjectThing, NativeThing }) => {
+        module(name, function () {
+          const invocationType = [
+            {
+              name: 'class function',
+              createPromise(...args: any[]) {
+                return EmberObjectThing.create().doAsyncStuff(...args);
+              },
+              createThrowingPromise() {
+                return EmberObjectThing.create().asyncThrow();
+              },
             },
-            createThrowingPromise() {
-              return EmberObjectThing.create().asyncThrow();
+            {
+              name: 'decorator',
+              createPromise(...args: any[]) {
+                return new NativeThing().doAsyncStuff(...args);
+              },
+              createThrowingPromise() {
+                return new NativeThing().asyncThrow();
+              },
             },
-          },
-          {
-            name: 'decorator',
-            createPromise(...args: any[]) {
-              return new NativeThing().doAsyncStuff(...args);
-            },
-            createThrowingPromise() {
-              return new NativeThing().asyncThrow();
-            },
-          },
-        ];
+          ];
 
-        invocationType.forEach(({ name, createPromise, createThrowingPromise }: ModeDef) => {
-          module(name, function () {
-            test('waitFor wraps and registers a waiter', async function (assert) {
-              overrideError(MockStableError);
+          invocationType.forEach(
+            ({ name, createPromise, createThrowingPromise }: ModeDef) => {
+              module(name, function () {
+                test('waitFor wraps and registers a waiter', async function (assert) {
+                  overrideError(MockStableError);
 
-              let promise = createPromise();
+                  const promise = createPromise();
 
-              assert.deepEqual(getPendingWaiterState(), {
-                pending: 1,
-                waiters: {
-                  [waiterName]: [
-                    {
-                      label: undefined,
-                      stack: 'STACK',
+                  assert.deepEqual(getPendingWaiterState(), {
+                    pending: 1,
+                    waiters: {
+                      [waiterName]: [
+                        {
+                          label: undefined,
+                          stack: 'STACK',
+                        },
+                      ],
                     },
-                  ],
-                },
+                  });
+
+                  await (
+                    promise as unknown as Thenable<void, PromiseType<void>>
+                  ).then(() => {
+                    assert.deepEqual(getPendingWaiterState(), {
+                      pending: 0,
+                      waiters: {},
+                    });
+                  });
+                });
+
+                test('waitFor handles arguments and return value', async function (assert) {
+                  overrideError(MockStableError);
+
+                  const ret = await createPromise(1, 'foo');
+                  assert.deepEqual(ret, ['foo', 1]);
+                });
+
+                test('waitFor transitions waiter to not pending even if promise throws when thenable wrapped', async function (assert) {
+                  const promise = createThrowingPromise();
+
+                  try {
+                    await promise;
+                  } catch (e) {
+                    assert.deepEqual(getPendingWaiterState(), {
+                      pending: 0,
+                      waiters: {},
+                    });
+                  }
+                });
               });
-
-              await (promise as unknown as Thenable<void, PromiseType<void>>).then(() => {
-                assert.deepEqual(getPendingWaiterState(), { pending: 0, waiters: {} });
-              });
-            });
-
-            test('waitFor handles arguments and return value', async function (assert) {
-              overrideError(MockStableError);
-
-              let ret = await createPromise(1, 'foo');
-              assert.deepEqual(ret, ['foo', 1]);
-            });
-
-            test('waitFor transitions waiter to not pending even if promise throws when thenable wrapped', async function (assert) {
-              let promise = createThrowingPromise();
-
-              try {
-                await promise;
-              } catch (e) {
-                assert.deepEqual(getPendingWaiterState(), { pending: 0, waiters: {} });
-              }
-            });
-          });
+            },
+          );
         });
-      });
-    });
+      },
+    );
 
     module('waitFor ember-concurrency interop', function () {
       class Deferred {
@@ -233,23 +250,25 @@ if (DEBUG) {
       }
 
       class NativeThing {
-        iterations: Array<Number> = [];
+        iterations: Array<number> = [];
         _continue?: Function;
 
         @taskDec
         @waitFor
         *doStuffTask(): TaskGenerator<string> {
           for (let i = 0; i < 3; i += 1) {
-            let continuation = new Deferred();
+            const continuation = new Deferred();
             if (this._continue !== undefined) {
               throw new Error('pending continue, cannot proceed');
             }
-            let completion = new Deferred();
+            const completion = new Deferred();
             let complete = false;
 
             this._continue = () => {
               if (complete === true) {
-                throw new Error('Cannot call continue twice on a single iteration');
+                throw new Error(
+                  'Cannot call continue twice on a single iteration',
+                );
               } else {
                 complete = true;
               }
@@ -287,20 +306,20 @@ if (DEBUG) {
         @taskDec
         *parentTask(): TaskGenerator<string> {
           // @ts-ignore
-          return yield get(this, 'doStuffTask').perform();
+          return yield this.doStuffTask.perform();
         }
 
         @taskDec
         @waitFor
         *wrappedParentTask(): TaskGenerator<string> {
           // @ts-ignore
-          return yield get(this, 'doStuffTask').perform();
+          return yield this.doStuffTask.perform();
         }
       }
 
       test('tasks with multiple yields work', async function (assert) {
-        let thing = new NativeThing();
-        let task = perform(get(thing, 'doStuffTask'));
+        const thing = new NativeThing();
+        const task = perform(thing.doStuffTask);
 
         assert.deepEqual(getPendingWaiterState().pending, 1);
 
@@ -332,9 +351,9 @@ if (DEBUG) {
 
       cancellationCases.forEach(({ desc, taskName }) => {
         test(`${desc} task cancellation works`, async function (assert) {
-          let thing = new NativeThing();
+          const thing = new NativeThing();
 
-          let instance = perform(get(thing, taskName));
+          const instance = perform(get(thing, taskName));
           assert.deepEqual(getPendingWaiterState().pending, 1);
 
           await thing.continue();
@@ -357,7 +376,7 @@ if (DEBUG) {
       function coDec(
         _target: object,
         _key: string,
-        descriptor: PropertyDescriptor
+        descriptor: PropertyDescriptor,
       ): PropertyDescriptor {
         descriptor.value = co.wrap(descriptor.value);
         return descriptor;
@@ -373,23 +392,25 @@ if (DEBUG) {
       }
 
       class NativeThing {
-        iterations: Array<Number> = [];
+        iterations: Array<number> = [];
         _continue?: Function;
 
         @coDec
         @waitFor
         *doStuffCo(): TaskGenerator<string> {
           for (let i = 0; i < 3; i += 1) {
-            let continuation = new Deferred();
+            const continuation = new Deferred();
             if (this._continue !== undefined) {
               throw new Error('pending continue, cannot proceed');
             }
-            let completion = new Deferred();
+            const completion = new Deferred();
             let continued = false;
 
             this._continue = () => {
               if (continued === true) {
-                throw new Error('Cannot call continue twice on a single iteration');
+                throw new Error(
+                  'Cannot call continue twice on a single iteration',
+                );
               } else {
                 continued = true;
               }
@@ -426,7 +447,7 @@ if (DEBUG) {
       }
 
       test('it works', async function (assert) {
-        let thing = new NativeThing();
+        const thing = new NativeThing();
 
         thing.doStuffCo();
         assert.deepEqual(getPendingWaiterState().pending, 1);

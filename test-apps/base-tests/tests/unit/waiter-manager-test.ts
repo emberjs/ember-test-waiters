@@ -1,5 +1,12 @@
-import MockStableError, { overrideError, resetError } from './utils/mock-stable-error';
-import { TestWaiterDebugInfo, Waiter, WaiterName } from '@ember/test-waiters/types';
+import MockStableError, {
+  overrideError,
+  resetError,
+} from './utils/mock-stable-error';
+import {
+  TestWaiterDebugInfo,
+  Waiter,
+  WaiterName,
+} from '@ember/test-waiters/types';
 import {
   Token,
   _reset,
@@ -27,27 +34,29 @@ if (DEBUG) {
     });
 
     test('register will correctly add a waiter', function (assert) {
-      let waiter = buildWaiter('@ember/test-waiters:first');
+      const waiter = buildWaiter('@ember/test-waiters:first');
 
       register(waiter);
 
-      let waiters = getWaiters().map((w) => w.name);
+      const waiters = getWaiters().map((w) => w.name);
       assert.deepEqual(waiters, ['@ember/test-waiters:first']);
     });
 
     test('register will only add one waiter with the same name', function (assert) {
-      let waiter = buildWaiter('@ember/test-waiters:first');
-      let secondWaiterButStillCalledFirst = buildWaiter('@ember/test-waiters:first');
+      const waiter = buildWaiter('@ember/test-waiters:first');
+      const secondWaiterButStillCalledFirst = buildWaiter(
+        '@ember/test-waiters:first',
+      );
 
       register(waiter);
       register(secondWaiterButStillCalledFirst);
 
-      let waiters = getWaiters().map((w) => w.name);
+      const waiters = getWaiters().map((w) => w.name);
       assert.deepEqual(waiters, ['@ember/test-waiters:first']);
     });
 
     test('unregister will correctly remove a waiter', function (assert) {
-      let waiter = buildWaiter('@ember/test-waiters:first');
+      const waiter = buildWaiter('@ember/test-waiters:first');
 
       register(waiter);
 
@@ -61,7 +70,7 @@ if (DEBUG) {
     });
 
     test('getWaiters returns all registered waiters', function (assert) {
-      let waiter = buildWaiter('@ember/test-waiters:first');
+      const waiter = buildWaiter('@ember/test-waiters:first');
 
       assert.equal(getWaiters(), 0, 'No waiters are registered');
 
@@ -75,18 +84,30 @@ if (DEBUG) {
     });
 
     test('getPendingWaiterState returns information on pending waiters', function (assert) {
-      let first = buildWaiter('@ember/test-waiters:first');
-      let second = buildWaiter('@ember/test-waiters:second');
-      let firstItem = {};
-      let secondItem = {};
+      const first = buildWaiter('@ember/test-waiters:first');
+      const second = buildWaiter('@ember/test-waiters:second');
+      const firstItem = {};
+      const secondItem = {};
 
       overrideError(MockStableError);
 
-      assert.equal(getPendingWaiterState().pending, 0, 'No waiters are pending');
-      assert.deepEqual(getPendingWaiterState().waiters, {}, 'No waiters are pending');
+      assert.equal(
+        getPendingWaiterState().pending,
+        0,
+        'No waiters are pending',
+      );
+      assert.deepEqual(
+        getPendingWaiterState().waiters,
+        {},
+        'No waiters are pending',
+      );
 
       first.beginAsync(firstItem);
-      assert.equal(getPendingWaiterState().pending, 1, 'First waiter is pending');
+      assert.equal(
+        getPendingWaiterState().pending,
+        1,
+        'First waiter is pending',
+      );
       assert.deepEqual(
         getPendingWaiterState().waiters,
         {
@@ -97,17 +118,29 @@ if (DEBUG) {
             },
           ],
         },
-        'First waiter is pending'
+        'First waiter is pending',
       );
 
       first.endAsync(firstItem);
 
-      assert.equal(getPendingWaiterState().pending, 0, 'No waiters are pending');
-      assert.deepEqual(getPendingWaiterState().waiters, {}, 'No waiters are pending');
+      assert.equal(
+        getPendingWaiterState().pending,
+        0,
+        'No waiters are pending',
+      );
+      assert.deepEqual(
+        getPendingWaiterState().waiters,
+        {},
+        'No waiters are pending',
+      );
 
       second.beginAsync(secondItem);
 
-      assert.equal(getPendingWaiterState().pending, 1, 'Second waiter is pending');
+      assert.equal(
+        getPendingWaiterState().pending,
+        1,
+        'Second waiter is pending',
+      );
       assert.deepEqual(
         getPendingWaiterState().waiters,
         {
@@ -118,20 +151,28 @@ if (DEBUG) {
             },
           ],
         },
-        'Second waiter is pending'
+        'Second waiter is pending',
       );
 
       second.endAsync(secondItem);
 
-      assert.equal(getPendingWaiterState().pending, 0, 'No waiters are pending');
-      assert.deepEqual(getPendingWaiterState().waiters, {}, 'No waiters are pending');
+      assert.equal(
+        getPendingWaiterState().pending,
+        0,
+        'No waiters are pending',
+      );
+      assert.deepEqual(
+        getPendingWaiterState().waiters,
+        {},
+        'No waiters are pending',
+      );
     });
 
     test('getPendingWaiterState contains label info when label provided', function (assert) {
-      let first = buildWaiter('@ember/test-waiters:first');
-      let second = buildWaiter('@ember/test-waiters:second');
-      let firstItem = {};
-      let secondItem = {};
+      const first = buildWaiter('@ember/test-waiters:first');
+      const second = buildWaiter('@ember/test-waiters:second');
+      const firstItem = {};
+      const secondItem = {};
 
       overrideError(MockStableError);
 
@@ -158,29 +199,28 @@ if (DEBUG) {
     });
 
     test('hasPendingWaiters can check if waiting is required', function (assert) {
-      let first = buildWaiter('@ember/test-waiters:first');
-      let second = buildWaiter('@ember/test-waiters:second');
-      let firstItem = {};
-      let secondItem = {};
+      const first = buildWaiter('@ember/test-waiters:first');
+      const second = buildWaiter('@ember/test-waiters:second');
+      const firstItem = {};
+      const secondItem = {};
 
-      assert.strictEqual(hasPendingWaiters(), false, 'No waiters are pending');
+      assert.false(hasPendingWaiters(), 'No waiters are pending');
 
       first.beginAsync(firstItem);
-      assert.strictEqual(hasPendingWaiters(), true, 'First waiter is pending');
+      assert.true(hasPendingWaiters(), 'First waiter is pending');
 
       first.endAsync(firstItem);
-      assert.strictEqual(hasPendingWaiters(), false, 'First waiter is not pending');
+      assert.false(hasPendingWaiters(), 'First waiter is not pending');
 
       second.beginAsync(secondItem);
-      assert.strictEqual(hasPendingWaiters(), true, 'Second waiter is pending');
+      assert.true(hasPendingWaiters(), 'Second waiter is pending');
 
       second.endAsync(secondItem);
-      assert.strictEqual(hasPendingWaiters(), false, 'Second waiter is not pending');
+      assert.false(hasPendingWaiters(), 'Second waiter is not pending');
     });
 
     test('custom waiters can be registered', function (assert) {
       let customWaiterCounter = 0;
-      let customWaiter;
 
       class CustomWaiter<T = Token> implements Waiter {
         public name: WaiterName;
@@ -209,7 +249,9 @@ if (DEBUG) {
         }
       }
 
-      customWaiter = new CustomWaiter('@ember/test-waiters:custom-waiter');
+      const customWaiter = new CustomWaiter(
+        '@ember/test-waiters:custom-waiter',
+      );
 
       register(customWaiter);
 
