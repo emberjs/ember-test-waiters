@@ -10,8 +10,8 @@ module('import-legacy-module', function (hooks) {
   });
 
   test('test waiter can be instantiated with a name', function (assert) {
-    let name = 'my-waiter';
-    let waiter = buildWaiter(name);
+    const name = 'my-waiter';
+    const waiter = buildWaiter(name);
 
     assert.equal(waiter.name, name);
   });
