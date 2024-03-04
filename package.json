@@ -1,7 +1,11 @@
 {
   "name": "root",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:emberjs/ember-test-waiters.git"
+  },
   "scripts": {
     "lint": "pnpm --filter '*' lint:fix",
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
@@ -9,11 +13,12 @@
     "start:test-app": "pnpm --filter test-app start",
     "test": "pnpm --filter '*' test"
   },
+  "devDependencies": {
+    "concurrently": "^8.2.1",
+    "release-plan": "^0.8.0"
+  },
   "volta": {
     "node": "18.16.0",
     "pnpm": "8.7.6"
-  },
-  "devDependencies": {
-    "concurrently": "^8.2.1"
   }
 }
