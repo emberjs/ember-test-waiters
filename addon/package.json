@@ -76,8 +76,6 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1",
     "qunit": "^2.20.0",
-    "release-it": "^14.14.3",
-    "release-it-lerna-changelog": "^3.1.0",
     "typescript": "~4.4.2",
     "webpack": "^5.0.0"
   },
@@ -94,21 +92,6 @@
   "ember-addon": {
     "configPath": "tests/dummy/config",
     "main": "index.js"
-  },
-  "release-it": {
-    "plugins": {
-      "release-it-lerna-changelog": {
-        "infile": "CHANGELOG.md",
-        "launchEditor": true
-      }
-    },
-    "git": {
-      "tagName": "v${version}"
-    },
-    "github": {
-      "release": true,
-      "tokenRef": "GITHUB_AUTH"
-    }
   },
   "volta": {
     "node": "16.20.0",
