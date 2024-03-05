@@ -48,8 +48,18 @@ module.exports = {
     },
     {
       // test files
-      files: ['tests/**/*-test.{js,ts}'],
+      files: ['tests/**/*.{js,ts}'],
       extends: ['plugin:qunit/recommended'],
+      rules: {
+        // Disabled rules when migrating to v2 addon / updated app
+        'ember/no-classic-classes': 'off',
+        'qunit/no-assert-equal': 'off',
+        'qunit/no-identical-names': 'off',
+        '@typescript-eslint/ban-types': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-empty-function': 'off',
+      },
     },
   ],
 };

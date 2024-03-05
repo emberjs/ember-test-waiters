@@ -48,6 +48,7 @@ jobs:
         app: 
           - test-apps/base-tests
           - test-apps/ember-concurrency-v2
+          - test-apps/ember-concurrency-v3
         ember-try-scenario:
           - ember-lts-3.16
           - ember-lts-3.20
