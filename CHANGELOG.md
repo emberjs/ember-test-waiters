@@ -1,5 +1,46 @@
 # Changelog
 
+## Release (2024-03-05)
+
+@ember/test-waiters 4.0.0 (major)
+
+#### :boom: Breaking Change
+* `@ember/test-waiters`, `base-tests`, `ember-concurrency-v2`, `ember-concurrency-v3`, `ember-fetch-v8`
+  * [#463](https://github.com/emberjs/ember-test-waiters/pull/463) move tests to base-tests app, drop support for 3.8, 3.12, 0.x embroider, and ember-classic ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `@ember/test-waiters`
+  * [#454](https://github.com/emberjs/ember-test-waiters/pull/454) Remove dual-package emit ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* Other
+  * [#453](https://github.com/emberjs/ember-test-waiters/pull/453) Require ember-auto-import@v2 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#455](https://github.com/emberjs/ember-test-waiters/pull/455) Upgrade CI / re-roll lockfile ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :rocket: Enhancement
+* `base-tests`, `ember-concurrency-v2`
+  * [#466](https://github.com/emberjs/ember-test-waiters/pull/466) Add support for 3.28, 4.12, 5.4 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `@ember/test-waiters`
+  * [#459](https://github.com/emberjs/ember-test-waiters/pull/459) Improve waitFor() types ([@bendemboski](https://github.com/bendemboski))
+
+#### :bug: Bug Fix
+* `@ember/test-waiters`
+  * [#467](https://github.com/emberjs/ember-test-waiters/pull/467) Update to `ember-cli-babel` v8 ([@bertdeblock](https://github.com/bertdeblock))
+
+#### :house: Internal
+* `@ember/test-waiters`
+  * [#468](https://github.com/emberjs/ember-test-waiters/pull/468) Setup release plan ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#452](https://github.com/emberjs/ember-test-waiters/pull/452) v2 Addon prep: move everything in to a single package monorepo ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* Other
+  * [#469](https://github.com/emberjs/ember-test-waiters/pull/469) Enable manual CI running ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#456](https://github.com/emberjs/ember-test-waiters/pull/456) Remove IE11 from targets as the browser is not supported anymore ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#392](https://github.com/emberjs/ember-test-waiters/pull/392) Bump release-it from 14.13.1 to 14.14.3 ([@dependabot[bot]](https://github.com/apps/dependabot))
+* `@ember/test-waiters`, `base-tests`, `ember-concurrency-v2`, `ember-concurrency-v3`, `ember-fetch-v8`
+  * [#464](https://github.com/emberjs/ember-test-waiters/pull/464) Move ember-concurrency-specific-tests to the ember-concurrency@v2 test-app ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `base-tests`, `ember-concurrency-v2`, `ember-concurrency-v3`, `ember-fetch-v8`
+  * [#460](https://github.com/emberjs/ember-test-waiters/pull/460) Add 4 empty test apps (all boilerplate) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 3
+- Ben Demboski ([@bendemboski](https://github.com/bendemboski))
+- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v3.0.2 (2022-04-26)
 
 #### :rocket: Enhancement
