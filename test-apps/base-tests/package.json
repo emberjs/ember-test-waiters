@@ -22,8 +22,8 @@
     "lint:js:fix": "eslint . --fix",
     "lint:types": "tsc --noEmit",
     "start": "ember serve",
-    "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test",
+    "test:ts": "tsc --noEmit",
     "test:ember-compatibility": "ember try:each",
     "test:prod": "ember test --environment=production"
   },
@@ -36,6 +36,7 @@
     "@ember/string": "^3.1.1",
     "@ember/test-helpers": "^3.2.0",
     "@glimmer/component": "^1.1.2",
+    "@glimmer/env": "^0.1.7",
     "@glimmer/tracking": "^1.1.2",
     "@glint/environment-ember-loose": "^1.1.0",
     "@glint/template": "^1.1.0",

@@ -98,9 +98,11 @@ if (DEBUG) {
             {
               name: 'class function',
               createPromise(...args: any[]) {
+                // @ts-expect-error classic object model is hard to type correctly
                 return EmberObjectThing.create().doAsyncStuff(...args);
               },
               createThrowingPromise() {
+                // @ts-expect-error classic object model is hard to type correctly
                 return EmberObjectThing.create().asyncThrow();
               },
             },

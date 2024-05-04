@@ -67,7 +67,7 @@ jobs:
         run: 'pnpm add --save-dev ${{ matrix.typescript-scenario}}'
         working-directory: ./test-apps/ember-fetch-v8
 
-      - run: pnpm --filter "./test-apps/*" exec tsc --noEmit;
+      - run: pnpm --filter "*" test:ts;
 
 
   try-scenarios:

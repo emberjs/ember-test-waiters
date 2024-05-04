@@ -2,13 +2,13 @@ import MockStableError, {
   overrideError,
   resetError,
 } from './utils/mock-stable-error';
-import {
+import type {
   TestWaiterDebugInfo,
   Waiter,
   WaiterName,
 } from '@ember/test-waiters/types';
+import type { Token } from '@ember/test-waiters';
 import {
-  Token,
   _reset,
   _resetWaiterNames,
   buildWaiter,

@@ -37,6 +37,7 @@
     "tests/**/*",
     "types/**/*",
     "test-support/**/*",
-    "addon-test-support/**/*"
+    "addon-test-support/**/*",
+    "unpublished-development-types/**/*"
   ]
 }

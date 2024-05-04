@@ -87,9 +87,6 @@ importers:
       ember-cli-uglify:
         specifier: ^3.0.0
         version: 3.0.0
-      ember-concurrency:
-        specifier: ^2.1.2
-        version: 2.2.1(@babel/core@7.24.5)
       ember-concurrency-decorators:
         specifier: ^2.0.3
         version: 2.0.3(@babel/core@7.24.5)
@@ -175,6 +172,9 @@ importers:
       '@glimmer/component':
         specifier: ^1.1.2
         version: 1.1.2(@babel/core@7.24.5)
+      '@glimmer/env':
+        specifier: ^0.1.7
+        version: 0.1.7
       '@glimmer/tracking':
         specifier: ^1.1.2
         version: 1.1.2
@@ -341,6 +341,9 @@ importers:
       '@glimmer/component':
         specifier: ^1.1.2
         version: 1.1.2(@babel/core@7.24.5)
+      '@glimmer/env':
+        specifier: ^0.1.7
+        version: 0.1.7
       '@glimmer/tracking':
         specifier: ^1.1.2
         version: 1.1.2
