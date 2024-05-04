@@ -5,10 +5,10 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@glimmer/validator': '>= 0.84.3'
-  '@glimmer/manager': '>= 0.84.3'
-  '@glimmer/runtime': '>= 0.84.3'
-  '@glimmer/syntax': '>= 0.84.3'
+  '@glimmer/validator': '>= 0.86.0'
+  '@glimmer/manager': '>= 0.86.0'
+  '@glimmer/runtime': '>= 0.86.0'
+  '@glimmer/syntax': '>= 0.86.0'
 
 importers:
 
@@ -4137,7 +4137,7 @@ packages:
     resolution: {integrity: sha512-rU8qpqbqxIPwrEQH82yDDFi1hgv6ud1agYexmnmCXlaLS5uCVATJAqKsVozc7aHOgmmF4Ukd/LoF4NYfGr8X3w==}
     dependencies:
       '@glimmer/interfaces': 0.84.2
-      '@glimmer/syntax': 0.84.3
+      '@glimmer/syntax': 0.92.0
       '@glimmer/util': 0.84.2
       '@glimmer/wire-format': 0.84.2
       '@simple-dom/interface': 1.4.0
@@ -4240,12 +4240,12 @@ packages:
     resolution: {integrity: sha512-dk32ykoNojt0mvEaIW6Vli5MGTbQo58uy3Epj7ahCgTHmWOKuw/0G83f2UmFprRwFx689YTXG38I/vbpltEjzg==}
     dependencies:
       '@simple-dom/interface': 1.4.0
+    dev: true
 
   /@glimmer/interfaces@0.92.0:
     resolution: {integrity: sha512-SKZvIs+ZPN8F3EH8kEzs7rGIUa+wuV+/3oWYyEiBrqd+VrZlmAxIELM6qZ6oxXT2tx6q1rh2EmA5rWezi6bmYQ==}
     dependencies:
       '@simple-dom/interface': 1.4.0
-    dev: true
 
   /@glimmer/manager@0.92.0:
     resolution: {integrity: sha512-vo5kpdyRq1YpP9FBcpSB9K8nGyz3C8k/vF3yd6g0u4zqVaaQrtvM+nw7pqOOQHf+FfQMr5nLYisvySWT7Eqwww==}
@@ -4257,7 +4257,7 @@ packages:
       '@glimmer/interfaces': 0.92.0
       '@glimmer/reference': 0.92.0
       '@glimmer/util': 0.92.0
-      '@glimmer/validator': 0.84.3
+      '@glimmer/validator': 0.92.0
       '@glimmer/vm': 0.92.0
     dev: true
 
@@ -4341,7 +4341,7 @@ packages:
       '@glimmer/global-context': 0.84.2
       '@glimmer/interfaces': 0.84.2
       '@glimmer/util': 0.84.2
-      '@glimmer/validator': 0.84.3
+      '@glimmer/validator': 0.92.0
     dev: true
 
   /@glimmer/reference@0.84.3:
@@ -4351,7 +4351,7 @@ packages:
       '@glimmer/global-context': 0.84.3
       '@glimmer/interfaces': 0.84.3
       '@glimmer/util': 0.84.3
-      '@glimmer/validator': 0.84.3
+      '@glimmer/validator': 0.92.0
     dev: true
 
   /@glimmer/reference@0.92.0:
@@ -4361,7 +4361,7 @@ packages:
       '@glimmer/global-context': 0.92.0
       '@glimmer/interfaces': 0.92.0
       '@glimmer/util': 0.92.0
-      '@glimmer/validator': 0.84.3
+      '@glimmer/validator': 0.92.0
     dev: true
 
   /@glimmer/runtime@0.92.0:
@@ -4376,16 +4376,17 @@ packages:
       '@glimmer/program': 0.92.0
       '@glimmer/reference': 0.92.0
       '@glimmer/util': 0.92.0
-      '@glimmer/validator': 0.84.3
+      '@glimmer/validator': 0.92.0
       '@glimmer/vm': 0.92.0
       '@glimmer/wire-format': 0.92.0
     dev: true
 
-  /@glimmer/syntax@0.84.3:
-    resolution: {integrity: sha512-ioVbTic6ZisLxqTgRBL2PCjYZTFIwobifCustrozRU2xGDiYvVIL0vt25h2c1ioDsX59UgVlDkIK4YTAQQSd2A==}
+  /@glimmer/syntax@0.92.0:
+    resolution: {integrity: sha512-h8pYBC2cCnEyjbZBip2Yw4qi8S8sjNCYAb57iHek3AIhyFKMM13aTN+/aajFOM4FUTMCVE2B/iAAmO41WRCX4A==}
     dependencies:
-      '@glimmer/interfaces': 0.84.3
-      '@glimmer/util': 0.84.3
+      '@glimmer/interfaces': 0.92.0
+      '@glimmer/util': 0.92.0
+      '@glimmer/wire-format': 0.92.0
       '@handlebars/parser': 2.0.0
       simple-html-tokenizer: 0.5.11
 
@@ -4393,14 +4394,14 @@ packages:
     resolution: {integrity: sha512-F+oT8I55ba2puSGIzInmVrv/8QA2PcK1VD+GWgFMhF6WC97D+uZX7BFg+a3s/2N4FVBq5KHE+QxZzgazM151Yw==}
     dependencies:
       '@glimmer/env': 0.1.7
-      '@glimmer/validator': 0.84.3
+      '@glimmer/validator': 0.92.0
     dev: true
 
   /@glimmer/tracking@1.1.2:
     resolution: {integrity: sha512-cyV32zsHh+CnftuRX84ALZpd2rpbDrhLhJnTXn9W//QpqdRZ5rdMsxSY9fOsj0CKEc706tmEU299oNnDc0d7tA==}
     dependencies:
       '@glimmer/env': 0.1.7
-      '@glimmer/validator': 0.84.3
+      '@glimmer/validator': 0.92.0
     dev: true
 
   /@glimmer/util@0.44.0:
@@ -4421,19 +4422,21 @@ packages:
       '@glimmer/env': 0.1.7
       '@glimmer/interfaces': 0.84.3
       '@simple-dom/interface': 1.4.0
+    dev: true
 
   /@glimmer/util@0.92.0:
     resolution: {integrity: sha512-Fap52smLp8RkCgvozrZG7RysNJ2T6mk1SPoknMzmukbabFVBAzxl5iyY4OXUbmR09j6t2pupjF6sPabnLtL4vw==}
     dependencies:
       '@glimmer/env': 0.1.7
       '@glimmer/interfaces': 0.92.0
-    dev: true
 
-  /@glimmer/validator@0.84.3:
-    resolution: {integrity: sha512-RTBV4TokUB0vI31UC7ikpV7lOYpWUlyqaKV//pRC4pexYMlmqnVhkFrdiimB/R1XyNdUOQUmnIAcdic39NkbhQ==}
+  /@glimmer/validator@0.92.0:
+    resolution: {integrity: sha512-GFX54PD8BRi+lg/HJ8KJRcvnV4rbDzJooQnOpJ9PlgIQi4KP/ivdjsw3DaEuvqn4K584LR6VTgHmxfZlLkDh2g==}
     dependencies:
       '@glimmer/env': 0.1.7
-      '@glimmer/global-context': 0.84.3
+      '@glimmer/global-context': 0.92.0
+      '@glimmer/interfaces': 0.92.0
+      '@glimmer/util': 0.92.0
     dev: true
 
   /@glimmer/vm-babel-plugins@0.84.3(@babel/core@7.24.5):
@@ -4470,7 +4473,6 @@ packages:
     dependencies:
       '@glimmer/interfaces': 0.92.0
       '@glimmer/util': 0.92.0
-    dev: true
 
   /@glint/environment-ember-loose@1.2.1(@glimmer/component@1.1.2)(@glint/template@1.2.1)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.1.0):
     resolution: {integrity: sha512-ZA0Ht7vwd1FosVLtMFrB2Er62P1v6yX/UuS6z9UVR6DMPfrL5qx6vef+EGJPLBrBKZMlm7zMB6Fyca201y4hDA==}
@@ -6197,7 +6199,7 @@ packages:
     resolution: {integrity: sha512-wl7w4SX06Bx1Bo8CUpH+rFDOrGo6n70wMxHg2S3nUdg7aqIxcuUJOWDEoqeCzZClwm5/qLMNM12ulWYIXnF+bw==}
     engines: {node: '>= 12.*'}
     dependencies:
-      '@glimmer/syntax': 0.84.3
+      '@glimmer/syntax': 0.92.0
       babel-import-util: 3.0.0
 
   /babel-plugin-filter-imports@4.0.0:
@@ -9926,8 +9928,8 @@ packages:
       '@glimmer/program': 0.84.2
       '@glimmer/reference': 0.84.2
       '@glimmer/runtime': 0.92.0
-      '@glimmer/syntax': 0.84.3
-      '@glimmer/validator': 0.84.3
+      '@glimmer/syntax': 0.92.0
+      '@glimmer/validator': 0.92.0
       '@glimmer/vm-babel-plugins': 0.84.3(@babel/core@7.24.5)
       '@simple-dom/interface': 1.4.0
       babel-plugin-debug-macros: 0.3.4(@babel/core@7.24.5)
@@ -10013,8 +10015,8 @@ packages:
     hasBin: true
     dependencies:
       '@glimmer/reference': 0.84.3
-      '@glimmer/syntax': 0.84.3
-      '@glimmer/validator': 0.84.3
+      '@glimmer/syntax': 0.92.0
+      '@glimmer/validator': 0.92.0
       async-promise-queue: 1.0.5
       colors: 1.4.0
       commander: 8.3.0
@@ -10348,7 +10350,7 @@ packages:
       eslint: '>= 7'
     dependencies:
       '@ember-data/rfc395-data': 0.0.4
-      '@glimmer/syntax': 0.84.3
+      '@glimmer/syntax': 0.92.0
       css-tree: 2.3.1
       ember-rfc176-data: 0.3.17
       ember-template-imports: 3.4.2

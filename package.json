@@ -22,10 +22,10 @@
       "@glimmer/*": "https://github.com/glimmerjs/glimmer.js/issues/413"
     },
     "overrides": {
-      "@glimmer/validator": ">= 0.84.3",
-      "@glimmer/manager": ">= 0.84.3",
-      "@glimmer/runtime": ">= 0.84.3",
-      "@glimmer/syntax": ">= 0.84.3"
+      "@glimmer/validator": ">= 0.86.0",
+      "@glimmer/manager": ">= 0.86.0",
+      "@glimmer/runtime": ">= 0.86.0",
+      "@glimmer/syntax": ">= 0.86.0"
     }
   },
   "volta": {
