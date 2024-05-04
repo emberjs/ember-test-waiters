@@ -23,7 +23,9 @@
     },
     "overrides": {
       "@glimmer/validator": ">= 0.84.3",
-      "@glimmer/manager": ">= 0.84.3"
+      "@glimmer/manager": ">= 0.84.3",
+      "@glimmer/runtime": ">= 0.84.3",
+      "@glimmer/syntax": ">= 0.84.3"
     }
   },
   "volta": {
