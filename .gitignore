@@ -26,5 +26,6 @@ package.json.ember-try
 addon/addon/**/*.js
 
 *.d.ts
+!test-apps/**/*.d.ts
 !addon/types/**/*.d.ts
 *.tgz

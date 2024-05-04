@@ -17,6 +17,15 @@
     "concurrently": "^8.2.1",
     "release-plan": "^0.8.0"
   },
+  "pnpm": {
+    "overrides_notes": {
+      "@glimmer/*": "https://github.com/glimmerjs/glimmer.js/issues/413"
+    },
+    "overrides": {
+      "@glimmer/validator": ">= 0.84.3",
+      "@glimmer/manager": ">= 0.84.3"
+    }
+  },
   "volta": {
     "node": "18.16.0",
     "pnpm": "8.7.6"
