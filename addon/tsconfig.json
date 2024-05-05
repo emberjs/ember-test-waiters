@@ -29,7 +29,8 @@
       "@ember/test-waiters": ["addon"],
       "@ember/test-waiters/*": ["addon/*"],
       "*": ["types/*"]
-    }
+    },
+    "types": ["ember-source/types"]
   },
   "include": [
     "app/**/*",
