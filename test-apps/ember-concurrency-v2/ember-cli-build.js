@@ -11,19 +11,5 @@ module.exports = function (defaults) {
 
   const { maybeEmbroider } = require('@embroider/test-setup');
 
-  return maybeEmbroider(app, {
-    extraPublicTrees: [],
-    staticAddonTrees: true,
-    staticAddonTestSupportTrees: true,
-    staticHelpers: true,
-    staticModifiers: true,
-    staticComponents: true,
-    staticEmberSource: true,
-    packagerOptions: {
-      webpackConfig: {
-        // Highest fidelity source map (at the cost of build speed)
-        devtool: 'source-map',
-      },
-    },
-  });
+  return maybeEmbroider(app);
 };
