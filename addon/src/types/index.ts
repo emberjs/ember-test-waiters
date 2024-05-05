@@ -1,4 +1,4 @@
-import RSVP from 'rsvp';
+import type RSVP from 'rsvp';
 
 /**
  * @type WaiterName

@@ -1,9 +1,8 @@
-import { Primitive, TestWaiter, TestWaiterDebugInfo, WaiterName } from './';
-
+import type { Primitive, TestWaiter, TestWaiterDebugInfo, WaiterName } from './types/index.ts';
 import { macroCondition, isDevelopingApp } from '@embroider/macros';
 import { warn } from '@ember/debug';
-import Token from './token';
-import { register } from './waiter-manager';
+import Token from './token.ts';
+import { register } from './waiter-manager.ts';
 
 const WAITER_NAME_PATTERN = /^[^:]*:?.*/;
 let WAITER_NAMES = macroCondition(isDevelopingApp()) ? new Set() : undefined;
@@ -35,6 +34,7 @@ class TestWaiterImpl<T extends object | Primitive = Token> implements TestWaiter
     this._register();
 
     if (this.items.has(token)) {
+      // SAFETY: force stringification of a potential symbol
       throw new Error(`beginAsync called for ${token as string} but it is already pending.`);
     }
 
@@ -128,7 +128,7 @@ class NoopTestWaiter implements TestWaiter {
 /**
  * Builds and returns a test waiter. The type of the
  * returned waiter is dependent on whether the app or
- * addon is in `isDevopingApp()` mode or not.
+ * addon is in `isDevelopingApp()` mode or not.
  *
  * @public
  *

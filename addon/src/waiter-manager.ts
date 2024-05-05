@@ -1,4 +1,4 @@
-import { PendingWaiterState, Waiter, WaiterName } from './types';
+import type { PendingWaiterState, Waiter, WaiterName } from './types/index.ts';
 
 type Indexable = Record<any, unknown>;
 

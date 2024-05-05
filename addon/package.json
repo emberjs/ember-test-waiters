@@ -11,73 +11,50 @@
     "Steve Calvert <steve.calvert@gmail.com>",
     "Robert Jackson <me@rwjblue.com>"
   ],
-  "types": "index.d.ts",
-  "directories": {
-    "doc": "doc",
-    "test": "tests"
-  },
   "scripts": {
-    "build": "ember build",
-    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
-    "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
-    "lint:prettier": "prettier --check .",
+    "build": "rollup --config ./rollup.config.mjs",
+    "start": "rollup --config --watch",
+    "lint": "pnpm lint:js && pnpm format:check",
+    "lint:fix": "pnpm lint:js:fix && pnpm format",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
     "lint:js": "eslint",
     "lint:js:fix": "eslint --fix",
-    "lint:ts": "tsc -p tsconfig.json --noEmit",
-    "prepack": "npm-run-all prepack:*",
-    "prepack:d.ts": "ember ts:precompile",
-    "prepack:addon": "babel --extensions '.ts' --presets @babel/preset-typescript addon --out-dir addon --ignore '**/*.d.ts'",
-    "postpack": "ember ts:clean"
+    "lint:ts": "tsc --noEmit --emitDeclarationOnly false",
+    "prepare": "pnpm build",
+    "prepack": "pnpm build"
   },
   "dependencies": {
-    "@babel/core": "^7.26.0",
-    "@embroider/macros": "^1.16.9",
-    "ember-auto-import": "^2.10.0",
-    "ember-cli-babel": "^8.2.0",
-    "ember-cli-typescript": "^5.3.0",
-    "ember-cli-version-checker": "^5.1.2",
-    "semver": "^7.5.2"
+    "@embroider/addon-shim": "^1.9.0",
+    "@embroider/macros": "^1.16.9"
   },
   "devDependencies": {
-    "@babel/cli": "^7.25.9",
-    "@babel/preset-typescript": "^7.26.0",
-    "@ember/optional-features": "^2.2.0",
-    "@ember/string": "^4.0.0",
-    "@eslint/js": "^9.15.0",
-    "@types/qunit": "^2.19.9",
-    "@types/rsvp": "^4.0.4",
-    "@typescript-eslint/eslint-plugin": "^8.16.0",
-    "@typescript-eslint/parser": "^8.16.0",
-    "co": "^4.6.0",
-    "ember-cli": "^6.0.1",
-    "ember-cli-dependency-checker": "^3.3.3",
-    "ember-cli-htmlbars": "^6.3.0",
-    "ember-cli-inject-live-reload": "^2.1.0",
-    "ember-cli-uglify": "^3.0.0",
-    "ember-decorators-polyfill": "^1.1.5",
-    "ember-disable-prototype-extensions": "^1.1.3",
-    "ember-load-initializers": "^2.1.2",
-    "ember-maybe-import-regenerator-for-testing": "^1.0.0",
-    "ember-resolver": "^11.0.1",
-    "ember-source": "^5.0.0",
-    "ember-source-channel-url": "^3.0.0",
-    "ember-try": "^3.0.0",
-    "eslint": "^9.15.0",
+    "@babel/plugin-transform-typescript": "^7.25.9",
+    "@embroider/addon-dev": "^7.0.0",
+    "@eslint/js": "^9.16.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@tsconfig/ember": "^3.0.8",
+    "@types/rsvp": "^4.0.9",
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
+    "decorator-transforms": "^2.3.0",
+    "ember-source": "~5.3.0",
+    "eslint": "^9.16.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-ember": "^12.3.3",
+    "eslint-plugin-n": "^17.14.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "globals": "^15.12.0",
-    "loader.js": "^4.7.0",
+    "execa": "^9.5.1",
+    "fix-bad-declaration-output": "^1.1.4",
+    "globals": "^15.13.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.4.1",
-    "qunit": "^2.20.0",
+    "qunit": "^2.22.0",
+    "rollup": "^4.28.0",
+    "rollup-plugin-copy": "^3.5.0",
     "typescript": "~5.7.2",
-    "typescript-eslint": "^8.16.0",
-    "webpack": "^5.96.1"
-  },
-  "engines": {
-    "node": "10.* || 12.* || >= 14.*"
+    "typescript-eslint": "^8.17.0"
   },
   "ember": {
     "edition": "octane"
@@ -86,9 +63,37 @@
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
+  "files": [
+    "declarations",
+    "dist",
+    "src",
+    "addon-main.cjs"
+  ],
+  "exports": {
+    ".": {
+      "types": "./declarations/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./__private__/types": {
+      "types": "./declarations/types/index.d.ts",
+      "default": "./dist/types/index.js"
+    },
+    "./__private__/token": {
+      "types": "./declarations/token.d.ts",
+      "default": "./dist/token.js"
+    }
+  },
   "ember-addon": {
-    "configPath": "tests/dummy/config",
-    "main": "index.js"
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.cjs"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "declarations/*"
+      ]
+    }
   },
   "volta": {
     "extends": "../package.json"

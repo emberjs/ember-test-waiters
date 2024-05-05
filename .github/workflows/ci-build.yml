@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - 'v*'
   pull_request:
   workflow_dispatch:
   schedule:
@@ -19,47 +18,30 @@ jobs:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
       # type checking requires build
-      - run: pnpm prepack
-        working-directory: addon
+      - run: pnpm build
       - run: pnpm lint
 
   test:
     timeout-minutes: 10
-    name: "Tests: ${{ matrix.EMBROIDER && 'embroider' || 'classic' }}"
+    name: "Tests"
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        EMBROIDER:
-          - '' # classic
-          - 'true'
 
     steps:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
       - run: pnpm test:ember
         working-directory: test-apps/base-tests
-        env: 
-          EMBROIDER: ${{ matrix.EMBROIDER }}
 
   floating-dependencies:
     timeout-minutes: 10
-    name: "Floating Dependencies: ${{ matrix.EMBROIDER && 'embroider' || 'classic' }}"
+    name: "Floating Dependencies"
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        EMBROIDER:
-          - '' # classic
-          - 'true'
 
     steps:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
       - run: pnpm test:ember
         working-directory: test-apps/base-tests
-        env: 
-          EMBROIDER: ${{ matrix.EMBROIDER }}
 
   typecheck:
     name: '${{ matrix.typescript-scenario }}'
@@ -108,16 +90,12 @@ jobs:
           - test-apps/base-tests
         ember-try-scenario:
           - ember-lts-3.16
-          - ember-lts-3.20
-          - ember-lts-3.24
           - ember-lts-3.28
           - ember-lts-4.12
-          - ember-lts-5.4
+          - ember-lts-5.12
           - ember-release
           - ember-beta
           - ember-canary
-          - 3.x-embroider-safe
-          - 3.x-embroider-optimized
 
     steps:
       - uses: actions/checkout@v4
