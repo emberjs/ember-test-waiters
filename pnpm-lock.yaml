@@ -505,6 +505,10 @@ importers:
         version: 5.88.2
 
   test-apps/ember-fetch-v8:
+    dependencies:
+      '@ember/test-waiters':
+        specifier: workspace:*
+        version: link:../../addon
     devDependencies:
       '@babel/core':
         specifier: ^7.24.5

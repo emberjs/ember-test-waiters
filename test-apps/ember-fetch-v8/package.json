@@ -25,6 +25,9 @@
     "test:ts": "tsc --noEmit",
     "test:ember": "ember test"
   },
+  "dependencies": {
+    "@ember/test-waiters": "workspace:*"
+  },
   "devDependencies": {
     "@babel/core": "^7.24.5",
     "@ember/optional-features": "^2.0.0",
