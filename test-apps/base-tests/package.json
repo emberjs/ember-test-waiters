@@ -22,6 +22,7 @@
     "lint:js:fix": "eslint . --fix",
     "lint:types": "tsc --noEmit",
     "start": "ember serve",
+    "start:embroider": "EMBROIDER=1 ember serve",
     "test:ember": "ember test",
     "test:ts": "tsc --noEmit",
     "test:ember-compatibility": "ember try:each",

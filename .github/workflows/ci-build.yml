@@ -13,8 +13,14 @@ on:
 jobs:
   test:
     timeout-minutes: 10
-    name: Tests
+    name: "Tests: ${{ matrix.EMBROIDER && 'embroider' || 'classic' }}"
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        EMBROIDER:
+          - '' # classic
+          - 'true'
 
     steps:
       - uses: actions/checkout@v4
@@ -22,17 +28,27 @@ jobs:
       - run: pnpm lint
       - run: pnpm test:ember
         working-directory: test-apps/base-tests
+        env: 
+          EMBROIDER: ${{ matrix.EMBROIDER }}
 
   floating-dependencies:
     timeout-minutes: 10
-    name: "Floating Dependencies"
+    name: "Floating Dependencies: ${{ matrix.EMBROIDER && 'embroider' || 'classic' }}"
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        EMBROIDER:
+          - '' # classic
+          - 'true'
 
     steps:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
       - run: pnpm test:ember
         working-directory: test-apps/base-tests
+        env: 
+          EMBROIDER: ${{ matrix.EMBROIDER }}
 
   typecheck:
     name: '${{ matrix.typescript-scenario }}'
