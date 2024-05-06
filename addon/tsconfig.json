@@ -4,6 +4,9 @@
     "allowJs": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
+    // have to use this, because the current TS setup errors with ember's own types
+    // this will be fixed during v2 addon conversion
+    "skipLibCheck": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
@@ -26,7 +29,8 @@
       "@ember/test-waiters": ["addon"],
       "@ember/test-waiters/*": ["addon/*"],
       "*": ["types/*"]
-    }
+    },
+    "types": ["ember-source/types"]
   },
   "include": [
     "app/**/*",
@@ -34,6 +38,7 @@
     "tests/**/*",
     "types/**/*",
     "test-support/**/*",
-    "addon-test-support/**/*"
+    "addon-test-support/**/*",
+    "unpublished-development-types/**/*"
   ]
 }

@@ -34,6 +34,42 @@ jobs:
       - run: pnpm test:ember
         working-directory: test-apps/base-tests
 
+  typecheck:
+    name: '${{ matrix.typescript-scenario }}'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    continue-on-error: true
+    strategy:
+      fail-fast: true
+      matrix:
+        typescript-scenario:
+          - typescript@5.0
+          - typescript@5.1
+          - typescript@5.2
+          - typescript@5.3
+          - typescript@5.4
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: wyvox/action-setup-pnpm@v3
+      - run: pnpm prepack
+        working-directory: ./addon/
+
+      - name: 'Change base tests TS to ${{ matrix.typescript-scenario }}'
+        run: 'pnpm add --save-dev ${{ matrix.typescript-scenario}}'
+        working-directory: ./test-apps/base-tests/
+
+      - name: 'Change ember-concurrency TS to ${{ matrix.typescript-scenario }}'
+        run: 'pnpm add --save-dev ${{ matrix.typescript-scenario}}'
+        working-directory: ./test-apps/ember-concurrency-v2
+
+      - name: 'Change ember-fetch TS to ${{ matrix.typescript-scenario }}'
+        run: 'pnpm add --save-dev ${{ matrix.typescript-scenario}}'
+        working-directory: ./test-apps/ember-fetch-v8
+
+      - run: pnpm --filter "*" test:ts;
+
+
   try-scenarios:
     timeout-minutes: 10
     name: "Try: ${{ matrix.ember-try-scenario }} @ ${{ matrix.app }}"
