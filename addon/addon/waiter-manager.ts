@@ -1,8 +1,5 @@
 import { PendingWaiterState, Waiter, WaiterName } from './types';
 
-import Ember from 'ember';
-import { registerWaiter } from '@ember/test';
-
 type Indexable = Record<any, unknown>;
 
 // this ensures that if @ember/test-waiters exists in multiple places in the
@@ -35,18 +32,6 @@ function getGlobal(): Indexable {
   if (typeof window !== 'undefined') return indexable(window);
 
   throw new Error('unable to locate global object');
-}
-
-/**
- * Backwards compatibility with legacy waiters system.
- *
- * We want to always register a waiter using the legacy waiter system, as right
- * now if consumers are not on the right version of @ember/test-helpers, using
- * this addon will result in none of these waiters waiting.
- */
-// eslint-disable-next-line ember/new-module-imports
-if (Ember.Test) {
-  registerWaiter(() => !hasPendingWaiters());
 }
 
 /**
