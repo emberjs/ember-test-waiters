@@ -8,6 +8,8 @@
 /coverage/
 !.*
 .*/
+*.md
+*.html
 
 # ember-try
 /.node_modules.ember-try/
