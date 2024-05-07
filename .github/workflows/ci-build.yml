@@ -11,6 +11,18 @@ on:
     - cron: '0 3 * * *' # daily, at 3am
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: wyvox/action-setup-pnpm@v3
+      # type checking requires build
+      - run: pnpm prepack
+        working-directory: addon
+      - run: pnpm lint
+
   test:
     timeout-minutes: 10
     name: "Tests: ${{ matrix.EMBROIDER && 'embroider' || 'classic' }}"
@@ -25,7 +37,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
-      - run: pnpm lint
       - run: pnpm test:ember
         working-directory: test-apps/base-tests
         env: 

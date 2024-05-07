@@ -112,7 +112,7 @@ class NoopTestWaiter implements TestWaiter {
     return this;
   }
 
-  endAsync(): void { }
+  endAsync(): void {}
 
   waitUntil(): boolean {
     return true;
@@ -122,7 +122,7 @@ class NoopTestWaiter implements TestWaiter {
     return [];
   }
 
-  reset(): void { }
+  reset(): void {}
 }
 
 /**

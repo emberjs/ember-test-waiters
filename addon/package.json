@@ -20,6 +20,7 @@
     "build": "ember build",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
     "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
+    "lint:prettier": "prettier --check .",
     "lint:js": "eslint --ext ts,js .",
     "lint:js:fix": "eslint --ext ts,js . --fix",
     "lint:ts": "tsc -p tsconfig.json --noEmit",

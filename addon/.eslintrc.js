@@ -16,6 +16,9 @@ module.exports = {
     browser: true,
     node: false,
   },
+  globals: {
+    globalThis: true,
+  },
   rules: {
     'prettier/prettier': 'error',
     'no-unused-vars': 'off',

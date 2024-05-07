@@ -22,3 +22,5 @@
 
 addon/**/*.js
 **/*.d.ts
+*.md
+*.html
