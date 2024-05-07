@@ -609,9 +609,15 @@ importers:
       ember-source:
         specifier: ~5.3.0
         version: 5.3.0(@babel/core@7.24.5)(@glimmer/component@1.1.2)(@glint/template@1.2.1)(rsvp@4.8.5)(webpack@5.88.2)
+      ember-source-channel-url:
+        specifier: ^3.0.0
+        version: 3.0.0
       ember-template-lint:
         specifier: ^5.11.2
         version: 5.11.2
+      ember-try:
+        specifier: ^3.0.0
+        version: 3.0.0
       ember-welcome-page:
         specifier: ^7.0.2
         version: 7.0.2
@@ -900,7 +906,7 @@ packages:
       '@babel/traverse': 7.23.5
       debug: 4.3.4(supports-color@8.1.1)
       lodash.debounce: 4.0.8
-      resolve: 1.22.6
+      resolve: 1.22.8
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
@@ -15169,7 +15175,7 @@ packages:
     resolution: {integrity: sha512-fVEKHGeK85bGbVFuwO9o1aU0n3vqQGrezPc51JGu9UTXpFQfWq5qCeKxyaRUSvephs+06c5j5rPq/dzHGEo8+Q==}
     dependencies:
       path-root: 0.1.1
-      resolve: 1.22.0
+      resolve: 1.22.8
 
   /resolve-package-path@2.0.0:
     resolution: {integrity: sha512-/CLuzodHO2wyyHTzls5Qr+EFeG6RcW4u6//gjYvUfcfyuplIX1SSccU+A5A9A78Gmezkl3NBkFAMxLbzTY9TJA==}
@@ -15223,6 +15229,7 @@ packages:
       is-core-module: 2.13.0
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
+    dev: true
 
   /resolve@1.22.8:
     resolution: {integrity: sha512-oKWePCxqpd6FlLvGV1VU0x7bkPmmCNolxzjMf4NczoDnQcIWrAF+cPtZn5i6n+RfD2d9i0tzpKnG6Yk168yIyw==}
