@@ -18,6 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
+      # type checking requires build
+      - run: pnpm prepack
       - run: pnpm lint
 
   test:
