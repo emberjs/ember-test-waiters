@@ -34,13 +34,13 @@ interface ModeDef {
 }
 
 if (DEBUG) {
-  module('wait-for', function(hooks) {
-    hooks.afterEach(function() {
+  module('wait-for', function (hooks) {
+    hooks.afterEach(function () {
       _reset();
       resetError();
     });
     const generatorTestModules = [
-      (function() {
+      (function () {
         const EmberObjectThing = EmberObject.extend({
           doStuffTask: taskFn(
             waitFor(function* doTaskStuff(...args: any) {
@@ -108,7 +108,7 @@ if (DEBUG) {
 
     testModules.forEach(
       ({ name, waiterName, EmberObjectThing, NativeThing }) => {
-        module(name, function() {
+        module(name, function () {
           const invocationType = [
             {
               name: 'class function',
@@ -134,8 +134,8 @@ if (DEBUG) {
 
           invocationType.forEach(
             ({ name, createPromise, createThrowingPromise }: ModeDef) => {
-              module(name, function() {
-                test('waitFor wraps and registers a waiter', async function(assert) {
+              module(name, function () {
+                test('waitFor wraps and registers a waiter', async function (assert) {
                   overrideError(MockStableError);
 
                   const promise = createPromise();
@@ -162,14 +162,14 @@ if (DEBUG) {
                   });
                 });
 
-                test('waitFor handles arguments and return value', async function(assert) {
+                test('waitFor handles arguments and return value', async function (assert) {
                   overrideError(MockStableError);
 
                   const ret = await createPromise(1, 'foo');
                   assert.deepEqual(ret, ['foo', 1]);
                 });
 
-                test('waitFor transitions waiter to not pending even if promise throws when thenable wrapped', async function(assert) {
+                test('waitFor transitions waiter to not pending even if promise throws when thenable wrapped', async function (assert) {
                   const promise = createThrowingPromise();
 
                   try {
@@ -188,7 +188,7 @@ if (DEBUG) {
       },
     );
 
-    module('waitFor ember-concurrency interop', function() {
+    module('waitFor ember-concurrency interop', function () {
       class Deferred {
         promise: Promise<any>;
         resolve: Function = () => null;
@@ -266,7 +266,7 @@ if (DEBUG) {
         }
       }
 
-      test('tasks with multiple yields work', async function(assert) {
+      test('tasks with multiple yields work', async function (assert) {
         const thing = new NativeThing();
         const task = perform(thing.doStuffTask);
 
@@ -299,7 +299,7 @@ if (DEBUG) {
       ];
 
       cancellationCases.forEach(({ desc, taskName }) => {
-        test(`${desc} task cancellation works`, async function(assert) {
+        test(`${desc} task cancellation works`, async function (assert) {
           const thing = new NativeThing();
 
           const instance = perform(get(thing, taskName));
@@ -321,7 +321,7 @@ if (DEBUG) {
       });
     });
 
-    module('waitFor co interop', function() {
+    module('waitFor co interop', function () {
       function coDec(
         _target: object,
         _key: string,
@@ -395,7 +395,7 @@ if (DEBUG) {
         }
       }
 
-      test('it works', async function(assert) {
+      test('it works', async function (assert) {
         const thing = new NativeThing();
 
         thing.doStuffCo();
@@ -416,7 +416,7 @@ if (DEBUG) {
       });
     });
 
-    test('types', async function(assert) {
+    test('types', async function (assert) {
       assert.expect(0);
 
       async function asyncFn(a: string, b: string) {
