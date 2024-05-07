@@ -1,7 +1,7 @@
 import { DEBUG } from '@glimmer/env';
-import buildWaiter from './build-waiter';
+import buildWaiter from './build-waiter.ts';
 
-import { PromiseType, Thenable } from './types';
+import type { PromiseType, Thenable } from './types/index.ts';
 
 const PROMISE_WAITER = buildWaiter('@ember/test-waiters:promise-waiter');
 

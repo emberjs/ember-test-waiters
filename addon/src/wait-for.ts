@@ -1,7 +1,7 @@
 import { DEBUG } from '@glimmer/env';
-import waitForPromise from './wait-for-promise';
-import buildWaiter from './build-waiter';
-import { PromiseType } from './types';
+import waitForPromise from './wait-for-promise.ts';
+import buildWaiter from './build-waiter.ts';
+import type { PromiseType } from './types/index.ts';
 
 type AsyncFunction<A extends Array<any>, PromiseReturn> = (...args: A) => Promise<PromiseReturn>;
 type AsyncFunctionArguments = [AsyncFunction<any[], any>, string?];

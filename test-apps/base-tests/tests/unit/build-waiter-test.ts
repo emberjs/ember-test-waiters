@@ -13,7 +13,7 @@ import { module, test } from 'qunit';
 
 // @ts-ignore
 import { Promise } from 'rsvp';
-import Token from '@ember/test-waiters/token';
+import Token from '@ember/test-waiters/__private__/token';
 import { registerWarnHandler } from '@ember/debug';
 
 module('build-waiter', function (hooks) {

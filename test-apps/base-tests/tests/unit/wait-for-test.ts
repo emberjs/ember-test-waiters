@@ -15,7 +15,7 @@ import RSVP from 'rsvp';
 // @ember/test-waiters is still a v1 addon and is too weird
 // to have in-repo types working correctly.
 // @ts-ignore
-import { PromiseType, Thenable } from '@ember/test-waiters/types';
+import { PromiseType, Thenable } from '@ember/test-waiters/__private__/types';
 
 interface PromiseClassType<T> {
   new (resolve: (value: T) => T, ...args: any[]): PromiseType<T>;

@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - 'v*'
   pull_request:
   workflow_dispatch:
   schedule:
@@ -19,8 +18,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
       # type checking requires build
-      - run: pnpm prepack
-        working-directory: addon
+      - run: pnpm build
       - run: pnpm lint
 
   test:

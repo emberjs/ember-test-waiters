@@ -7,6 +7,7 @@
     "url": "git@github.com:emberjs/ember-test-waiters.git"
   },
   "scripts": {
+    "build": "pnpm --filter '@ember/test-waiters' build",
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix",
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
@@ -15,8 +16,11 @@
     "test": "pnpm --filter '*' test"
   },
   "devDependencies": {
+    "@glint/core": "^1.4.0",
     "concurrently": "^8.2.1",
-    "release-plan": "^0.8.0"
+    "prettier": "^3.2.5",
+    "release-plan": "^0.8.0",
+    "typescript": "~5.0.0"
   },
   "pnpm": {
     "overrides_notes": {
