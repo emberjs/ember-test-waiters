@@ -1,6 +1,8 @@
 {
   "extends": "@tsconfig/ember/tsconfig.json",
   "compilerOptions": {
+    // have to skipLibCheck becauseu ember-concurrency has the wrong types for ComputedProperty
+    "skipLibCheck": true,
     // The combination of `baseUrl` with `paths` allows Ember's classic package
     // layout, which is not resolvable with the Node resolution algorithm, to
     // work with TypeScript.
