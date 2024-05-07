@@ -8,7 +8,7 @@ module('ember-fetch@8', function (hooks) {
   setupTest(hooks);
 
   test('it waits for the fetch to be done', async function (assert) {
-    const promise = fetch('test-file.json');
+    const promise = fetch('/test-file.json');
 
     assert.strictEqual(promise._state, undefined);
     assert.strictEqual(promise._result, undefined);
