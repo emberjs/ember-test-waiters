@@ -22,6 +22,7 @@
       "@glimmer/*": "https://github.com/glimmerjs/glimmer.js/issues/413"
     },
     "overrides": {
+      "@ember/test-waiters": "workspace:*",
       "@glimmer/validator": ">= 0.86.0",
       "@glimmer/manager": ">= 0.86.0",
       "@glimmer/runtime": ">= 0.86.0",
