@@ -326,184 +326,6 @@ importers:
         specifier: ^5.88.2
         version: 5.88.2
 
-  test-apps/ember-concurrency-v2:
-    dependencies:
-      '@ember/test-waiters':
-        specifier: workspace:*
-        version: link:../../addon
-    devDependencies:
-      '@babel/core':
-        specifier: ^7.24.5
-        version: 7.24.5(supports-color@8.1.1)
-      '@ember/optional-features':
-        specifier: ^2.0.0
-        version: 2.0.0
-      '@ember/string':
-        specifier: ^3.1.1
-        version: 3.1.1
-      '@ember/test-helpers':
-        specifier: ^3.2.0
-        version: 3.2.0(@glint/template@1.2.1)(ember-source@5.3.0)(webpack@5.88.2)
-      '@glimmer/component':
-        specifier: ^1.1.2
-        version: 1.1.2(@babel/core@7.24.5)
-      '@glimmer/env':
-        specifier: ^0.1.7
-        version: 0.1.7
-      '@glimmer/tracking':
-        specifier: ^1.1.2
-        version: 1.1.2
-      '@glint/environment-ember-loose':
-        specifier: ^1.1.0
-        version: 1.2.1(@glimmer/component@1.1.2)(@glint/template@1.2.1)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.1.0)
-      '@glint/template':
-        specifier: ^1.1.0
-        version: 1.2.1
-      '@tsconfig/ember':
-        specifier: ^3.0.6
-        version: 3.0.6
-      '@types/qunit':
-        specifier: ^2.19.9
-        version: 2.19.9
-      '@types/rsvp':
-        specifier: ^4.0.4
-        version: 4.0.4
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^6.7.2
-        version: 6.9.0(@typescript-eslint/parser@6.9.0)(eslint@8.52.0)(typescript@5.0.4)
-      '@typescript-eslint/parser':
-        specifier: ^6.7.2
-        version: 6.9.0(eslint@8.52.0)(typescript@5.0.4)
-      broccoli-asset-rev:
-        specifier: ^3.0.0
-        version: 3.0.0
-      co:
-        specifier: ^4.6.0
-        version: 4.6.0
-      concurrently:
-        specifier: ^8.2.1
-        version: 8.2.1
-      ember-auto-import:
-        specifier: ^2.7.2
-        version: 2.7.2(@glint/template@1.2.1)(webpack@5.88.2)
-      ember-cli:
-        specifier: ~5.3.0
-        version: 5.3.0
-      ember-cli-app-version:
-        specifier: ^6.0.1
-        version: 6.0.1(ember-source@5.3.0)
-      ember-cli-babel:
-        specifier: ^8.0.0
-        version: 8.2.0(@babel/core@7.24.5)
-      ember-cli-clean-css:
-        specifier: ^3.0.0
-        version: 3.0.0
-      ember-cli-dependency-checker:
-        specifier: ^3.3.2
-        version: 3.3.2(ember-cli@5.3.0)
-      ember-cli-htmlbars:
-        specifier: ^6.3.0
-        version: 6.3.0
-      ember-cli-inject-live-reload:
-        specifier: ^2.1.0
-        version: 2.1.0
-      ember-cli-sri:
-        specifier: ^2.1.1
-        version: 2.1.1
-      ember-cli-terser:
-        specifier: ^4.0.2
-        version: 4.0.2
-      ember-concurrency:
-        specifier: ^2.1.2
-        version: 2.3.7(@babel/core@7.24.5)
-      ember-concurrency-decorators:
-        specifier: ^2.0.3
-        version: 2.0.3(@babel/core@7.24.5)
-      ember-concurrency-ts:
-        specifier: ^0.3.1
-        version: 0.3.1(ember-concurrency@2.3.7)
-      ember-fetch:
-        specifier: ^8.1.2
-        version: 8.1.2
-      ember-load-initializers:
-        specifier: ^2.1.2
-        version: 2.1.2(@babel/core@7.24.5)
-      ember-modifier:
-        specifier: ^4.1.0
-        version: 4.1.0(ember-source@5.3.0)
-      ember-page-title:
-        specifier: ^8.0.0
-        version: 8.0.0
-      ember-qunit:
-        specifier: ^8.0.2
-        version: 8.0.2(@ember/test-helpers@3.2.0)(@glint/template@1.2.1)(ember-source@5.3.0)(qunit@2.20.0)
-      ember-resolver:
-        specifier: ^11.0.1
-        version: 11.0.1(ember-source@5.3.0)
-      ember-source:
-        specifier: ~5.3.0
-        version: 5.3.0(@babel/core@7.24.5)(@glimmer/component@1.1.2)(@glint/template@1.2.1)(rsvp@4.8.5)(webpack@5.88.2)
-      ember-source-channel-url:
-        specifier: ^3.0.0
-        version: 3.0.0
-      ember-template-lint:
-        specifier: ^5.11.2
-        version: 5.11.2
-      ember-try:
-        specifier: ^3.0.0
-        version: 3.0.0
-      ember-welcome-page:
-        specifier: ^7.0.2
-        version: 7.0.2
-      eslint:
-        specifier: ^8.49.0
-        version: 8.52.0
-      eslint-config-prettier:
-        specifier: ^9.0.0
-        version: 9.0.0(eslint@8.52.0)
-      eslint-plugin-ember:
-        specifier: ^11.11.1
-        version: 11.11.1(eslint@8.52.0)
-      eslint-plugin-n:
-        specifier: ^16.1.0
-        version: 16.2.0(eslint@8.52.0)
-      eslint-plugin-prettier:
-        specifier: ^5.0.0
-        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.52.0)(prettier@3.0.3)
-      eslint-plugin-qunit:
-        specifier: ^8.0.0
-        version: 8.0.1(eslint@8.52.0)
-      loader.js:
-        specifier: ^4.7.0
-        version: 4.7.0
-      prettier:
-        specifier: ^3.0.3
-        version: 3.0.3
-      qunit:
-        specifier: ^2.20.0
-        version: 2.20.0
-      qunit-dom:
-        specifier: ^3.0.0
-        version: 3.0.0
-      stylelint:
-        specifier: ^15.10.3
-        version: 15.11.0(typescript@5.0.4)
-      stylelint-config-standard:
-        specifier: ^34.0.0
-        version: 34.0.0(stylelint@15.11.0)
-      stylelint-prettier:
-        specifier: ^4.0.2
-        version: 4.0.2(prettier@3.0.3)(stylelint@15.11.0)
-      tracked-built-ins:
-        specifier: ^3.2.0
-        version: 3.3.0
-      typescript:
-        specifier: ~5.0.0
-        version: 5.0.4
-      webpack:
-        specifier: ^5.88.2
-        version: 5.88.2
-
   test-apps/ember-fetch-v8:
     devDependencies:
       '@babel/core':
@@ -9622,8 +9444,8 @@ packages:
     resolution: {integrity: sha512-sz6sTIXN/CuLb5wdpauFa+rWXuvXXSnSHS4kuNzU5GSMDX1pLBWSuovoUk61FUe6CYRqBmT1/UushObwBGickQ==}
     engines: {node: 10.* || 12.* || 14.* || >= 16}
     dependencies:
-      '@babel/helper-plugin-utils': 7.22.5
-      '@babel/types': 7.23.5
+      '@babel/helper-plugin-utils': 7.24.5
+      '@babel/types': 7.24.5
       '@glimmer/tracking': 1.1.2
       ember-cli-babel: 7.26.11
       ember-cli-babel-plugin-helpers: 1.1.1
@@ -9653,7 +9475,7 @@ packages:
     dependencies:
       ember-cli-babel: 7.26.11
       ember-cli-version-checker: 5.1.2
-      ember-compatibility-helpers: 1.2.6(@babel/core@7.24.5)
+      ember-compatibility-helpers: 1.2.7(@babel/core@7.24.5)
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
