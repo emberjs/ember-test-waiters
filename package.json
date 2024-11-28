@@ -29,8 +29,9 @@
       "@glimmer/syntax": ">= 0.86.0"
     }
   },
+  "packageManager": "pnpm@9.14.2",
   "volta": {
-    "node": "18.16.0",
-    "pnpm": "8.7.6"
+    "node": "22.10.0",
+    "pnpm": "9.14.2"
   }
 }
