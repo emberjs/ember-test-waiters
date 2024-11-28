@@ -79,12 +79,16 @@ export default ts.config(
     },
   },
   {
-    files: ['**/*.{ts,gts}'],
+    files: ['**/*!(.d).{ts,gts}'],
     languageOptions: {
       parser: ember.parser,
       parserOptions: parserOptions.esm.ts,
     },
-    extends: [...ts.configs.recommendedTypeChecked, ember.configs.gts],
+    extends: [
+      // Disabled until we're v2
+      // ...ts.configs.recommendedTypeChecked,
+      ember.configs.gts,
+    ],
     rules: {
       'ember/no-classic-classes': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
@@ -151,6 +155,14 @@ export default ts.config(
       globals: {
         ...globals.node,
       },
+    },
+  },
+  {
+    // Remove this after v2
+    rules: {
+      'no-unused-vars': 'off',
+      'no-redeclare': 'off',
+      'no-undef': 'off',
     },
   }
 );
