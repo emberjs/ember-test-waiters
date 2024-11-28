@@ -85,6 +85,22 @@ export default ts.config(
       parserOptions: parserOptions.esm.ts,
     },
     extends: [...ts.configs.recommendedTypeChecked, ember.configs.gts],
+    rules: {
+      'ember/no-classic-classes': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off',
+      '@typescript-eslint/no-unsafe-function-type': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/require-await': 'off',
+      '@typescript-eslint/no-implied-eval': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-redundant-type-constituents': 'off',
+    },
   },
   {
     files: ['tests/**/*-test.{js,gjs,ts,gts}'],
@@ -97,6 +113,7 @@ export default ts.config(
    */
   {
     files: [
+      'index.js',
       '**/*.cjs',
       'config/**/*.js',
       'testem.js',

@@ -26,7 +26,6 @@ function indexable<T extends object>(input: T): T & Indexable {
 }
 
 function getGlobal(): Indexable {
-  // eslint-disable-next-line node/no-unsupported-features/es-builtins
   if (typeof globalThis !== 'undefined') return indexable(globalThis);
   if (typeof self !== 'undefined') return indexable(self);
   if (typeof window !== 'undefined') return indexable(window);
