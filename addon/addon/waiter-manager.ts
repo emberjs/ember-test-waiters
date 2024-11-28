@@ -8,10 +8,10 @@ type Indexable = Record<any, unknown>;
 const WAITERS: Map<WaiterName, Waiter> = (function () {
   const HAS_SYMBOL = typeof Symbol !== 'undefined';
 
-  let symbolName = 'TEST_WAITERS';
-  let symbol = HAS_SYMBOL ? (Symbol.for(symbolName) as any) : symbolName;
+  const symbolName = 'TEST_WAITERS';
+  const symbol = HAS_SYMBOL ? (Symbol.for(symbolName) as any) : symbolName;
 
-  let global = getGlobal();
+  const global = getGlobal();
 
   let waiters = global[symbol];
   if (waiters === undefined) {
@@ -26,7 +26,6 @@ function indexable<T extends object>(input: T): T & Indexable {
 }
 
 function getGlobal(): Indexable {
-  // eslint-disable-next-line node/no-unsupported-features/es-builtins
   if (typeof globalThis !== 'undefined') return indexable(globalThis);
   if (typeof self !== 'undefined') return indexable(self);
   if (typeof window !== 'undefined') return indexable(window);
@@ -61,7 +60,7 @@ export function unregister(waiter: Waiter): void {
  * @returns {Waiter[]}
  */
 export function getWaiters(): Waiter[] {
-  let result: Waiter[] = [];
+  const result: Waiter[] = [];
 
   WAITERS.forEach((value) => {
     result.push(value);
@@ -76,7 +75,7 @@ export function getWaiters(): Waiter[] {
  * @private
  */
 export function _reset(): void {
-  for (let waiter of getWaiters()) {
+  for (const waiter of getWaiters()) {
     (waiter as any).isRegistered = false;
   }
 
@@ -92,7 +91,7 @@ export function _reset(): void {
  * and their debug info.
  */
 export function getPendingWaiterState(): PendingWaiterState {
-  let result: PendingWaiterState = {
+  const result: PendingWaiterState = {
     pending: 0,
     waiters: {},
   };
@@ -101,7 +100,7 @@ export function getPendingWaiterState(): PendingWaiterState {
     if (!waiter.waitUntil()) {
       result.pending++;
 
-      let debugInfo = waiter.debugInfo();
+      const debugInfo = waiter.debugInfo();
       result.waiters[waiter.name] = debugInfo || true;
     }
   });
@@ -115,7 +114,7 @@ export function getPendingWaiterState(): PendingWaiterState {
  * @returns {boolean} `true` if there are pending waiters, otherwise `false`.
  */
 export function hasPendingWaiters(): boolean {
-  let state = getPendingWaiterState();
+  const state = getPendingWaiterState();
 
   return state.pending > 0;
 }
