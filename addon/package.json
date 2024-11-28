@@ -74,7 +74,7 @@
     "qunit": "^2.20.0",
     "typescript": "~5.0.0",
     "typescript-eslint": "^8.16.0",
-    "webpack": "^5.0.0"
+    "webpack": "^5.96.1"
   },
   "engines": {
     "node": "10.* || 12.* || >= 14.*"
