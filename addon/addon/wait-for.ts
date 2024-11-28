@@ -48,32 +48,6 @@ type DecoratorArguments = [object, string, PropertyDescriptor, string?];
  *   }
  * }
  *
- * @example
- *
- * import Component from '@ember/component';
- * import { task } from 'ember-concurrency';
- * import { waitFor } from '@ember/test-waiters';
- *
- * export default Component.extend({
- *   doTaskStuff: task(waitFor(function* doTaskStuff() {
- *     yield somethingAsync();
- *   }
- * });
- *
- * @example
- *
- * import Component from '@ember/component';
- * import { task } from 'ember-concurrency-decorators';
- * import { waitFor } from '@ember/test-waiters';
- *
- * export default class Friendz extends Component {
- *   @task
- *   @waitFor
- *   *doTaskStuff() {
- *     yield somethingAsync();
- *   }
- * }
- *
  */
 export default function waitFor<A extends Array<any>, PromiseReturn>(
   fn: AsyncFunction<A, PromiseReturn>,
