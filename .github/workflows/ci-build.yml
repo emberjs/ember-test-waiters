@@ -86,10 +86,6 @@ jobs:
         run: 'pnpm add --save-dev ${{ matrix.typescript-scenario}}'
         working-directory: ./test-apps/base-tests/
 
-      - name: 'Change ember-concurrency TS to ${{ matrix.typescript-scenario }}'
-        run: 'pnpm add --save-dev ${{ matrix.typescript-scenario}}'
-        working-directory: ./test-apps/ember-concurrency-v2
-
       - name: 'Change ember-fetch TS to ${{ matrix.typescript-scenario }}'
         run: 'pnpm add --save-dev ${{ matrix.typescript-scenario}}'
         working-directory: ./test-apps/ember-fetch-v8
@@ -110,7 +106,6 @@ jobs:
       matrix:
         app: 
           - test-apps/base-tests
-          - test-apps/ember-concurrency-v2
         ember-try-scenario:
           - ember-lts-3.16
           - ember-lts-3.20
