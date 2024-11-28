@@ -1,5 +1,4 @@
 /* eslint-disable no-global-assign */
-/* eslint-disable no-unused-vars */
 
 const ERROR = Error;
 

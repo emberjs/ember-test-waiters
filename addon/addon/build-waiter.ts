@@ -38,7 +38,7 @@ class TestWaiterImpl<T extends object | Primitive = Token> implements TestWaiter
       throw new Error(`beginAsync called for ${token as string} but it is already pending.`);
     }
 
-    let error = new Error();
+    const error = new Error();
 
     this.items.set(token, {
       get stack() {
@@ -71,7 +71,7 @@ class TestWaiterImpl<T extends object | Primitive = Token> implements TestWaiter
   }
 
   debugInfo(): TestWaiterDebugInfo[] {
-    let result: TestWaiterDebugInfo[] = [];
+    const result: TestWaiterDebugInfo[] = [];
 
     this.items.forEach((value) => {
       result.push(value);
@@ -92,11 +92,11 @@ class TestWaiterImpl<T extends object | Primitive = Token> implements TestWaiter
   }
 
   private _getCompletedOperations(token: T) {
-    let type = typeof token;
+    const type = typeof token;
 
-    let isFunction = type === 'function';
-    let isObject = token !== null && type === 'object';
-    let isPrimitive = !isFunction && !isObject;
+    const isFunction = type === 'function';
+    const isObject = token !== null && type === 'object';
+    const isPrimitive = !isFunction && !isObject;
 
     return isPrimitive ? this.completedOperationsForPrimitives : this.completedOperationsForTokens;
   }

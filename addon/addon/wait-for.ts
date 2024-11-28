@@ -66,20 +66,20 @@ export default function waitFor(
 export default function waitFor(
   ...args: AsyncFunctionArguments | CoroutineFunctionArguments | DecoratorArguments
 ): PropertyDescriptor | Function | CoroutineFunction<any[], any> {
-  let isFunction = args.length < 3;
+  const isFunction = args.length < 3;
 
   if (isFunction) {
-    let [fn, label] = args as AsyncFunctionArguments | CoroutineFunctionArguments;
+    const [fn, label] = args as AsyncFunctionArguments | CoroutineFunctionArguments;
 
     return wrapFunction(fn, label);
   } else {
-    let [, , descriptor, label] = args as DecoratorArguments;
+    const [, , descriptor, label] = args as DecoratorArguments;
 
     if (!DEBUG) {
       return descriptor;
     }
 
-    let fn = descriptor.value;
+    const fn = descriptor.value;
 
     descriptor.value = wrapFunction(fn, label);
 
@@ -93,7 +93,7 @@ function wrapFunction(fn: Function, label?: string) {
   }
 
   return function (this: any, ...args: any[]) {
-    let result = fn.call(this, ...args);
+    const result = fn.call(this, ...args);
 
     if (isThenable(result)) {
       return waitForPromise(result, label);
@@ -108,7 +108,7 @@ function wrapFunction(fn: Function, label?: string) {
 function isThenable(
   maybePromise: any | PromiseType<unknown>
 ): maybePromise is PromiseType<unknown> {
-  let type = typeof maybePromise;
+  const type = typeof maybePromise;
 
   return (
     ((maybePromise !== null && type === 'object') || type === 'function') &&
@@ -147,7 +147,7 @@ function waitForGenerator<T>(
     next(...args) {
       let hasErrored = true;
       try {
-        let val = generator.next(...args);
+        const val = generator.next(...args);
         hasErrored = false;
 
         if (val.done) {
