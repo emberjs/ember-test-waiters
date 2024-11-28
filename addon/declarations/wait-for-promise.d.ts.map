@@ -1,1 +1,0 @@
-{"version":3,"file":"wait-for-promise.d.ts","sourceRoot":"","sources":["../src/wait-for-promise.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAE,WAAW,EAAY,MAAM,kBAAkB,CAAC;AAI9D;;;;;;;;;;;;;;;;;;;;GAoBG;AACH,MAAM,CAAC,OAAO,UAAU,cAAc,CAAC,CAAC,EAAE,aAAa,SAAS,WAAW,CAAC,CAAC,CAAC,EAC5E,OAAO,EAAE,aAAa,EACtB,KAAK,CAAC,EAAE,MAAM,GACb,aAAa,CAmBf"}
