@@ -16,22 +16,22 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.1",
-    "release-plan": "^0.8.0"
-  },
-  "pnpm": {
-    "overrides_notes": {
-      "@glimmer/*": "https://github.com/glimmerjs/glimmer.js/issues/413"
-    },
-    "overrides": {
-      "@glimmer/validator": ">= 0.86.0",
-      "@glimmer/manager": ">= 0.86.0",
-      "@glimmer/runtime": ">= 0.86.0",
-      "@glimmer/syntax": ">= 0.86.0"
-    }
+    "release-plan": "^0.11.0"
   },
   "packageManager": "pnpm@9.14.2",
   "volta": {
     "node": "22.10.0",
     "pnpm": "9.14.2"
+  },
+  "pnpm": {
+    "overrides": {
+      "@glimmer/manager": ">= 0.86.0",
+      "@glimmer/runtime": ">= 0.86.0",
+      "@glimmer/syntax": ">= 0.86.0",
+      "@glimmer/validator": ">= 0.86.0"
+    },
+    "overrides_notes": {
+      "@glimmer/*": "https://github.com/glimmerjs/glimmer.js/issues/413"
+    }
   }
 }
