@@ -1,4 +1,4 @@
-import { DEBUG } from '@glimmer/env';
+import { macroCondition, isDevelopingApp } from '@embroider/macros';
 import waitForPromise from './wait-for-promise';
 import buildWaiter from './build-waiter';
 import { PromiseType } from './types';
@@ -75,7 +75,7 @@ export default function waitFor(
   } else {
     const [, , descriptor, label] = args as DecoratorArguments;
 
-    if (!DEBUG) {
+    if (macroCondition(!isDevelopingApp())) {
       return descriptor;
     }
 
@@ -88,7 +88,7 @@ export default function waitFor(
 }
 
 function wrapFunction(fn: Function, label?: string) {
-  if (!DEBUG) {
+  if (macroCondition(!isDevelopingApp())) {
     return fn;
   }
 

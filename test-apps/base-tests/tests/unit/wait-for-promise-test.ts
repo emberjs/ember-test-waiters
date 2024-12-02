@@ -9,10 +9,10 @@ import {
 } from '@ember/test-waiters';
 import { module, test } from 'qunit';
 
-import { DEBUG } from '@glimmer/env';
+import { macroCondition, isDevelopingApp } from '@embroider/macros';
 import RSVP from 'rsvp';
 
-if (DEBUG) {
+if (macroCondition(isDevelopingApp())) {
   module('wait-for-promise', function (hooks) {
     hooks.afterEach(function () {
       _reset();

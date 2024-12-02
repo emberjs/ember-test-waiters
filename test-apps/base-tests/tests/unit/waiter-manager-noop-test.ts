@@ -1,15 +1,15 @@
 import { _reset, buildWaiter, getWaiters, register } from '@ember/test-waiters';
 import { module, test } from 'qunit';
 
-import { DEBUG } from '@glimmer/env';
+import { macroCondition, isDevelopingApp } from '@embroider/macros';
 
-if (!DEBUG) {
-  module('waiter-manager-noop | DEBUG: false', function (hooks) {
+if (macroCondition(!isDevelopingApp())) {
+  module('waiter-manager-noop | isDevelopingApp(): false', function (hooks) {
     hooks.afterEach(function () {
       _reset();
     });
 
-    test('buildWaiter returns NoopTestWaiter DEBUG: false', function (assert) {
+    test('buildWaiter returns NoopTestWaiter isDevelopingApp(): false', function (assert) {
       const waiter = buildWaiter('first');
 
       assert.equal(

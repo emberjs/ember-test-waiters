@@ -9,7 +9,7 @@ import { _reset, getPendingWaiterState, waitFor } from '@ember/test-waiters';
 import { module, test } from 'qunit';
 
 import EmberObject from '@ember/object';
-import { DEBUG } from '@glimmer/env';
+import { macroCondition, isDevelopingApp } from '@embroider/macros';
 import RSVP from 'rsvp';
 
 // @ember/test-waiters is still a v1 addon and is too weird
@@ -32,7 +32,7 @@ interface ModeDef {
   createThrowingPromise: Function;
 }
 
-if (DEBUG) {
+if (macroCondition(isDevelopingApp())) {
   module('wait-for', function (hooks) {
     hooks.afterEach(function () {
       _reset();
