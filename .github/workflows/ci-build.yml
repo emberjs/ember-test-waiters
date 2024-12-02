@@ -32,6 +32,17 @@ jobs:
       - run: pnpm test:ember
         working-directory: test-apps/base-tests
 
+  test_ember-fetch:
+    timeout-minutes: 10
+    name: "Tests (ember-fetch @ v8)"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: wyvox/action-setup-pnpm@v3
+      - run: pnpm test:ember
+        working-directory: test-apps/ember-fetch-v8
+
   floating-dependencies:
     timeout-minutes: 10
     name: "Floating Dependencies"
