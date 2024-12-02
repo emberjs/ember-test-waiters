@@ -8,7 +8,7 @@ const CLASSIC_ONLY = new Set([
   'ember-lts-3.24',
 ]);
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   const app = new EmberApp(defaults, {
     'ember-cli-babel': { enableTypeScriptTransform: true },
     autoImport: {
