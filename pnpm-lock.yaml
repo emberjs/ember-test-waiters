@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@ember/test-waiters': workspace:*
+
 importers:
 
   .:
