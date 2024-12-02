@@ -1,4 +1,4 @@
-import { DEBUG } from '@glimmer/env';
+import { macroCondition, isDevelopingApp } from '@embroider/macros';
 import buildWaiter from './build-waiter';
 
 import { PromiseType, Thenable } from './types';
@@ -32,7 +32,7 @@ export default function waitForPromise<T, KindOfPromise extends PromiseType<T>>(
 ): KindOfPromise {
   let result = promise;
 
-  if (DEBUG) {
+  if (macroCondition(isDevelopingApp())) {
     PROMISE_WAITER.beginAsync(promise, label);
 
     result = (promise as unknown as Thenable<T, KindOfPromise>).then(

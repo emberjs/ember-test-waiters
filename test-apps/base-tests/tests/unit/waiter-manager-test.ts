@@ -20,11 +20,11 @@ import {
 } from '@ember/test-waiters';
 import { module, test } from 'qunit';
 
-import { DEBUG } from '@glimmer/env';
+import { macroCondition, isDevelopingApp } from '@embroider/macros';
 import { registerWarnHandler } from '@ember/debug';
 
-if (DEBUG) {
-  module('waiter-manager | DEBUG: true', function (hooks) {
+if (macroCondition(isDevelopingApp())) {
+  module('waiter-manager | isDevelopingApp(): true', function (hooks) {
     hooks.afterEach(function () {
       _reset();
       _resetWaiterNames();
