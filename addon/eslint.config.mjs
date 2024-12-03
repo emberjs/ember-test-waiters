@@ -30,10 +30,6 @@ const parserOptions = {
     js: {
       ecmaFeatures: { modules: true },
       ecmaVersion: 'latest',
-      requireConfigFile: false,
-      babelOptions: {
-        plugins: [['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }]],
-      },
     },
     ts: {
       projectService: true,
@@ -53,7 +49,7 @@ export default ts.config(
    * https://eslint.org/docs/latest/use/configure/ignore
    */
   {
-    ignores: ['dist/', 'node_modules/', 'coverage/', '!**/.*'],
+    ignores: ['dist/', 'declarations/', 'node_modules/', 'coverage/', '!**/.*'],
   },
   /**
    * https://eslint.org/docs/latest/use/configure/configuration-files#configuring-linter-options
@@ -84,11 +80,7 @@ export default ts.config(
       parser: ember.parser,
       parserOptions: parserOptions.esm.ts,
     },
-    extends: [
-      // Disabled until we're v2
-      // ...ts.configs.recommendedTypeChecked,
-      ember.configs.gts,
-    ],
+    extends: [...ts.configs.recommendedTypeChecked, ember.configs.gts],
     rules: {
       'ember/no-classic-classes': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
@@ -155,14 +147,6 @@ export default ts.config(
       globals: {
         ...globals.node,
       },
-    },
-  },
-  {
-    // Remove this after v2
-    rules: {
-      'no-unused-vars': 'off',
-      'no-redeclare': 'off',
-      'no-undef': 'off',
     },
   }
 );

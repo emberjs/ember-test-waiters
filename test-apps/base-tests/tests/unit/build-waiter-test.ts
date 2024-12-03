@@ -13,7 +13,7 @@ import { module, test } from 'qunit';
 
 // @ts-ignore
 import { Promise } from 'rsvp';
-import Token from '@ember/test-waiters/token';
+import Token from '@ember/test-waiters/__private__/token';
 import { registerWarnHandler } from '@ember/debug';
 
 module('build-waiter', function (hooks) {
@@ -235,7 +235,7 @@ module('build-waiter', function (hooks) {
       return result;
     }
 
-    let promise: Promise<{}> = new Promise((resolve) => {
+    let promise: Promise<unknown> = new Promise((resolve) => {
       assert.step('Promise resolving');
       resolve();
     });
