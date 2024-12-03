@@ -100,8 +100,7 @@ jobs:
         app: 
           - test-apps/base-tests
         ember-try-scenario:
-          - ember-lts-3.16
-          - ember-lts-3.28
+          - ember-4.0
           - ember-lts-4.12
           - ember-lts-5.12
           - ember-release
