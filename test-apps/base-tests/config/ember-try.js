@@ -12,7 +12,7 @@ module.exports = async function () {
           devDependencies: {
             'ember-source': '~3.16.0',
             '@ember/string': '^3.0.0',
-            '@ember/test-helpers': '^2.9.3',
+            '@ember/test-helpers': '^3.0.0',
             '@glimmer/component': '^1.0.0',
             'ember-cli': '~3.28.0',
             'ember-cli-app-version': '^5.0.0',
@@ -27,7 +27,7 @@ module.exports = async function () {
           devDependencies: {
             'ember-source': '~3.28.11',
             '@ember/string': '^3.0.0',
-            '@ember/test-helpers': '^2.9.3',
+            '@ember/test-helpers': '^3.0.0',
             '@glimmer/component': '^1.0.0',
             'ember-cli': '~3.28.0',
             'ember-qunit': '^6.0.0',
