@@ -59,7 +59,7 @@ if (macroCondition(isDevelopingApp())) {
 
         try {
           await waitForPromise(promise).then();
-        } catch (e) {
+        } catch {
           assert.deepEqual(getPendingWaiterState(), {
             pending: 0,
             waiters: {},
@@ -74,7 +74,7 @@ if (macroCondition(isDevelopingApp())) {
 
         try {
           await waitForPromise(promise.then());
-        } catch (e) {
+        } catch {
           assert.deepEqual(getPendingWaiterState(), {
             pending: 0,
             waiters: {},
@@ -125,7 +125,7 @@ if (macroCondition(isDevelopingApp())) {
 
         try {
           await waitForPromise(promise).then();
-        } catch (e) {
+        } catch {
           assert.deepEqual(getPendingWaiterState(), {
             pending: 0,
             waiters: {},
@@ -140,7 +140,7 @@ if (macroCondition(isDevelopingApp())) {
 
         try {
           await waitForPromise(promise.then());
-        } catch (e) {
+        } catch {
           assert.deepEqual(getPendingWaiterState(), {
             pending: 0,
             waiters: {},

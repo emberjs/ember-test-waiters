@@ -15,7 +15,7 @@ import RSVP from 'rsvp';
 // @ember/test-waiters is still a v1 addon and is too weird
 // to have in-repo types working correctly.
 // @ts-ignore
-import { PromiseType, Thenable } from '@ember/test-waiters/types';
+import { PromiseType, Thenable } from '@ember/test-waiters/__private__/types';
 
 interface PromiseClassType<T> {
   new (resolve: (value: T) => T, ...args: any[]): PromiseType<T>;
@@ -159,7 +159,7 @@ if (macroCondition(isDevelopingApp())) {
 
                   try {
                     await promise;
-                  } catch (e) {
+                  } catch {
                     assert.deepEqual(getPendingWaiterState(), {
                       pending: 0,
                       waiters: {},
@@ -195,6 +195,7 @@ if (macroCondition(isDevelopingApp())) {
       genNoop(waitFor(genFn));
 
       // @ts-expect-error wrong argument types
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       waitFor(asyncFn)(1, 2);
       // @ts-expect-error wrong argument types
       waitFor(genFn)(1, 2);
