@@ -1,5 +1,10 @@
 # Changelog
 
+
+
+
+
+
 ## Release (2024-12-05)
 
 @ember/test-waiters 4.0.0 (major)
