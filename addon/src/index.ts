@@ -20,3 +20,4 @@ export {
 export { default as buildWaiter, _resetWaiterNames } from './build-waiter.ts';
 export { default as waitForPromise } from './wait-for-promise.ts';
 export { default as waitFor } from './wait-for.ts';
+export { waitForFetch } from './wait-for-fetch.ts';
