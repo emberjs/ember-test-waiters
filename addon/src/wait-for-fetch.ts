@@ -1,10 +1,7 @@
 import { default as waitForPromise } from './wait-for-promise';
 
 export async function waitForFetch(fetchPromise: ReturnType<typeof fetch>) {
-  // eslint-disable-next-line @typescript-eslint/no-floating-promises
-  waitForPromise(fetchPromise);
-
-  const response = await fetchPromise;
+  const response = await waitForPromise(fetchPromise);
 
   return new Proxy(response, {
     get(target, prop, receiver) {
