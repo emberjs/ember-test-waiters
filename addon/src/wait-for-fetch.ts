@@ -12,7 +12,7 @@ export async function waitForFetch(fetchPromise: ReturnType<typeof fetch>) {
 
       if (
         typeof prop === 'string' &&
-        ['json', 'text', 'arrayBuffer', 'blob', 'formData'].includes(prop)
+        ['json', 'text', 'arrayBuffer', 'blob', 'formData', 'bytes'].includes(prop)
       ) {
         return (...args: unknown[]) => {
           const parsePromise = original.call(target, ...args);
