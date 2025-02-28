@@ -1,4 +1,4 @@
-import { default as waitForPromise } from './wait-for-promise';
+import { default as waitForPromise } from './wait-for-promise.ts';
 
 export async function waitForFetch(fetchPromise: ReturnType<typeof fetch>) {
   const response = await waitForPromise(fetchPromise);
