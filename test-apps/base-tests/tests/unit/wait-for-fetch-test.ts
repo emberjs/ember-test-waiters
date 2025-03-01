@@ -15,14 +15,17 @@ function stepPromise<T>(assert: Assert, label: string, promise: Promise<T>) {
 }
 
 function fetchLike(assert: Assert) {
-  let handlers = {};
-  let promise = new Promise((resolve, reject) => {
+  const handlers = {} as {
+    resolve: <T>(r: T) => unknown;
+    reject: (e: unknown) => unknown;
+  };
+  const original = new Promise((resolve, reject) => {
     assert.step('fetch:start');
     handlers.resolve = resolve;
     handlers.reject = reject;
   });
 
-  stepPromise(assert, 'fetch', promise);
+  const promise = stepPromise(assert, 'fetch', original);
 
   return {
     promise,
@@ -47,14 +50,13 @@ function proxiedResponse(assert: Assert, response) {
         )
       ) {
         return (...args: unknown[]) => {
-          let label = `response:${prop}`;
+          const label = `response:${prop}`;
           // not part of waiting, but this tells us
           // we proxied correctly
           assert.step(label);
-          let promise = original.call(target, ...args);
+          const promise = original.call(target, ...args);
 
-          stepPromise(assert, label, promise);
-          return promise;
+          return stepPromise(assert, label, promise);
         };
       }
 
@@ -63,7 +65,7 @@ function proxiedResponse(assert: Assert, response) {
   });
 }
 function expectWaiters(assert: Assert, expected: number) {
-  let result = getPendingWaiterState().pending;
+  const result = getPendingWaiterState().pending;
   assert.strictEqual(
     result,
     expected,
@@ -73,10 +75,10 @@ function expectWaiters(assert: Assert, expected: number) {
 
 module('waitForFetch', function () {
   test('empty response', async function (assert) {
-    let f = fetchLike(assert);
+    const f = fetchLike(assert);
 
     expectWaiters(assert, 0);
-    waitForFetch(f.promise);
+    void waitForFetch(f.promise);
 
     assert.verifySteps(['fetch:start']);
     expectWaiters(assert, 1);
@@ -92,10 +94,10 @@ module('waitForFetch', function () {
   });
 
   test('text response', async function (assert) {
-    let f = fetchLike(assert);
+    const f = fetchLike(assert);
 
     expectWaiters(assert, 0);
-    waitForFetch(f.promise);
+    void waitForFetch(f.promise);
 
     assert.verifySteps(['fetch:start']);
     expectWaiters(assert, 1);
@@ -105,17 +107,17 @@ module('waitForFetch', function () {
     await settled();
     assert.verifySteps(['fetch:then']);
 
-    let p = (await f.promise).text();
+    const p = (await f.promise).text();
 
     assert.verifySteps(['response:text']);
     expectWaiters(assert, 1);
 
     await settled();
     expectWaiters(assert, 0);
-    assert.verifySteps([]);
+    assert.verifySteps(['response:text:then']);
 
     await p;
     expectWaiters(assert, 0);
-    assert.verifySteps(['response:text:then']);
+    assert.verifySteps([]);
   });
 });
