@@ -64,7 +64,7 @@ module('waitForFetch', function () {
 
       expectWaiters(assert, 0);
 
-      const responsePromise = response[scenario.method]();
+      const responsePromise = (response as any)[scenario.method]();
       expectWaiters(assert, 1);
 
       const verify = await responsePromise;
