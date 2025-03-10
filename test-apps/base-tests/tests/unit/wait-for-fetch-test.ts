@@ -15,7 +15,8 @@ function createFormData(obj: any) {
   const data = new FormData();
 
   for (const [k, v] of Object.entries(obj)) {
-    data.append(k, v);
+    // SAFETY: just for testing, we can be a bit looser
+    data.append(k, v as string);
   }
 
   return data;
