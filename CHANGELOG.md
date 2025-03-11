@@ -1,5 +1,16 @@
 # Changelog
 
+## Release (2025-03-11)
+
+@ember/test-waiters 4.1.0 (minor)
+
+#### :rocket: Enhancement
+* `@ember/test-waiters`, `base-tests`
+  * [#513](https://github.com/emberjs/ember-test-waiters/pull/513) Implement functionally for "deprecate fetch" RFC ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2024-12-05)
 
 @ember/test-waiters 4.0.0 (major)
