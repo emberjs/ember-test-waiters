@@ -12,7 +12,6 @@ export async function waitForFetch(fetchPromise: ReturnType<typeof fetch>) {
         ['json', 'text', 'arrayBuffer', 'blob', 'formData', 'bytes'].includes(prop)
       ) {
         return (...args: unknown[]) => {
-          console.log('invoke', ...args);
           return waitForPromise(original.call(target, ...args));
         };
       }
