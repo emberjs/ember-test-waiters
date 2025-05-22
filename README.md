@@ -30,6 +30,7 @@ This addon implements the design specified in [RFC 581](https://github.com/ember
     - [Waiter naming conventions](#waiter-naming-conventions)
   - [waitForPromise function](#waitforpromise-function)
   - [waitFor function](#waitfor-function)
+  - [waitForFetch function](#waitforfetch-function)
   - [Waiting on all waiters](#waiting-on-all-waiters)
 - [Best Practices](#best-practices)
   - [Use buildWaiter in module scope](#use-buildwaiter-in-module-scope)
@@ -191,6 +192,25 @@ export default class Friendz extends Component {
 ```
 
 `waitFor` acts as a wrapper for the generator function, producing another generator function that is registered with the test waiter system, suitable for wrapping in an `ember-concurrency` task. So `@waitFor`/`waitFor()` needs to be applied directly to the generator function, and `@task`/`task()` applied to the result.
+
+### waitForFetch function
+
+Similar to `waitForPromise`, `waitForFetch` wraps the `fetch` promise, but also wraps the response parsing functions, `text`, `json`, etc.
+
+
+```js
+import Component from '@glimmer/component';
+import { waitForFetch } from '@ember/test-waiters';
+
+export default class MoreFriendz extends Component {
+  async funcWithAsync() {
+    let response = await waitForFetch(fetch('...'));
+
+    // automatically wrapped it waitForPromise
+    return await response.json();
+  }
+}
+```
 
 ### Waiting on all waiters
 
