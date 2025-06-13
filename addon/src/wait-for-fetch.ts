@@ -5,6 +5,12 @@ export async function waitForFetch(fetchPromise: ReturnType<typeof fetch>) {
 
   return new Proxy(response, {
     get(target, prop, receiver) {
+      if (
+        typeof prop === 'string' &&
+        ['ok', 'status', 'statusText', 'bodyUsed', 'headers', 'redirected', 'type', 'url'].includes(prop)
+      ) {
+        return target[prop];
+      }
       const original = Reflect.get(target, prop, receiver);
 
       if (
@@ -15,7 +21,11 @@ export async function waitForFetch(fetchPromise: ReturnType<typeof fetch>) {
           return waitForPromise(original.call(target, ...args));
         };
       }
-
+      if (typeof prop === 'string' && ['clone'].includes(prop)) {
+        return (...args) => {
+          return original.call(target, ...args);
+        }
+      }
       return original;
     },
   });
