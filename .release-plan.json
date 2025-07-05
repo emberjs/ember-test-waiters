@@ -1,17 +1,17 @@
 {
   "solution": {
     "@ember/test-waiters": {
-      "impact": "minor",
-      "oldVersion": "4.0.0",
-      "newVersion": "4.1.0",
+      "impact": "patch",
+      "oldVersion": "4.1.0",
+      "newVersion": "4.1.1",
       "constraints": [
         {
-          "impact": "minor",
-          "reason": "Appears in changelog section :rocket: Enhancement"
+          "impact": "patch",
+          "reason": "Appears in changelog section :bug: Bug Fix"
         }
       ],
       "pkgJSONPath": "./addon/package.json"
     }
   },
-  "description": "## Release (2025-03-11)\n\n@ember/test-waiters 4.1.0 (minor)\n\n#### :rocket: Enhancement\n* `@ember/test-waiters`, `base-tests`\n  * [#513](https://github.com/emberjs/ember-test-waiters/pull/513) Implement functionally for \"deprecate fetch\" RFC ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2025-07-05)\n\n@ember/test-waiters 4.1.1 (patch)\n\n#### :bug: Bug Fix\n* `@ember/test-waiters`\n  * [#519](https://github.com/emberjs/ember-test-waiters/pull/519) fix: proxy more parts of fetch Response ([@Techn1x](https://github.com/Techn1x))\n\n#### :memo: Documentation\n* [#516](https://github.com/emberjs/ember-test-waiters/pull/516) Update README.md for waitForFetch ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 2\n- Brad Overton ([@Techn1x](https://github.com/Techn1x))\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }
