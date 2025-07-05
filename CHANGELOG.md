@@ -1,5 +1,20 @@
 # Changelog
 
+## Release (2025-07-05)
+
+@ember/test-waiters 4.1.1 (patch)
+
+#### :bug: Bug Fix
+* `@ember/test-waiters`
+  * [#519](https://github.com/emberjs/ember-test-waiters/pull/519) fix: proxy more parts of fetch Response ([@Techn1x](https://github.com/Techn1x))
+
+#### :memo: Documentation
+* [#516](https://github.com/emberjs/ember-test-waiters/pull/516) Update README.md for waitForFetch ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 2
+- Brad Overton ([@Techn1x](https://github.com/Techn1x))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2025-03-11)
 
 @ember/test-waiters 4.1.0 (minor)
