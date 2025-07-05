@@ -1,18 +1,33 @@
 import { default as waitForPromise } from './wait-for-promise.ts';
 
-const properties = [
-  'ok',
-  'status',
-  'statusText',
+const props = [
+  'body',
   'bodyUsed',
   'headers',
+  'ok',
   'redirected',
+  'status',
+  'statusText',
   'type',
   'url',
 ] as const satisfies (keyof Response)[];
-type ResponseProp = (typeof properties)[number];
+type ResponseProp = (typeof props)[number];
 function isResponseProperty(maybeProp: string): maybeProp is ResponseProp {
-  return properties.some((prop) => maybeProp === prop);
+  return props.some((prop) => maybeProp === prop);
+}
+
+const fns = [
+  'arrayBuffer',
+  'blob',
+  'bytes',
+  'clone',
+  'formData',
+  'json',
+  'text',
+] as const satisfies (keyof Response)[];
+type ResponseFn = (typeof fns)[number];
+function isResponseFn(maybeFn: string): maybeFn is ResponseFn {
+  return fns.some((fn) => maybeFn === fn);
 }
 
 /**
@@ -31,21 +46,19 @@ export async function waitForFetch(fetchPromise: ReturnType<typeof fetch>) {
       }
       const original = Reflect.get(target, prop, receiver);
 
-      // For async functions, call them but wrapped in waitForPromise
-      if (
-        typeof prop === 'string' &&
-        ['json', 'text', 'arrayBuffer', 'blob', 'formData', 'bytes'].includes(prop)
-      ) {
+      // Wrap Response functions in test waiter
+      if (typeof prop === 'string' && isResponseFn(prop)) {
+        // clone() is sync, no need to wrap in test-waiter
+        if (prop === 'clone') {
+          return (...args: unknown[]) => {
+            return original.call(target, ...args);
+          };
+        }
         return (...args: unknown[]) => {
           return waitForPromise(original.call(target, ...args));
         };
       }
-      // For sync functions, just call them
-      if (typeof prop === 'string' && ['clone'].includes(prop)) {
-        return (...args: unknown[]) => {
-          return original.call(target, ...args);
-        };
-      }
+      // return the Reflect.get() result for anything else
       return original;
     },
   });
