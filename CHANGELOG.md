@@ -1,5 +1,19 @@
 # Changelog
 
+## Release (2026-06-09)
+
+* @ember/test-waiters 4.1.2 (patch)
+
+#### :bug: Bug Fix
+* `@ember/test-waiters`
+  * [#521](https://github.com/emberjs/ember-test-waiters/pull/521) Remove macros from dependencies as it's not needed (consumer must provide macros-handling plugin) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* [#522](https://github.com/emberjs/ember-test-waiters/pull/522) Update release-plan ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2025-07-05)
 
 @ember/test-waiters 4.1.1 (patch)
