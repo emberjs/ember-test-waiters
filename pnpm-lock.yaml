@@ -32,9 +32,6 @@ importers:
       '@embroider/addon-shim':
         specifier: ^1.9.0
         version: 1.9.0
-      '@embroider/macros':
-        specifier: ^1.16.9
-        version: 1.16.9(@glint/template@1.5.0)
     devDependencies:
       '@babel/plugin-transform-typescript':
         specifier: ^7.25.9
@@ -42,6 +39,9 @@ importers:
       '@embroider/addon-dev':
         specifier: ^7.0.0
         version: 7.0.0(@glint/template@1.5.0)(rollup@4.28.0)
+      '@embroider/macros':
+        specifier: ^1.16.9
+        version: 1.16.9(@glint/template@1.5.0)
       '@eslint/js':
         specifier: ^9.16.0
         version: 9.16.0
