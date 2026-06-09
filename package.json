@@ -19,17 +19,17 @@
     "@glint/core": "^1.5.0",
     "concurrently": "^9.1.0",
     "prettier": "^3.4.1",
-    "release-plan": "^0.11.0",
+    "release-plan": "^0.18.0",
     "typescript": "~5.7.2"
-  },
-  "pnpm": {
-    "overrides": {
-      "@ember/test-waiters": "workspace:*"
-    }
   },
   "packageManager": "pnpm@9.14.2",
   "volta": {
     "node": "22.10.0",
     "pnpm": "9.14.2"
+  },
+  "pnpm": {
+    "overrides": {
+      "@ember/test-waiters": "workspace:*"
+    }
   }
 }
