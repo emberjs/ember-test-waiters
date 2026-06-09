@@ -25,12 +25,12 @@
     "prepack": "pnpm build"
   },
   "dependencies": {
-    "@embroider/addon-shim": "^1.9.0",
-    "@embroider/macros": "^1.16.9"
+    "@embroider/addon-shim": "^1.9.0"
   },
   "devDependencies": {
     "@babel/plugin-transform-typescript": "^7.25.9",
     "@embroider/addon-dev": "^7.0.0",
+    "@embroider/macros": "^1.16.9",
     "@eslint/js": "^9.16.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@tsconfig/ember": "^3.0.8",
