@@ -15,6 +15,21 @@ function getNextToken(): Token {
   return new Token();
 }
 
+/**
+ * A promise that carries its own resolver, so a collection of pending
+ * operations holds nothing but the promises themselves.
+ */
+type ResolvablePromise = Promise<void> & { resolve: () => void };
+
+function resolvablePromise(): ResolvablePromise {
+  let resolve!: () => void;
+  const promise = new Promise<void>((r) => (resolve = r)) as ResolvablePromise;
+
+  promise.resolve = resolve;
+
+  return promise;
+}
+
 class TestWaiterImpl<T extends object | Primitive = Token> implements TestWaiter<T> {
   public name: WaiterName;
   private nextToken: () => T;
@@ -23,6 +38,14 @@ class TestWaiterImpl<T extends object | Primitive = Token> implements TestWaiter
   items = new Map<T, TestWaiterDebugInfo>();
   completedOperationsForTokens = new WeakMap<Token, boolean>();
   completedOperationsForPrimitives = new Map<Primitive, boolean>();
+
+  /**
+   * The completion promise for each pending operation, keyed by token so
+   * `endAsync` can settle its own. Values are the promises themselves,
+   * each carrying its resolver, and an entry is dropped as it resolves --
+   * so this only ever holds operations still in flight.
+   */
+  private pendingPromises = new Map<T, ResolvablePromise>();
 
   constructor(name: WaiterName, nextToken?: () => T) {
     this.name = name;
@@ -47,6 +70,8 @@ class TestWaiterImpl<T extends object | Primitive = Token> implements TestWaiter
       label,
     });
 
+    this.pendingPromises.set(token, resolvablePromise());
+
     return token;
   }
 
@@ -64,6 +89,13 @@ class TestWaiterImpl<T extends object | Primitive = Token> implements TestWaiter
     // Mark when a waiter operation has completed so we can distinguish
     // whether endAsync is being called before a prior beginAsync call above.
     this._getCompletedOperations(token).set(token, true);
+
+    const pending = this.pendingPromises.get(token);
+
+    if (pending !== undefined) {
+      this.pendingPromises.delete(token);
+      pending.resolve();
+    }
   }
 
   waitUntil(): boolean {
@@ -80,8 +112,20 @@ class TestWaiterImpl<T extends object | Primitive = Token> implements TestWaiter
     return result;
   }
 
+  settled(): Promise<unknown> {
+    return Promise.all(this.pendingPromises.values());
+  }
+
   reset(): void {
     this.items.clear();
+
+    // anything awaiting these would otherwise wait on operations this
+    // waiter has stopped tracking
+    for (const pending of this.pendingPromises.values()) {
+      pending.resolve();
+    }
+
+    this.pendingPromises.clear();
   }
 
   private _register(): void {

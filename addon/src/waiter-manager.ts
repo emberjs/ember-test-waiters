@@ -118,3 +118,38 @@ export function hasPendingWaiters(): boolean {
 
   return state.pending > 0;
 }
+
+/**
+ * Never resolves. Returned when a pending waiter cannot announce its own
+ * completion, so callers fall through to whatever fallback they race
+ * this against rather than being told, wrongly, that things are quiet.
+ */
+const NEVER: Promise<unknown> = new Promise(() => {});
+
+/**
+ * Resolves when the operations all waiters are currently tracking have
+ * completed, composed from the waiters' own completion promises rather
+ * than by polling `hasPendingWaiters`.
+ *
+ * Operations begun after this call are not included: settling can start
+ * more work, so a caller that needs a true fixpoint re-checks. And a
+ * pending waiter that does not implement `settled` cannot announce
+ * anything, so this never resolves while one is outstanding -- race it
+ * against a fallback tick if you must tolerate those.
+ *
+ * @public
+ * @returns {Promise<unknown>} resolves when the tracked operations complete
+ */
+export function waitersSettled(): Promise<unknown> {
+  const settled: Promise<unknown>[] = [];
+
+  for (const waiter of getWaiters()) {
+    if (typeof waiter.settled === 'function') {
+      settled.push(waiter.settled());
+    } else if (!waiter.waitUntil()) {
+      return NEVER;
+    }
+  }
+
+  return Promise.all(settled);
+}

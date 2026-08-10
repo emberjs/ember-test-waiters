@@ -50,6 +50,21 @@ export interface Waiter {
    * @returns {TestWaiterDebugInfo}
    */
   debugInfo(): TestWaiterDebugInfo[];
+
+  /**
+   * Resolves when the operations this waiter is currently tracking have
+   * completed, so callers can await completion rather than polling
+   * `waitUntil`. Operations begun after the call are not included --
+   * callers that need a fixpoint should re-check.
+   *
+   * Optional: a waiter that cannot know when it goes quiet may omit it,
+   * and `waitersSettled` will treat this waiter as un-announceable.
+   *
+   * @public
+   * @method settled
+   * @returns {Promise<unknown>} resolves when the tracked operations complete
+   */
+  settled?(): Promise<unknown>;
 }
 
 /**
