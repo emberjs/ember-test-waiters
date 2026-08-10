@@ -15,6 +15,7 @@ export {
   _reset,
   getPendingWaiterState,
   hasPendingWaiters,
+  waitersSettled,
 } from './waiter-manager.ts';
 
 export { default as buildWaiter, _resetWaiterNames } from './build-waiter.ts';
