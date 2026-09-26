@@ -32,6 +32,7 @@ const parserOptions = {
       ecmaVersion: "latest",
       requireConfigFile: false,
       babelOptions: {
+        configFile: false,
         plugins: [
           [
             "@babel/plugin-proposal-decorators",
