@@ -1,0 +1,6 @@
+# Unlabeled Changes
+
+* [#514](https://github.com/emberjs/ember-test-waiters/pull/514) add 4.4 to the try matrix ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+
+*Cannot plan release until the above changes are labeled*.
