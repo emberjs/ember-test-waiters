@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@ember/test-waiters": "workspace:*",
-    "@embroider/macros": "^1.16.9"
+    "@embroider/macros": "^1.21.1"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -85,7 +85,6 @@
     "prettier": "^3.4.1",
     "qunit": "^2.22.0",
     "qunit-dom": "^3.4.0",
-    "tracked-built-ins": "^3.2.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.17.0",
     "webpack": "^5.96.1"
